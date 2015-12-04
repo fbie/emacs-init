@@ -11,17 +11,15 @@
 (setenv "PATH" path-from-shell)
 (setq exec-path (split-string path-from-shell path-separator)))
 
+;; Don't minimize!
 (global-unset-key (kbd "C-z"))
 
-;; All requires are conditional in order to allow to start Mac OSX's
-;; Emacs version from command line without any errors.
-
-(when (require 'package nil 'noerror)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-  (package-initialize))
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize)
 
 ;; Always remove trailing whitespaces.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -35,55 +33,47 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;; Flycheck
-(when (require 'flycheck nil 'noerror)
-  (add-hook 'after-init-hook 'global-flycheck-mode)
-  (add-hook 'LaTeX-mode-hook 'flycheck-mode)
-  (add-hook 'LaTeX-mode-hook 'flyspell-mode))
+(require 'flycheck)
+(add-hook 'after-init-hook 'global-flycheck-mode)
+(add-hook 'LaTeX-mode-hook 'flycheck-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;; Helm
-(when (require 'helm-config nil 'noerror)
-  (helm-mode 'true)
-  (helm-autoresize-mode 'true)
-  (add-hook 'LaTeX-mode-hook 'helm-mode)
-  )
+(require 'helm-config)
+(helm-mode 'true)
+(helm-autoresize-mode 'true)
+(add-hook 'LaTeX-mode-hook 'helm-mode)
 
 ;; Magit
-(when (require 'magit nil 'noerror)
-  (global-set-key (kbd "C-c i") 'magit-status)
-  )
+(require 'magit)
+(global-set-key (kbd "C-c i") 'magit-status)
 
 ;; C# and OmniSharp
-(when (require 'omnisharp nil 'noerror)
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'omnisharp-mode-hook 'eldoc-mode)
-  (setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
+(require 'omnisharp)
+(add-hook 'csharp-mode-hook 'omnisharp-mode)
+(add-hook 'omnisharp-mode-hook 'eldoc-mode)
+(setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
 
-  ;; Load company for omnisharp
-  (when (require 'company nil 'noerror)
-    (eval-after-load 'company
-      '(add-to-list 'company-backends 'company-omnisharp))
-    (add-hook 'omnisharp-mode-hook 'company-mode)
-    )
+;; Load company for omnisharp
+(require 'company)
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-omnisharp))
+(add-hook 'omnisharp-mode-hook 'company-mode)
 
-  (define-key omnisharp-mode-map (kbd "C-SPC") 'company-search-candidates)
-  (define-key omnisharp-mode-map (kbd "<f12>") 'omnisharp-go-to-definition)
-  (define-key omnisharp-mode-map (kbd "C-x p") 'pop-tag-mark)
+(define-key omnisharp-mode-map (kbd "C-SPC") 'company-search-candidates)
+(define-key omnisharp-mode-map (kbd "<f12>") 'omnisharp-go-to-definition)
+(define-key omnisharp-mode-map (kbd "C-x p") 'pop-tag-mark)
 
-  ;; Bind C-u to find usages according to availability
-  (if (require 'helm-config nil 'noerror)
-      (define-key omnisharp-mode-map (kbd "C-u") 'omnisharp-helm-find-usages)
-    (define-key omnisharp-mode-map (kbd "C-u") 'omnisharp-find-usages)
-    )
+(define-key omnisharp-mode-map (kbd "C-u") 'omnisharp-helm-find-usages)
 
-  (define-key omnisharp-mode-map (kbd "S-s-<up>") 'omnisharp-navigate-up)
-  (define-key omnisharp-mode-map (kbd "S-s-<down>") 'omnisharp-navigate-down)
+(define-key omnisharp-mode-map (kbd "S-s-<up>") 'omnisharp-navigate-up)
+(define-key omnisharp-mode-map (kbd "S-s-<down>") 'omnisharp-navigate-down)
 
-  (define-key omnisharp-mode-map (kbd "s-i") 'omnisharp-helm-find-implementations)
-  (define-key omnisharp-mode-map (kbd "C-.") 'omnisharp-run-code-action-refactoring)
+(define-key omnisharp-mode-map (kbd "s-i") 'omnisharp-helm-find-implementations)
+(define-key omnisharp-mode-map (kbd "C-.") 'omnisharp-run-code-action-refactoring)
 
-  (define-key omnisharp-mode-map (kbd "<f2>") 'omnisharp-rename-interactively)
-  (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
-  )
+(define-key omnisharp-mode-map (kbd "<f2>") 'omnisharp-rename-interactively)
+(define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
 ;; Downloading bibliography from CiteULike
 (defvar citeulike-user "fbie")
