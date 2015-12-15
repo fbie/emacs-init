@@ -75,6 +75,9 @@
 (define-key omnisharp-mode-map (kbd "<f2>") 'omnisharp-rename-interactively)
 (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
+(require 'paredit)
+(add-hook 'ielm-mode-hook 'paredit-mode)
+
 ;; Downloading bibliography from CiteULike
 (defvar citeulike-user "fbie")
 (defvar citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
