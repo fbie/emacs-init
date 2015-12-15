@@ -76,6 +76,7 @@
 (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
 (require 'paredit)
+(add-hook 'lisp-mode 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
 
 ;; Downloading bibliography from CiteULike
