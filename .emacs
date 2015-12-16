@@ -75,9 +75,12 @@
 (define-key omnisharp-mode-map (kbd "<f2>") 'omnisharp-rename-interactively)
 (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
+;; Always run paredit and eldoc.
 (require 'paredit)
 (add-hook 'lisp-mode 'paredit-mode)
+(add-hook 'lisp-mode 'eldoc-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook 'eldoc-mode)
 
 ;; Downloading bibliography from CiteULike
 (defvar citeulike-user "fbie")
