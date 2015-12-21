@@ -77,10 +77,12 @@
 
 ;; Always run paredit and eldoc.
 (require 'paredit)
-(add-hook 'lisp-mode 'paredit-mode)
-(add-hook 'lisp-mode 'eldoc-mode)
-(add-hook 'ielm-mode-hook 'paredit-mode)
-(add-hook 'ielm-mode-hook 'eldoc-mode)
+(add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'lisp-mode-hook 'eldoc-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
+(add-hook 'ielm-mode-hook-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook-hook 'eldoc-mode)
 
 ;; Downloading bibliography from CiteULike
 (defvar citeulike-user "fbie")
