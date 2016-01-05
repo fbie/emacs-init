@@ -91,11 +91,12 @@
 (add-hook 'ielm-mode-hook-hook 'eldoc-mode)
 
 ;; Downloading bibliography from CiteULike
-(defvar citeulike-user "fbie")
-(defvar citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
+(defconst citeulike-user "fbie")
+(defconst citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
 (require 'url)
 
 (defun do-citeulike-download-bibliography (username)
+  "Download bibliography from CiteULike for USERNAME."
   (let*
       ((current-path
 	(if buffer-file-name
