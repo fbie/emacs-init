@@ -2,6 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
+(defmacro require-install (package)
+  "Require PACKAGE, install it if missing."
+  `(unless (require ,package nil t)
+     (package-install ,package)
+     (require ,package)))
+
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
 ;; such as latex.
@@ -33,29 +39,29 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;; Flycheck
-(require 'flycheck)
+(require-install 'flycheck)
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'LaTeX-mode-hook 'flycheck-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 
 ;; Helm
-(require 'helm-config)
+(require-install 'helm-config)
 (helm-mode 'true)
 (helm-autoresize-mode 'true)
 (add-hook 'LaTeX-mode-hook 'helm-mode)
 
 ;; Magit
-(require 'magit)
+(require-install 'magit)
 (global-set-key (kbd "C-c i") 'magit-status)
 
 ;; C# and OmniSharp
-(require 'omnisharp)
+(require-install 'omnisharp)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 (add-hook 'omnisharp-mode-hook 'eldoc-mode)
 (setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
 
 ;; Load company for omnisharp
-(require 'company)
+(require-install 'company)
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'omnisharp-mode-hook 'company-mode)
@@ -76,7 +82,7 @@
 (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
 ;; Always run paredit and eldoc.
-(require 'paredit)
+(require-install 'paredit)
 (add-hook 'lisp-mode-hook 'paredit-mode)
 (add-hook 'lisp-mode-hook 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
