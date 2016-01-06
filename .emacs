@@ -43,6 +43,7 @@
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'LaTeX-mode-hook 'flycheck-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'org-mode-hook 'flyspell-mode)
 
 ;; Helm
 (require-install 'helm-config)
