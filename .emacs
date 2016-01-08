@@ -126,3 +126,8 @@
        (default-path (concat current-path citeulike-user ".bib"))
        (file-path (read-string (format "Write to (default %s): " default-path) nil nil default-path)))
     (url-copy-file citeulike-url-usr file-path 'true)))
+
+;; Omnomnom slirm.
+(add-to-list 'load-path "~/src/slirm/")
+(load "slirm.el")
+(require 'slirm)
