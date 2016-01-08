@@ -2,11 +2,23 @@
 ;;; Commentary:
 ;;; Code:
 
-(defmacro require-install (package)
-  "Require PACKAGE, install it if missing."
-  `(unless (require ,package nil t)
-     (package-install ,package)
-     (require ,package)))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(LaTeX-command "latex")
+ '(highlight-current-line nil)
+ '(org-support-shift-select t)
+ '(save-place t nil (saveplace))
+ '(show-paren-mode t)
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
@@ -26,6 +38,12 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
+
+(defmacro require-install (package)
+  "Require PACKAGE, install it if missing."
+  `(unless (require ,package nil t)
+     (package-install ,package)
+     (require ,package)))
 
 ;; Always remove trailing whitespaces.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -108,21 +126,3 @@
        (default-path (concat current-path citeulike-user ".bib"))
        (file-path (read-string (format "Write to (default %s): " default-path) nil nil default-path)))
     (url-copy-file citeulike-url-usr file-path 'true)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex")
- '(highlight-current-line nil)
- '(org-support-shift-select t)
- '(save-place t nil (saveplace))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
