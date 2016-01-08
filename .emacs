@@ -93,35 +93,21 @@
 (add-hook 'ielm-mode-hook-hook 'eldoc-mode)
 
 ;; Downloading bibliography from CiteULike
-(defconst citeulike-user "fbie")
+(defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
 (defconst citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
-(require 'url)
 
-(defun do-citeulike-download-bibliography (username)
-  "Download bibliography from CiteULike for USERNAME."
+(defun citeulike-download-bibliography ()
+  "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
+  (interactive)
   (let*
       ((current-path
 	(if buffer-file-name
 	    (file-name-directory buffer-file-name)
 	  "~"))
-       (citeulike-url-usr (format citeulike-url username))
-       (default-path (concat current-path username ".bib"))
+       (citeulike-url-usr (format citeulike-url citeulike-user))
+       (default-path (concat current-path citeulike-user ".bib"))
        (file-path (read-string (format "Write to (default %s): " default-path) nil nil default-path)))
-    (url-copy-file citeulike-url-usr file-path 'true)
-  ))
-
-(if citeulike-user
-    (defun citeulike-download-bibliography ()
-      "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
-      (interactive)
-      (do-citeulike-download-bibliography citeulike-user)
-      )
-  (defun citeulike-download-bibliography (username)
-    "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
-    (interactive "sEnter CiteULike user: ")
-    (do-citeulike-download-bibliography username)
-    )
-  )
+    (url-copy-file citeulike-url-usr file-path 'true)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
