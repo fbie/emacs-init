@@ -130,7 +130,7 @@
 	  "~"))
        (citeulike-url-usr (format citeulike-url citeulike-user))
        (default-path (concat current-path citeulike-user ".bib"))
-       (file-path (read-string (format "Write to (default %s): " default-path) nil nil default-path)))
+       (file-path (read-string  "Write to: " default-path nil default-path)))
     (url-copy-file citeulike-url-usr file-path 'true)))
 
 ;; Omnomnom slirm.
