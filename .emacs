@@ -110,6 +110,12 @@
 (add-hook 'ielm-mode-hook-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook-hook 'eldoc-mode)
 
+;; Racket mode
+(require-install 'racket-mode)
+(add-hook 'racket-mode-hook 'paredit-mode)
+;; I prefer elisp-mode style key bindings.
+(define-key racket-mode-map (kbd "C-h f") 'racket-describe)
+
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
 (defconst citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
