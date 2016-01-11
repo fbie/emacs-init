@@ -113,8 +113,10 @@
 ;; Racket mode
 (require-install 'racket-mode)
 (add-hook 'racket-mode-hook 'paredit-mode)
+(add-hook 'racket-repl-mode 'paredit-mode)
 ;; I prefer elisp-mode style key bindings.
 (define-key racket-mode-map (kbd "C-h f") 'racket-describe)
+(define-key racket-repl-mode-map (kbd "C-h f") 'racket-describe)
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
