@@ -71,6 +71,7 @@
 (add-hook 'LaTeX-mode-hook 'helm-mode)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-x C-g") 'helm-recentf)
 
 ;; Magit
 (require-install 'magit)
