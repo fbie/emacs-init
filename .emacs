@@ -138,7 +138,5 @@
        (file-path (read-string  "Write to: " default-path nil default-path)))
     (url-copy-file citeulike-url-usr file-path 'true)))
 
-;; Omnomnom slirm.
-(add-to-list 'load-path "~/src/slirm/")
-(load "slirm.el")
-(require 'slirm)
+(require-install 'spotify)
+(global-set-key (kbd "s-<f15>") 'spotify-playpause)
