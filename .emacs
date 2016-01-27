@@ -135,7 +135,7 @@
 	  "~"))
        (citeulike-url-usr (format citeulike-url citeulike-user))
        (default-path (concat current-path citeulike-user ".bib"))
-       (file-path (read-string  "Write to: " default-path nil default-path)))
+       (file-path (read-file-name "Write to: " nil nil nil default-path nil)))
     (url-copy-file citeulike-url-usr file-path 'true)))
 
 (require-install 'spotify)
