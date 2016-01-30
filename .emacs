@@ -64,6 +64,9 @@
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'flyspell-mode)
 
+(require-install 'writegood-mode)
+(add-hook 'LaTeX-mode-hook 'writegood-mode)
+
 ;; Helm
 (require-install 'helm-config)
 (helm-mode 'true)
