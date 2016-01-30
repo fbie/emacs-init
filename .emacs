@@ -142,4 +142,13 @@
     (url-copy-file citeulike-url-usr file-path 'true)))
 
 (require-install 'spotify)
-(global-set-key (kbd "s-<f15>") 'spotify-playpause)
+(global-set-key (kbd "s-<f15>") 'spotify-playpause) ;; Works on Kinesis Advantage.
+
+;; Org-mode
+(require 'org)
+(setq org-log-done t) ;; Log completion of tasks.
+(setq org-agenda-files '("~/todo.org"))
+(define-key global-map (kbd "C-c C-a")
+  (lambda ()
+    (interactive)
+    (org-agenda nil "n"))) ;; "n" is overall TODO list and week-agenda.
