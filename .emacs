@@ -146,6 +146,17 @@
 
 ;; Org-mode
 (require 'org)
+(defun org-agenda-and-todos ()
+  "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
+  (interactive)
+  (org-agenda nil "n"))
+
+(define-key global-map (kbd "C-c C-a") 'org-agenda-and-todos)
 (setq org-log-done t) ;; Log completion of tasks.
-(setq org-agenda-files '("~/todo.org"))
-(define-key global-map (kbd "C-c C-a") 'org-agenda)
+(setq org-agenda-files '("~/org/personal.org"
+			 "~/org/work.org"
+			 "~/org/funcalc.org"))
+(setq initial-buffer-choice (lambda () ;; Start emacs in agenda view.
+			      (save-window-excursion
+				(org-agenda-and-todos)
+				(get-buffer "*Org Agenda*"))))
