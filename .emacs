@@ -148,7 +148,4 @@
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-agenda-files '("~/todo.org"))
-(define-key global-map (kbd "C-c C-a")
-  (lambda ()
-    (interactive)
-    (org-agenda nil "n"))) ;; "n" is overall TODO list and week-agenda.
+(define-key global-map (kbd "C-c C-a") 'org-agenda)
