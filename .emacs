@@ -160,3 +160,6 @@
 			      (save-window-excursion
 				(org-agenda-and-todos)
 				(get-buffer "*Org Agenda*"))))
+
+(scroll-bar-mode -1) ;; Hide scroll bars.
+(load-theme 'hydandata-light t) ;; More easy on the eyes!
