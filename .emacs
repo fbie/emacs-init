@@ -167,6 +167,7 @@
   (org-agenda nil "n"))
 
 (define-key global-map (kbd "C-c C-a") 'org-agenda-and-todos)
+(define-key org-mode-map (kbd "C-c C-a") 'org-agenda-and-todos)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-agenda-files '("~/org/personal.org"
 			 "~/org/work.org"
