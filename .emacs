@@ -44,8 +44,8 @@
 (setenv "PATH" path-from-shell)
 (setq exec-path (split-string path-from-shell path-separator)))
 
-;; Don't minimize!
-(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-z")) ;; Don't minimize!
+(setq require-final-newline t) ;; OMG final newlines!
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
