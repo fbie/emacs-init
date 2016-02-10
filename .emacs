@@ -69,6 +69,10 @@
 (add-to-list 'default-frame-alist
              '(font . "Monaco-14"))
 
+(require-install 'centered-window-mode)
+(centered-window-mode t)
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;; Flycheck
