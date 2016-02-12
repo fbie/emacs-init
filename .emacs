@@ -66,8 +66,9 @@
 ;; Highlight current line and custom-set-faces seems broken im my
 ;; version of Emacs.
 (add-hook 'after-init-hook 'global-hl-line-mode)
-(add-to-list 'default-frame-alist
-             '(font . "Monaco-14"))
+(when (eq system-type 'darwin)
+  (add-to-list 'default-frame-alist
+	       '(font . "Monaco-14")))
 
 (require-install 'centered-window-mode)
 (centered-window-mode t)
