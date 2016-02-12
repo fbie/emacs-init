@@ -87,7 +87,7 @@
 (add-hook 'LaTeX-mode-hook 'writegood-mode)
 
 ;; Helm
-(require-install 'helm-config)
+(require-install 'helm)
 (helm-mode 'true)
 (helm-autoresize-mode 'true)
 (add-hook 'LaTeX-mode-hook 'helm-mode)
