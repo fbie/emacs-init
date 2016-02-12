@@ -183,4 +183,5 @@
 				(get-buffer "*Org Agenda*"))))
 
 (scroll-bar-mode -1) ;; Hide scroll bars.
+(require-install 'professional-theme)
 (load-theme 'professional t) ;; More easy on the eyes!
