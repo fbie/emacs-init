@@ -171,8 +171,9 @@
        (file-path (read-file-name "Write to: " nil nil nil default-path nil)))
     (url-copy-file citeulike-url-usr file-path 'true)))
 
-(require-install 'spotify)
-(global-set-key (kbd "s-<f15>") 'spotify-playpause) ;; Works on Kinesis Advantage.
+(when (not (system-win?))
+  (require-install 'spotify)
+  (global-set-key (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
 
 ;; Org-mode
 (require 'org)
