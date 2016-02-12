@@ -35,10 +35,19 @@
  ;; If there is more than one, they won't work right.
  )
 
+(defun system-win? ()
+  "True if current system is Windows."
+  (or (eq system-type 'windows-nt)
+      (eq system-type 'ms-dos)))
+
+(defun system-osx? ()
+  "True if current system is Mac OSX."
+  (eq system-type 'darwin))
+
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
 ;; such as latex.
-(when (eq system-type 'darwin)
+(when (system-osx?)
   (let ((path-from-shell
 	 (replace-regexp-in-string "[\t\n]*$" ""
 				   (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
@@ -67,7 +76,7 @@
 ;; Highlight current line and custom-set-faces seems broken im my
 ;; version of Emacs.
 (add-hook 'after-init-hook 'global-hl-line-mode)
-(when (eq system-type 'darwin)
+(when (system-osx?)
   (add-to-list 'default-frame-alist
 	       '(font . "Monaco-14")))
 
