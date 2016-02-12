@@ -38,11 +38,12 @@
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
 ;; such as latex.
-(let ((path-from-shell
-       (replace-regexp-in-string "[\t\n]*$" ""
-				(shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-(setenv "PATH" path-from-shell)
-(setq exec-path (split-string path-from-shell path-separator)))
+(when (eq system-type 'darwin)
+  (let ((path-from-shell
+	 (replace-regexp-in-string "[\t\n]*$" ""
+				   (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
 
 (global-unset-key (kbd "C-z")) ;; Don't minimize!
 (setq require-final-newline t) ;; OMG final newlines!
