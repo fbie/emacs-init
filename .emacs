@@ -93,6 +93,7 @@
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode) ;; Having someone check my commit messages is nice.
 
 (require-install 'writegood-mode)
 (add-hook 'LaTeX-mode-hook 'writegood-mode)
