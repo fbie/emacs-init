@@ -178,14 +178,11 @@
 
 ;; Org-mode
 (require 'org)
+(setq org-log-done t) ;; Log completion of tasks.
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
   (interactive)
   (org-agenda nil "n"))
-
-(define-key global-map (kbd "C-c C-a") 'org-agenda-and-todos)
-(define-key org-mode-map (kbd "C-c C-a") 'org-agenda-and-todos)
-(setq org-log-done t) ;; Log completion of tasks.
 
 (when (file-directory-p "~/org") ;; Load org files only if directory exists.
   (setq org-agenda-files '("~/org/personal.org"
@@ -196,6 +193,22 @@
 			      (save-window-excursion
 				(org-agenda-and-todos)
 				(get-buffer "*Org Agenda*"))))
+
+
+
+;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
+(defvar fbie-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-a") 'org-agenda-and-todos)
+    map)
+  "fbie-minor-mode keymap.")
+
+(define-minor-mode fbie-minor-mode
+  "Florians's global override keybindings."
+  :init-value t
+  :lighter " Florian")
+
+(fbie-minor-mode 1)
 
 (scroll-bar-mode -1) ;; Hide scroll bars.
 (require-install 'professional-theme)
