@@ -199,7 +199,7 @@
 ;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
 (defvar fbie-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-a") 'org-agenda-and-todos)
+    (define-key map (kbd "C-c a") 'org-agenda-and-todos)
     map)
   "fbie-minor-mode keymap.")
 
