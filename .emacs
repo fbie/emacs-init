@@ -194,8 +194,6 @@
 				(org-agenda-and-todos)
 				(get-buffer "*Org Agenda*"))))
 
-
-
 ;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
 (defvar fbie-minor-mode-map
   (let ((map (make-sparse-keymap)))
