@@ -54,6 +54,15 @@
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
+
+;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
+(defvar fbie-minor-mode-map (make-sparse-keymap) "Florian's keymap.")
+
+(define-minor-mode fbie-minor-mode
+  "Florians's global override keybindings."
+  :init-value t
+  :lighter " Florian")
+
 (global-unset-key (kbd "C-z")) ;; Don't minimize!
 (setq require-final-newline t) ;; OMG final newlines!
 
@@ -103,13 +112,13 @@
 (helm-mode 'true)
 (helm-autoresize-mode 'true)
 (add-hook 'LaTeX-mode-hook 'helm-mode)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-x C-g") 'helm-recentf)
+(define-key fbie-minor-mode-map (kbd "M-x") 'helm-M-x)
+(define-key fbie-minor-mode-map (kbd "C-x C-f") 'helm-find-files)
+(define-key fbie-minor-mode-map (kbd "C-x C-g") 'helm-recentf)
 
 ;; Magit
 (require-install 'magit)
-(global-set-key (kbd "C-c i") 'magit-status)
+(define-key fbie-minor-mode-map (kbd "C-c i") 'magit-status)
 
 ;; C# and OmniSharp
 (require-install 'omnisharp)
@@ -174,7 +183,7 @@
 
 (when (not (system-win?))
   (require-install 'spotify)
-  (global-set-key (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
+  (define-key fbie-minor-mode-map (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
 
 ;; Org-mode
 (require 'org)
@@ -194,20 +203,10 @@
 				(org-agenda-and-todos)
 				(get-buffer "*Org Agenda*"))))
 
-;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
-(defvar fbie-minor-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c a") 'org-agenda-and-todos)
-    map)
-  "fbie-minor-mode keymap.")
-
-(define-minor-mode fbie-minor-mode
-  "Florians's global override keybindings."
-  :init-value t
-  :lighter " Florian")
-
-(fbie-minor-mode 1)
+(define-key fbie-minor-mode-map (kbd "C-c a") 'org-agenda-and-todos)
 
 (scroll-bar-mode -1) ;; Hide scroll bars.
 (require-install 'professional-theme)
 (load-theme 'professional t) ;; More easy on the eyes!
+
+(fbie-minor-mode 1)
