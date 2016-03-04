@@ -153,8 +153,8 @@
 (add-hook 'lisp-mode-hook 'eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
-(add-hook 'ielm-mode-hook-hook 'paredit-mode)
-(add-hook 'ielm-mode-hook-hook 'eldoc-mode)
+(add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook 'eldoc-mode)
 
 ;; Racket mode
 (require-install 'racket-mode)
