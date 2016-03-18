@@ -160,6 +160,10 @@
 (define-key racket-mode-map (kbd "C-h f") 'racket-describe)
 (define-key racket-repl-mode-map (kbd "C-h f") 'racket-describe)
 
+;; F# mode
+(require-install 'fsharp-mode)
+(setq inferior-fsharp-program (string-join inferior-fsharp-program " -g -d:TRACE"))
+
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
 (defconst citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
