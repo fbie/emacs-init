@@ -162,7 +162,7 @@
 
 ;; F# mode
 (require-install 'fsharp-mode)
-(setq inferior-fsharp-program (string-join inferior-fsharp-program " -g -d:TRACE"))
+(setq inferior-fsharp-program (string-join (list inferior-fsharp-program " -g -d:TRACE")))
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
