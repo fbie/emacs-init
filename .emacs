@@ -23,7 +23,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex")
- '(highlight-current-line nil)
  '(org-support-shift-select t)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -235,9 +234,7 @@
                (119 . ".\\(?:ww\\)")
                (123 . ".\\(?:-\\)")
                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-               )
-             ))
+               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)"))))
   (dolist (char-regexp alist)
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
