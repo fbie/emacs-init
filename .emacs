@@ -87,7 +87,7 @@
 (add-hook 'after-init-hook 'global-hl-line-mode)
 (when (system-osx?)
   (add-to-list 'default-frame-alist
-	       '(font . "Monaco-14")))
+	       '(font . "Monoid-14")))
 
 (require-install 'centered-window-mode)
 (centered-window-mode t)
