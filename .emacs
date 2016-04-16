@@ -206,11 +206,11 @@
 
 (fbie-minor-mode 1)
 
-;; Fix Monoid font ligatures. This is taken from
+;; Fix FiraCode font ligatures. This is taken from
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs and works
 ;; just as well for other fonts, apparently.
 (when (window-system)
-  (set-default-font "Monoid"))
+  (set-default-font "FiraCode"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
