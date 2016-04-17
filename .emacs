@@ -210,7 +210,7 @@
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs and works
 ;; just as well for other fonts, apparently.
 (when (window-system)
-  (set-default-font "Fira Code Retina 14"))
+  (set-default-font "Fira Code Retina 15"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
