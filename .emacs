@@ -157,7 +157,7 @@
 
 ;; F# mode
 (require-install 'fsharp-mode)
-(setq inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE")))
+(setq inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
