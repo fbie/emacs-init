@@ -84,10 +84,7 @@
 ;; Highlight current line.
 (add-hook 'after-init-hook 'global-hl-line-mode)
 
-(require-install 'centered-window-mode)
-(centered-window-mode t)
-(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-
+;; Make sure reftex is turned on.
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;; Flycheck
@@ -165,6 +162,11 @@
 ;; F# mode
 (require-install 'fsharp-mode)
 (setq inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
+
+;; Centered window mode.
+(require-install 'centered-window-mode)
+(centered-window-mode t)
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
