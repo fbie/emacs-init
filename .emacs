@@ -24,6 +24,7 @@
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex")
  '(org-support-shift-select t)
+ '(safe-local-variable-values (quote ((TeX-engine . latex))))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
@@ -32,7 +33,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(fringe ((t (:background "White"))))
+ '(racket-paren-face ((t (:foreground "dark gray"))))
 
 (defun system-win? ()
   "True if current system is Windows."
