@@ -34,7 +34,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fringe ((t (:background "White"))))
- '(racket-paren-face ((t (:foreground "dark gray"))))
+ '(racket-paren-face ((t (:foreground "dark gray")))))
 
 (defun system-win? ()
   "True if current system is Windows."
