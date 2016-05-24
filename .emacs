@@ -134,8 +134,8 @@
 (add-hook 'omnisharp-mode-hook 'company-mode)
 
 (define-key omnisharp-mode-map (kbd "C-SPC") 'company-search-candidates)
-(define-key omnisharp-mode-map (kbd "<f12>") 'omnisharp-go-to-definition)
-(define-key omnisharp-mode-map (kbd "C-x p") 'pop-tag-mark)
+(define-key omnisharp-mode-map (kbd "M-.") 'omnisharp-go-to-definition)
+(define-key omnisharp-mode-map (kbd "M-,") 'pop-tag-mark)
 
 (define-key omnisharp-mode-map (kbd "C-u") 'omnisharp-helm-find-usages)
 
