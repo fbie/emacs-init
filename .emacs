@@ -121,7 +121,11 @@
 (require-install 'omnisharp)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 (add-hook 'omnisharp-mode-hook 'eldoc-mode)
-(setq omnisharp-server-executable-path "/usr/local/bin/omnisharp")
+(setq omnisharp-server "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
+(setq omnisharp-roslyn "~/src/omnisharp-roslyn/artifacts/publish/OmniSharp/default/net451/OmniSharp.exe")
+
+;; TODO: Write code to easily switch between both versions.
+(setq omnisharp-server-executable-path omnisharp-server)
 
 ;; Load company for omnisharp
 (require-install 'company)
