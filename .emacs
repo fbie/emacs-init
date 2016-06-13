@@ -87,6 +87,7 @@
 (add-hook 'after-init-hook 'global-hl-line-mode)
 
 ;; Make sure reftex is turned on.
+(require-install 'auctex)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ;; Flycheck
