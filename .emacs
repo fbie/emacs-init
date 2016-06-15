@@ -126,11 +126,29 @@
 (require-install 'omnisharp)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
 (add-hook 'omnisharp-mode-hook 'eldoc-mode)
-(setq omnisharp-server "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
-(setq omnisharp-roslyn "~/src/omnisharp-roslyn/artifacts/publish/OmniSharp/default/net451/OmniSharp.exe")
 
-;; TODO: Write code to easily switch between both versions.
-(setq omnisharp-server-executable-path omnisharp-server)
+(defconst omnisharp-server "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
+(defconst omnisharp-roslyn "~/src/omnisharp-roslyn/artifacts/publish/OmniSharp/default/net451/OmniSharp.exe")
+
+(defcustom omnisharp-server-path
+  omnisharp-server
+  "User defined path to Omnisharp server executable.")
+(setq omnisharp-server-executable-path omnisharp-server-path)
+
+(defun omnisharp-set-server (path)
+  "Use PATH as the path to the Omnisharp server."
+  (setq omnisharp-server-path path)
+  (setq omnisharp-server-executable-path path))
+
+(defun omnisharp-use-roslyn ()
+  "Use Omnisharp with Roslyn compiler."
+  (interactive)
+  (omnisharp-set-server omnisharp-roslyn))
+
+(defun omnisharp-use-classic ()
+  "Use the classic Omnisharp implementation."
+  (interactive)
+  (omnisharp-set-server omnisharp-server))
 
 ;; Load company for omnisharp
 (require-install 'company)
