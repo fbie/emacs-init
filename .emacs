@@ -89,11 +89,6 @@
 ;; Make sure reftex is turned on.
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
-;; Auctex with completions!
-(require-install 'company-auctex)
-(company-auctex-init)
-(add-hook 'LaTeX-mode-hook 'company-mode)
-
 ;; Flycheck
 (require-install 'flycheck)
 
@@ -152,6 +147,7 @@
 
 ;; Load company for omnisharp
 (require-install 'company)
+(setq omnisharp-company-template-use-yasnippet nil)
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'omnisharp-mode-hook 'company-mode)
