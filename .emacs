@@ -217,7 +217,7 @@
 ;; Org-mode
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
-(add-hook 'org-mode-hook (lambda () (set-input-method "TeX")))
+(setq org-pretty-entities t)
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
   (interactive)
