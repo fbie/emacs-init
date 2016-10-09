@@ -23,9 +23,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(LaTeX-command "latex")
+ '(default-input-method "TeX")
+ '(global-prettify-symbols-mode nil)
+ '(global-pretty-mode nil)
+ '(mac-command-modifier (quote super))
+ '(mac-mouse-wheel-smooth-scroll nil)
+ '(mac-option-modifier (quote meta))
  '(org-support-shift-select t)
+ '(package-selected-packages
+   (quote
+    (ssh ssh-config-mode gnuplot-mode markdown-mode auctex professional-theme spotify centered-window-mode fsharp-mode racket-mode paredit company omnisharp magit helm writegood-mode flyspell-lazy flycheck)))
  '(safe-local-variable-values (quote ((TeX-engine . latex))))
- '(save-place t nil (saveplace))
+ '(save-place-mode t nil (saveplace))
  '(show-paren-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces
