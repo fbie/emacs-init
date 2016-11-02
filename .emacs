@@ -101,10 +101,6 @@
 ;; Flycheck
 (require-install 'flycheck)
 
-;; Claims to improve flyspell performance.
-(require-install 'flyspell-lazy)
-(flyspell-lazy-mode 1)
-
 ;; Add flyspell mode hooks.
 (require-install 'flyspell)
 (add-hook 'text-mode-hook 'flyspell-mode)
