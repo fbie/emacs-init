@@ -220,7 +220,7 @@
   (define-key fbie-minor-mode-map (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
 
 ;; Org-mode
-(require 'org)
+(require-install 'org)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-pretty-entities t)
 (defun org-agenda-and-todos ()
