@@ -204,10 +204,11 @@
 			   "~/org/work.org"
 			   "~/org/funcalc.org"))
   ;; Start emacs in agenda view.
-  (setq initial-buffer-choice (lambda ()
-				(save-window-excursion
-				  (org-agenda-and-todos)
-				  (get-buffer "*Org Agenda*")))))
+  (when (window-system)
+    (setq initial-buffer-choice (lambda ()
+				  (save-window-excursion
+				    (org-agenda-and-todos)
+				    (get-buffer "*Org Agenda*"))))))
 
 (define-key fbie-minor-mode-map (kbd "C-c a") 'org-agenda-and-todos)
 
