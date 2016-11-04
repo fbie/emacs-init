@@ -63,10 +63,10 @@
   :init-value t
   :lighter " Florian")
 
+;; Set-up MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
@@ -78,8 +78,6 @@
 (setq use-package-always-ensure t)
 
 (use-package flycheck)
-
-;; Add flyspell mode hooks.
 (use-package flyspell
   :init
   (add-hook 'text-mode-hook 'flyspell-mode)
@@ -89,7 +87,6 @@
   :init
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
-;; Helm
 (use-package helm
   :init
   (helm-mode 'true)
@@ -100,7 +97,6 @@
   (define-key fbie-minor-mode-map (kbd "C-x C-f") 'helm-find-files)
   (define-key fbie-minor-mode-map (kbd "C-x C-g") 'helm-recentf))
 
-;; Magit
 (use-package magit
   :init
   (define-key fbie-minor-mode-map (kbd "C-c i") 'magit-status))
@@ -151,14 +147,12 @@
     (interactive)
     (omnisharp-set-server omnisharp-server)))
 
-;; Always run paredit and eldoc.
 (use-package paredit
   :init
   (add-hook 'lisp-mode-hook 'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'ielm-mode-hook 'paredit-mode))
 
-;; Racket mode
 (use-package racket-mode
   :ensure paredit
   :bind
@@ -172,13 +166,11 @@
   :config
   (setq racket-paren-face '(t (:foreground "dark gray"))))
 
-;; F# mode
 (use-package fsharp-mode
   :config
   (setq inferior-fsharp-program
 	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))))
 
-;; Centered window mode.
 (use-package centered-window-mode
   :if window-system
   :init
@@ -211,7 +203,6 @@
   :init
   (define-key fbie-minor-mode-map (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
 
-;; Org-mode
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-pretty-entities t)
