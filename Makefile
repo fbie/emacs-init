@@ -1,2 +1,0 @@
-all:
-	cp .emacs ~/.emacs
