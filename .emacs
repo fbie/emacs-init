@@ -17,33 +17,14 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-command "latex")
- '(default-input-method "TeX")
- '(global-prettify-symbols-mode nil)
- '(global-pretty-mode nil)
- '(mac-command-modifier (quote super))
- '(mac-mouse-wheel-smooth-scroll nil)
- '(mac-option-modifier (quote meta))
- '(org-support-shift-select t)
- '(package-selected-packages
-   (quote
-    (ssh ssh-config-mode gnuplot-mode markdown-mode auctex professional-theme spotify centered-window-mode fsharp-mode racket-mode paredit company omnisharp magit helm writegood-mode flyspell-lazy flycheck)))
- '(safe-local-variable-values (quote ((TeX-engine . latex))))
- '(save-place-mode t nil (saveplace))
- '(show-paren-mode t)
- '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(fringe ((t (:background "White"))))
- '(racket-paren-face ((t (:foreground "dark gray")))))
+;; General settings.
+(tool-bar-mode -1)
+(setq require-final-newline t)
+(global-unset-key (kbd "C-z")) ;; Don't minimize!
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'after-init-hook 'global-hl-line-mode)
+
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 (defun system-win? ()
   "True if current system is Windows."
@@ -64,17 +45,12 @@
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
-
 ;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
 (defvar fbie-minor-mode-map (make-sparse-keymap) "Florian's keymap.")
-
 (define-minor-mode fbie-minor-mode
   "Florians's global override keybindings."
   :init-value t
   :lighter " Florian")
-
-(global-unset-key (kbd "C-z")) ;; Don't minimize!
-(setq require-final-newline t) ;; OMG final newlines!
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -83,22 +59,14 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+;; Install packages if they are not available.
+;; A poor man's version of use-package.
 (defmacro require-install (package)
   "Require PACKAGE, install it if missing."
   `(unless (require ,package nil t)
      (package-install ,package)
      (require ,package)))
 
-;; Always remove trailing whitespaces.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Highlight current line.
-(add-hook 'after-init-hook 'global-hl-line-mode)
-
-;; Make sure reftex is turned on.
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-
-;; Flycheck
 (require-install 'flycheck)
 
 ;; Add flyspell mode hooks.
@@ -156,19 +124,14 @@
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-omnisharp))
 (add-hook 'omnisharp-mode-hook 'company-mode)
-
 (define-key omnisharp-mode-map (kbd "C-SPC") 'company-search-candidates)
 (define-key omnisharp-mode-map (kbd "M-.") 'omnisharp-go-to-definition)
 (define-key omnisharp-mode-map (kbd "M-,") 'pop-tag-mark)
-
 (define-key omnisharp-mode-map (kbd "C-u") 'omnisharp-helm-find-usages)
-
 (define-key omnisharp-mode-map (kbd "S-s-<up>") 'omnisharp-navigate-up)
 (define-key omnisharp-mode-map (kbd "S-s-<down>") 'omnisharp-navigate-down)
-
 (define-key omnisharp-mode-map (kbd "s-i") 'omnisharp-helm-find-implementations)
 (define-key omnisharp-mode-map (kbd "C-.") 'omnisharp-run-code-action-refactoring)
-
 (define-key omnisharp-mode-map (kbd "<f2>") 'omnisharp-rename-interactively)
 (define-key omnisharp-mode-map (kbd "<f5>") 'omnisharp-build-in-emacs)
 
@@ -185,13 +148,15 @@
 (require-install 'racket-mode)
 (add-hook 'racket-mode-hook 'paredit-mode)
 (add-hook 'racket-repl-mode-hook 'paredit-mode)
+(setq racket-paren-face '(t (:foreground "dark gray")))
 ;; I prefer elisp-mode style key bindings.
 (define-key racket-mode-map (kbd "C-h f") 'racket-describe)
 (define-key racket-repl-mode-map (kbd "C-h f") 'racket-describe)
 
 ;; F# mode
 (require-install 'fsharp-mode)
-(setq inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
+(setq inferior-fsharp-program
+      (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
 
 ;; Centered window mode.
 (require-install 'centered-window-mode)
@@ -199,8 +164,12 @@
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
 
 ;; Downloading bibliography from CiteULike
-(defcustom citeulike-user "fbie" "The CiteULike user to download bibliography from.")
-(defconst citeulike-url "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1")
+(defcustom citeulike-user
+  "fbie"
+  "The CiteULike user to download bibliography from.")
+(defconst citeulike-url
+  "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1"
+  "The URL to fetch from to get a .bib file with generated citation keys.")
 
 (defun citeulike-download-bibliography ()
   "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
@@ -223,28 +192,32 @@
 (require-install 'org)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-pretty-entities t)
+
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
   (interactive)
   (org-agenda nil "n"))
 
-(when (file-directory-p "~/org") ;; Load org files only if directory exists.
+(when (file-directory-p "~/org")
+  ;; Load org files only if directory exists.
   (setq org-agenda-files '("~/org/personal.org"
 			   "~/org/work.org"
-			   "~/org/funcalc.org")))
-
-(setq initial-buffer-choice (lambda () ;; Start emacs in agenda view.
-			      (save-window-excursion
-				(org-agenda-and-todos)
-				(get-buffer "*Org Agenda*"))))
+			   "~/org/funcalc.org"))
+  ;; Start emacs in agenda view.
+  (setq initial-buffer-choice (lambda ()
+				(save-window-excursion
+				  (org-agenda-and-todos)
+				  (get-buffer "*Org Agenda*")))))
 
 (define-key fbie-minor-mode-map (kbd "C-c a") 'org-agenda-and-todos)
 
-(scroll-bar-mode -1) ;; Hide scroll bars.
 (require-install 'professional-theme)
 (load-theme 'professional t) ;; More easy on the eyes!
+(scroll-bar-mode -1) ;; Hide scroll bars.
 
-(fbie-minor-mode 1)
+(require-install 'gnuplot-mode)
+(require-install 'ssh-config-mode)
+(require-install 'markdown-mode)
 
 ;; Fix FiraCode font ligatures. This is taken from
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs and works
@@ -279,3 +252,5 @@
       (set-char-table-range composition-function-table (car char-regexp)
 			    `([,(cdr char-regexp) 0 font-shape-gstring])))))
 (put 'downcase-region 'disabled nil)
+
+(fbie-minor-mode 1)
