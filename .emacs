@@ -17,6 +17,11 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
+;; I don't want this, but Emacs keeps setting it. I'll put it at the
+;; top to allow centered-window-mode to overwrite its value.
+(custom-set-faces
+ '(fringe ((t (:background "White")))))
+
 ;; General settings.
 (tool-bar-mode -1)
 (setq require-final-newline t)
