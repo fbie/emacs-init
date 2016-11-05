@@ -77,6 +77,7 @@
 
 (setq use-package-always-ensure t)
 
+(use-package fireplace)
 (use-package flycheck)
 (use-package flyspell
   :init
