@@ -155,11 +155,10 @@
 
 (use-package racket-mode
   :ensure paredit
-  :bind
-  (:map racket-mode-map
-	("C-h f" . racket-describe))
-  (:map racket-repl-mode-map
-	("C-h f" . racket-describe))
+  :bind (:map racket-mode-map
+	 ("C-h f" . racket-describe)
+	 :map racket-repl-mode-map
+	 ("C-h f" . racket-describe))
   :init
   (add-hook 'racket-mode-hook 'paredit-mode)
   (add-hook 'racket-repl-mode-hook 'paredit-mode)
@@ -230,9 +229,16 @@
   :init
   (load-theme 'professional t))
 
-(use-package gnuplot-mode)
+(use-package gnuplot-mode
+  :mode "\\.gnuplot\\'")
+(use-package markdown-mode
+  :mode "\\.md\\'")
+(use-package ace-jump-mode
+  :commands ace-jump-mode
+  :init
+  (define-key fbie-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
+  (define-key fbie-minor-mode-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark))
 (use-package ssh-config-mode)
-(use-package markdown-mode)
 
 ;; Fix FiraCode font ligatures. This is taken from
 ;; https://github.com/tonsky/FiraCode/wiki/Setting-up-Emacs and works
