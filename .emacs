@@ -30,7 +30,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (setq require-final-newline t)
-(global-unset-key (kbd "C-z")) ;; Don't minimize!
+(global-unset-key (kbd "C-z")) ;; Don't minimize.
+(global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-hl-line-mode)
 (show-paren-mode)
