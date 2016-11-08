@@ -38,6 +38,7 @@
 (show-paren-mode)
 (global-eldoc-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq confirm-kill-emacs #'yes-or-no-p)
 
 (defun system-win? ()
   "True if current system is Windows."
