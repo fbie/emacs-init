@@ -283,4 +283,12 @@
 			    `([,(cdr char-regexp) 0 font-shape-gstring])))))
 (put 'downcase-region 'disabled nil)
 
+(add-hook 'after-init-hook
+	  (lambda () (when (window-system)
+		       ;; Always run graphical Emacs in fullscreen.
+		       (toggle-frame-fullscreen)
+		       ;; Graphical Emacs instances may run as server.
+		       (unless (server-running-p)
+			 (server-start)))))
+
 (fbie-minor-mode 1)
