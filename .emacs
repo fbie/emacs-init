@@ -238,12 +238,6 @@
 (use-package markdown-mode
   :mode "\\.md\\'")
 
-(use-package ace-jump-mode
-  :commands ace-jump-mode
-  :init
-  (define-key fbie-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
-  (define-key fbie-minor-mode-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark))
-
 ;; Includes ace-jump-mode and helm-swoop. Both are awesome!
 (use-package ace-isearch
   :ensure t
