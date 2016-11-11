@@ -71,6 +71,9 @@
   :init-value t
   :lighter " Florian")
 
+(define-key fbie-minor-mode-map (kbd "s-<down>") 'shrink-window)
+(define-key fbie-minor-mode-map (kbd "s-<up>") 'enlarge-window)
+
 ;; Set-up MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
