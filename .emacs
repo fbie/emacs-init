@@ -88,7 +88,10 @@
 
 (setq use-package-always-ensure t)
 
-(use-package flycheck)
+(use-package flycheck
+  :init
+  (add-hook 'prog-mode-hook 'flycheck-mode))
+
 (use-package flyspell
   :init
   (add-hook 'text-mode-hook 'flyspell-mode)
