@@ -71,15 +71,8 @@
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
-;; Minor mode keymap idea from http://stackoverflow.com/a/683575/804397
-(defvar fbie-minor-mode-map (make-sparse-keymap) "Florian's keymap.")
-(define-minor-mode fbie-minor-mode
-  "Florians's global override keybindings."
-  :init-value t
-  :lighter " Florian")
-
-(define-key fbie-minor-mode-map (kbd "s-<down>") 'shrink-window)
-(define-key fbie-minor-mode-map (kbd "s-<up>") 'enlarge-window)
+(global-set-key (kbd "s-<down>") 'shrink-window)
+(global-set-key (kbd "s-<up>") 'enlarge-window)
 
 ;; Set-up MELPA.
 (require 'package)
@@ -109,18 +102,18 @@
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
 (use-package helm
+  :bind
+  ("M-x" . helm-M-x)
+  ("C-x C-f" . helm-find-files)
+  ("C-x C-g" . helm-recentf)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
-  (add-hook 'LaTeX-mode-hook 'helm-mode)
-  ;; No need to put this in :bind
-  (define-key fbie-minor-mode-map (kbd "M-x") 'helm-M-x)
-  (define-key fbie-minor-mode-map (kbd "C-x C-f") 'helm-find-files)
-  (define-key fbie-minor-mode-map (kbd "C-x C-g") 'helm-recentf))
+  (add-hook 'LaTeX-mode-hook 'helm-mode))
 
 (use-package magit
-  :init
-  (define-key fbie-minor-mode-map (kbd "C-c i") 'magit-status))
+  :bind
+  ("C-c i" . magit-status))
 
 (use-package company
   :init
@@ -145,8 +138,12 @@
   (setq omnisharp-company-template-use-yasnippet nil)
   (add-to-list 'company-backends 'company-omnisharp)
 
-  (defconst omnisharp-server "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
-  (defconst omnisharp-roslyn "~/src/omnisharp-roslyn/artifacts/publish/OmniSharp/default/net451/OmniSharp.exe")
+  (defconst
+    omnisharp-server
+    "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
+  (defconst
+    omnisharp-roslyn
+    "~/src/omnisharp-roslyn/artifacts/publish/OmniSharp/default/net451/OmniSharp.exe")
 
   (defcustom omnisharp-server-path
     omnisharp-server
@@ -220,8 +217,8 @@
 
 (use-package spotify
   :if (not (system-win?))
-  :init
-  (define-key fbie-minor-mode-map (kbd "s-<f15>") 'spotify-playpause)) ;; Works on Kinesis Advantage.
+  :bind
+  ("s-<f15>" . spotify-playpause)) ;; Works on Kinesis Advantage.
 
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
@@ -244,7 +241,7 @@
 				    (org-agenda-and-todos)
 				    (get-buffer "*Org Agenda*"))))))
 
-(define-key fbie-minor-mode-map (kbd "C-c a") 'org-agenda-and-todos)
+(global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
 (use-package professional-theme
   :init
@@ -306,4 +303,3 @@
 		       (unless (and (fboundp 'server-running-p) (server-running-p))
 			 (server-start)))))
 
-(fbie-minor-mode 1)
