@@ -1,4 +1,4 @@
-;; .emacs file by Florian Biermann <fbie@itu.dk>
+;; .emacs --- .emacs file by Florian Biermann <fbie@itu.dk>
 
 ;; Permission is hereby granted, free of charge, to any person
 ;; obtaining a copy of this software and associated documentation
@@ -17,7 +17,13 @@
 ;; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 ;; DEALINGS IN THE SOFTWARE.
 
-;; I don't want this, but Emacs keeps setting it. I'll put it at the
+;;; Commentary:
+
+;; What a great .emacs file!
+
+;;; Code:
+
+;; I don't want this, but Emacs keeps setting it.  I'll put it at the
 ;; top to allow centered-window-mode to overwrite its value.
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
