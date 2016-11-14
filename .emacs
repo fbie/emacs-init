@@ -303,7 +303,7 @@
 		       ;; Always run graphical Emacs in fullscreen.
 		       (toggle-frame-fullscreen)
 		       ;; Graphical Emacs instances may run as server.
-		       (unless (server-running-p)
+		       (unless (and (fboundp 'server-running-p) (server-running-p))
 			 (server-start)))))
 
 (fbie-minor-mode 1)
