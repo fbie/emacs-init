@@ -39,6 +39,7 @@
 (global-unset-key (kbd "C-z")) ;; Don't minimize.
 (global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
 (global-unset-key (kbd "C-x C-l")) ;; Don't use downcase-region.
+(global-unset-key (kbd "C-x C-u")) ;; Don't use upcase-region.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-hl-line-mode)
 (show-paren-mode)
