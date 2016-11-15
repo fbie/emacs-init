@@ -74,6 +74,10 @@
 (global-set-key (kbd "s-<down>") 'shrink-window)
 (global-set-key (kbd "s-<up>") 'enlarge-window)
 
+;; Some modes, such as paredit, re-bind the delete key. This retains
+;; the same functionality at C-delete. I don't use delete-word.
+(global-set-key (kbd "C-<delete>") 'delete-char)
+
 ;; Set-up MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -167,26 +171,37 @@
 
 (use-package paredit
   :init
-  (add-hook 'lisp-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'ielm-mode-hook 'paredit-mode))
+  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
 
 (use-package racket-mode
   :ensure paredit
-  :bind (:map racket-mode-map
-	 ("C-h f" . racket-describe)
-	 :map racket-repl-mode-map
-	 ("C-h f" . racket-describe))
+  :bind ((:map racket-mode-map
+	       ("C-h f" . racket-describe)
+	       ("{" . paredit-open-curly)
+	       ("}" . paredit-close-curly))
+	 (:map racket-repl-mode-map
+	       ("{" . paredit-open-curly)
+	       ("}" . paredit-close-curly)
+	       ("C-h f" . racket-describe)))
   :init
-  (add-hook 'racket-mode-hook 'paredit-mode)
-  (add-hook 'racket-repl-mode-hook 'paredit-mode)
+  (add-hook 'racket-mode-hook #'enable-paredit-mode)
+  (add-hook 'racket-repl-mode-hook #'enable-paredit-mode)
   :config
   (setq racket-paren-face '(t (:foreground "dark gray"))))
 
 (use-package fsharp-mode
+  :ensure paredit
+  :bind
+  (:map paredit-mode-map
+	("{" . paredit-open-curly)
+	("}" . paredit-close-curly))
   :config
   (setq inferior-fsharp-program
-	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))))
+	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
+  :init
+  (add-hook 'fsharp-mode-hook #'enable-paredit-mode))
 
 (use-package centered-window-mode
   :if window-system
