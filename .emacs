@@ -124,20 +124,21 @@
   (global-company-mode))
 
 (use-package paredit
+  :bind
+  (:map paredit-mode-map
+	("{" . paredit-open-curly)
+	("}" . paredit-close-curly))
   :init
   (add-hook 'lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode)
   (add-hook 'LaTeX-mode-hook #'enable-paredit-mode)
-  ;; Don't add spaces in Latex mode.
+  ;; Don't add spaces in LaTeX mode.
   (add-hook 'paredit-space-for-delimiter-predicates (lambda (endp delimiter) (eq major-mode 'LaTeX-mode))))
 
 (use-package omnisharp
   :ensure company
   :bind
-  (:map paredit-mode-map
-	("{" . paredit-open-curly)
-	("}" . paredit-close-curly))
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
 	("M-." . omnisharp-go-to-definition)
@@ -189,14 +190,9 @@
 
 (use-package racket-mode
   :ensure paredit
-  :bind ((:map racket-mode-map
-	       ("C-h f" . racket-describe)
-	       ("{" . paredit-open-curly)
-	       ("}" . paredit-close-curly))
-	 (:map racket-repl-mode-map
-	       ("{" . paredit-open-curly)
-	       ("}" . paredit-close-curly)
-	       ("C-h f" . racket-describe)))
+  :bind
+  (:map racket-mode-map ("C-h f" . racket-describe))
+  (:map racket-repl-mode-map ("C-h f" . racket-describe))
   :init
   (add-hook 'racket-mode-hook #'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook #'enable-paredit-mode)
@@ -205,10 +201,6 @@
 
 (use-package fsharp-mode
   :ensure paredit
-  :bind
-  (:map paredit-mode-map
-	("{" . paredit-open-curly)
-	("}" . paredit-close-curly))
   :config
   (setq inferior-fsharp-program
 	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
