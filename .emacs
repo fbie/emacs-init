@@ -76,7 +76,7 @@
 
 ;; Some modes, such as paredit, re-bind the delete key. This retains
 ;; the same functionality at C-delete. I don't use delete-word.
-(global-set-key (kbd "C-<delete>") 'delete-char)
+(global-set-key (kbd "C-<delete>") 'delete-forward-char)
 
 ;; Set-up MELPA.
 (require 'package)
