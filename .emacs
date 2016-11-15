@@ -123,6 +123,15 @@
   :init
   (global-company-mode))
 
+(use-package paredit
+  :init
+  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook #'enable-paredit-mode)
+  (add-hook 'LaTeX-mode-hook #'enable-paredit-mode)
+  ;; Don't add spaces in Latex mode.
+  (add-hook 'paredit-space-for-delimiter-predicates (lambda (endp delimiter) (eq major-mode 'LaTeX-mode))))
+
 (use-package omnisharp
   :ensure company
   :bind
@@ -177,12 +186,6 @@
     "Use the classic Omnisharp implementation."
     (interactive)
     (omnisharp-set-server omnisharp-server)))
-
-(use-package paredit
-  :init
-  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
 
 (use-package racket-mode
   :ensure paredit
