@@ -188,6 +188,9 @@
     (interactive)
     (omnisharp-set-server omnisharp-server)))
 
+(use-package paren-face
+  :init (global-paren-face-mode))
+
 (use-package racket-mode
   :ensure paredit
   :bind
@@ -197,7 +200,7 @@
   (add-hook 'racket-mode-hook #'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook #'enable-paredit-mode)
   :config
-  (setq racket-paren-face '(t (:foreground "dark gray"))))
+  (setq racket-paren-face '(t (:inherit "shadow"))))
 
 (use-package fsharp-mode
   :ensure paredit
