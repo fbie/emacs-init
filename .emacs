@@ -47,11 +47,6 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq confirm-kill-emacs #'yes-or-no-p)
 
-;; Too annoying to move the mouse to check time when in full screen.
-(display-time-mode 1)
-(setq display-time-24hr-format 't)
-(setq display-time-day-and-date 't)
-
 (defun system-win? ()
   "True if current system is Windows."
   (or (eq system-type 'windows-nt)
@@ -60,6 +55,13 @@
 (defun system-osx? ()
   "True if current system is Mac OSX."
   (eq system-type 'darwin))
+
+;; Too annoying to move the mouse to check time when in full screen on
+;; Mac OSX.
+(when (system-osx?)
+  (display-time-mode 1)
+  (setq display-time-24hr-format 't)
+  (setq display-time-day-and-date 't))
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
