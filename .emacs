@@ -281,7 +281,7 @@
 (use-package ace-isearch
   :init
   (global-ace-isearch-mode 1)
-  (setq ace-isearch-input-length 1))
+  (setq ace-isearch-input-length 2))
 
 (use-package ssh-config-mode)
 
