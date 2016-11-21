@@ -216,6 +216,8 @@
   :if window-system
   :init
   (centered-window-mode t)
+  (setq split-height-threshold nil)
+  (setq split-width-threshold cwm-centered-window-width)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
 ;; Downloading bibliography from CiteULike
