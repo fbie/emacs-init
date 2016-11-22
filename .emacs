@@ -139,7 +139,6 @@
   (add-hook 'paredit-space-for-delimiter-predicates (lambda (endp delimiter) (eq major-mode 'LaTeX-mode))))
 
 (use-package omnisharp
-  :ensure company
   :bind
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
@@ -194,7 +193,6 @@
   :init (global-paren-face-mode))
 
 (use-package racket-mode
-  :ensure paredit
   :bind
   (:map racket-mode-map ("C-h f" . racket-describe))
   (:map racket-repl-mode-map ("C-h f" . racket-describe))
@@ -205,7 +203,6 @@
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
 (use-package fsharp-mode
-  :ensure paredit
   :config
   (setq inferior-fsharp-program
 	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
