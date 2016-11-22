@@ -34,6 +34,7 @@
 
 ;; General settings.
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq require-final-newline t)
 (global-unset-key (kbd "C-z")) ;; Don't minimize.
