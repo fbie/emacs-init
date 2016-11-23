@@ -57,6 +57,10 @@
   "True if current system is Mac OSX."
   (eq system-type 'darwin))
 
+(defun system-linux? ()
+  "True if current system is Linux."
+  (not (and (system-win?) (system-osx?))))
+
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 1)
 (setq display-time-24hr-format 't)
@@ -75,9 +79,15 @@
 (global-set-key (kbd "s-<down>") 'shrink-window)
 (global-set-key (kbd "s-<up>") 'enlarge-window)
 
-;; Some modes, such as paredit, re-bind the delete key. This retains
-;; the same functionality at C-delete. I don't use delete-word.
-(global-set-key (kbd "C-<delete>") 'delete-forward-char)
+;; Set-up Okular to view PDFs from Latex mode.
+(add-hook 'LaTeX-mode-hook
+	  (lambda ()
+	    (when (system-linux?)
+	      (push '("%(masterdir)" (lambda nil (file-truename (TeX-master-directory))))
+		    TeX-expand-list)
+	      (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
+		    TeX-view-program-list)
+	      (push '(output-pdf "Okular") TeX-view-program-selection))))
 
 ;; Set-up MELPA.
 (require 'package)
