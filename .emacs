@@ -242,7 +242,7 @@
 (use-package spotify
   :if (not (system-win?))
   :bind
-  ("s-<f15>" . spotify-playpause)) ;; Works on Kinesis Advantage.
+  ("s-<pause>" . spotify-playpause)) ;; Works on Kinesis Advantage.
 
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
