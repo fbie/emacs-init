@@ -144,6 +144,7 @@
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode)
   (add-hook 'LaTeX-mode-hook #'enable-paredit-mode)
+  (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key "\\")))
   ;; Don't add spaces in LaTeX mode.
   (add-hook 'paredit-space-for-delimiter-predicates (lambda (endp delimiter) (eq major-mode 'LaTeX-mode))))
 
