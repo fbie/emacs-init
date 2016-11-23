@@ -79,6 +79,10 @@
 (global-set-key (kbd "s-<down>") 'shrink-window)
 (global-set-key (kbd "s-<up>") 'enlarge-window)
 
+;; Install auctex. use-package does not handle this well.
+(unless (package-installed-p 'auctex)
+  (package-install 'auctex))
+
 ;; Set-up Okular to view PDFs from Latex mode.
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
