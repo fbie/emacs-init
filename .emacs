@@ -153,10 +153,8 @@
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
   (add-hook 'csharp-mode-hook #'enable-paredit-mode)
-  ;; Don't insert spaces before ( and [, but before {.
   (add-hook 'paredit-space-for-delimiter-predicates
-	    (lambda (endp delimiter)
-	      (or (and (not endp) (eq delimiter ?\{)) (not (eq major-mode 'csharp-mode)))))
+	    (lambda (endp delimiter) (not (eq major-mode 'csharp-mode))))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
   (add-to-list 'company-backends 'company-omnisharp)
