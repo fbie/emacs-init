@@ -47,6 +47,9 @@
 (global-eldoc-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq confirm-kill-emacs #'yes-or-no-p)
+;; Prefer splitting vertically.
+(setq split-height-threshold nil)
+(setq split-width-threshold 100)
 
 (defun system-win? ()
   "True if current system is Windows."
@@ -203,9 +206,6 @@
   :if window-system
   :init
   (centered-window-mode t)
-  ;; Prefer splitting vertically.
-  (setq split-height-threshold nil)
-  (setq split-width-threshold (+ 1 cwm-centered-window-width))
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
 ;; Downloading bibliography from CiteULike
