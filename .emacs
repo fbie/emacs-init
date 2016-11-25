@@ -141,6 +141,10 @@
 (use-package paredit
   :bind
   (:map paredit-mode-map
+	("M-<left>" . paredit-forward-barf-sexp)
+	("M-<right>" . paredit-forward-slurp-sexp)
+	("C-<left>" . left-word)
+	("C-<right>" . right-word)
 	("{" . paredit-open-curly)
 	("}" . paredit-close-curly))
   :init
