@@ -237,6 +237,7 @@
 (require 'org)
 (setq org-log-done t) ;; Log completion of tasks.
 (setq org-pretty-entities t)
+(setq org-support-shift-select t)
 
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
