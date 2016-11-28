@@ -248,7 +248,8 @@
   ;; Load org files only if directory exists.
   (setq org-agenda-files '("~/org/personal.org"
 			   "~/org/work.org"
-			   "~/org/funcalc.org"))
+			   "~/org/funcalc.org"
+			   "~/org/supervision.org"))
   ;; Start emacs in agenda view.
   (when (window-system)
     (setq initial-buffer-choice (lambda ()
