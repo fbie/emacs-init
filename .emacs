@@ -74,7 +74,7 @@
   "Configure frame splitting preferences based on screen setup."
   (interactive)
   (setq split-height-threshold nil)
-  (if (and (system-linux?) (external-screen?))
+  (if (external-screen?)
       (setq split-width-threshold 100)
     (setq split-width-threshold nil)))
 
