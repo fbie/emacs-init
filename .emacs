@@ -47,9 +47,6 @@
 (global-eldoc-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq confirm-kill-emacs #'yes-or-no-p)
-;; Prefer splitting vertically.
-(setq split-height-threshold nil)
-(setq split-width-threshold 100)
 
 (defun system-win? ()
   "True if current system is Windows."
@@ -68,6 +65,20 @@
 (display-time-mode 1)
 (setq display-time-24hr-format 't)
 (setq display-time-day-and-date 't)
+
+(defun external-screen? ()
+  "Non-nil if Emacs is running on an external screen."
+  (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
+
+(defun configure-splitting ()
+  "Configure frame splitting preferences based on screen setup."
+  (interactive)
+  (setq split-height-threshold nil)
+  (if (and (system-linux?) (external-screen?))
+      (setq split-width-threshold 100)
+    (setq split-width-threshold nil)))
+
+(configure-splitting)
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
