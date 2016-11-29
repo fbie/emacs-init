@@ -78,7 +78,11 @@
       (setq split-width-threshold 100)
     (setq split-width-threshold nil)))
 
-(configure-splitting)
+(defun dynamic-split-window-sensibly (&optional window)
+  "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
+  (configure-splitting)
+  (split-window-sensibly window))
+(setq split-window-preferred-function 'dynamic-split-window-sensibly)
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
