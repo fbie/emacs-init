@@ -82,7 +82,10 @@
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
   (configure-splitting)
   (split-window-sensibly window))
+
 (setq split-window-preferred-function 'dynamic-split-window-sensibly)
+(global-set-key (kbd "s-<down>") 'shrink-window)
+(global-set-key (kbd "s-<up>") 'enlarge-window)
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
@@ -93,9 +96,6 @@
 				   (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
-
-(global-set-key (kbd "s-<down>") 'shrink-window)
-(global-set-key (kbd "s-<up>") 'enlarge-window)
 
 ;; Set-up Okular to view PDFs from Latex mode.
 (add-hook 'LaTeX-mode-hook
