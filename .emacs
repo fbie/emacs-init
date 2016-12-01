@@ -168,11 +168,7 @@
   :init
   (add-hook 'lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook #'enable-paredit-mode)
-  (add-hook 'LaTeX-mode-hook #'enable-paredit-mode)
-  (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key "\\")))
-  ;; Don't add spaces in LaTeX mode.
-  (add-hook 'paredit-space-for-delimiter-predicates (lambda (endp delimiter) (eq major-mode 'LaTeX-mode))))
+  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
 
 (use-package omnisharp
   :bind
@@ -189,9 +185,6 @@
 	("<f5>" . omnisharp-build-in-emacs))
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'csharp-mode-hook #'enable-paredit-mode)
-  (add-hook 'paredit-space-for-delimiter-predicates
-	    (lambda (endp delimiter) (not (eq major-mode 'csharp-mode))))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
   (setq omnisharp-server-executable-path "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
@@ -213,9 +206,7 @@
 (use-package fsharp-mode
   :config
   (setq inferior-fsharp-program
-	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
-  :init
-  (add-hook 'fsharp-mode-hook #'enable-paredit-mode))
+	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))))
 
 (use-package centered-window-mode
   :if window-system
