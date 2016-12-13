@@ -84,8 +84,8 @@
   (split-window-sensibly window))
 
 (setq split-window-preferred-function 'dynamic-split-window-sensibly)
-(global-set-key (kbd "s-<down>") 'shrink-window)
-(global-set-key (kbd "s-<up>") 'enlarge-window)
+(global-set-key (kbd "M-<down>") 'shrink-window)
+(global-set-key (kbd "M-<up>") 'enlarge-window)
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
