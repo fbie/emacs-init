@@ -75,7 +75,7 @@
   (interactive)
   (setq split-height-threshold nil)
   (if (external-screen?)
-      (setq split-width-threshold 100)
+      (setq split-width-threshold 110)
     (setq split-width-threshold nil)))
 
 (defun dynamic-split-window-sensibly (&optional window)
