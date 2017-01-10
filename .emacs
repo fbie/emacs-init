@@ -59,7 +59,7 @@
 
 (defun system-linux? ()
   "True if current system is Linux."
-  (not (and (system-win?) (system-osx?))))
+  (not (or (system-win?) (system-osx?))))
 
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 1)
