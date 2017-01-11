@@ -125,20 +125,25 @@
 (unless (package-installed-p 'auctex)
   (package-install 'auctex))
 
+(use-package diminish)
+
 (use-package flycheck
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
 (use-package flyspell
+  :diminish flyspell-mode
   :init
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (use-package writegood-mode
+  :diminish writegood-mode
   :init
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
 (use-package helm
+  :diminish helm-mode
   :bind
   ("M-x" . helm-M-x)
   ("C-x C-f" . helm-find-files)
@@ -153,10 +158,12 @@
   ("C-c i" . magit-status))
 
 (use-package company
+  :diminish company-mode
   :init
   (global-company-mode))
 
 (use-package paredit
+  :diminish paredit-mode
   :bind
   (:map paredit-mode-map
 	("M-<left>" . paredit-forward-barf-sexp)
@@ -277,6 +284,7 @@
 
 ;; Includes ace-jump-mode and helm-swoop. Both are awesome!
 (use-package ace-isearch
+  :diminish ace-isearch-mode
   :init
   (global-ace-isearch-mode 1)
   (setq ace-isearch-input-length 2))
