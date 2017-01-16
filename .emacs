@@ -148,6 +148,7 @@
   ("M-x" . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("C-x C-g" . helm-recentf)
+  ("C-c C-i" . helm-imenu)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
