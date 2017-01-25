@@ -274,9 +274,16 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
-(use-package professional-theme
+;; (use-package professional-theme
+;;   :init
+;;   (load-theme 'professional t))
+
+(use-package railscasts-reloaded-theme
   :init
-  (load-theme 'professional t))
+  (load-theme 'railscasts-reloaded t)
+  ;; We don't like the large headings.
+  (dolist (level org-level-faces)
+    (set-face-attribute level nil :height (face-attribute 'default :height))))
 
 (use-package gnuplot-mode
   :mode "\\.gnuplot\\'")
