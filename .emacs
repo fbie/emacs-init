@@ -259,18 +259,15 @@
   (interactive)
   (org-agenda nil "n"))
 
-(when (file-directory-p "~/org")
-  ;; Load org files only if directory exists.
-  (setq org-agenda-files '("~/org/personal.org"
-			   "~/org/work.org"
-			   "~/org/funcalc.org"
-			   "~/org/supervision.org"))
-  ;; Start emacs in agenda view.
-  (when (window-system)
-    (setq initial-buffer-choice (lambda ()
-				  (save-window-excursion
-				    (org-agenda-and-todos)
-				    (get-buffer "*Org Agenda*"))))))
+(setq org-directory "~/ownCloud/org/")
+
+;; Start emacs in agenda view.
+(when (and (directory-files org-directory) (window-system))
+  (setq org-agenda-files (concat org-directory "agenda.org"))
+  (setq initial-buffer-choice (lambda ()
+				(save-window-excursion
+				  (org-agenda-and-todos)
+				  (get-buffer "*Org Agenda*")))))
 
 (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
