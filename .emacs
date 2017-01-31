@@ -263,7 +263,7 @@
 
 ;; Start emacs in agenda view.
 (when (and (directory-files org-directory) (window-system))
-  (setq org-agenda-files (concat org-directory "agenda.org"))
+  (add-to-list 'org-agenda-files org-directory)
   (setq initial-buffer-choice (lambda ()
 				(save-window-excursion
 				  (org-agenda-and-todos)
@@ -273,8 +273,9 @@
 
 (use-package org-journal
   :config
+  (setq org-journal-file-format "%Y%m%d.org")
   (setq org-journal-dir (concat org-directory "journal"))
-  (setq org-journal-file-format "%Y%m%d.org"))
+  (add-to-list 'org-agenda-files org-journal-dir))
 
 ;; (use-package professional-theme
 ;;   :init
