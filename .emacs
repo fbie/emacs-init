@@ -271,6 +271,11 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
+(use-package org-journal
+  :config
+  (setq org-journal-dir (concat org-directory "journal"))
+  (setq org-journal-file-format "%Y%m%d.org"))
+
 ;; (use-package professional-theme
 ;;   :init
 ;;   (load-theme 'professional t))
