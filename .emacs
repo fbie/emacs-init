@@ -255,6 +255,11 @@
 (setq org-pretty-entities t)
 (setq org-support-shift-select t)
 
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+
+(org-indent-mode t)
+
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
   (interactive)
