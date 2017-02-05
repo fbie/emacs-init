@@ -36,7 +36,8 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(setq require-final-newline t)
+(setq-default require-final-newline t)
+(setq-default indent-tabs-mode nil)
 (global-unset-key (kbd "C-z")) ;; Don't minimize.
 (global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
 (global-unset-key (kbd "C-x C-l")) ;; Don't use downcase-region.
