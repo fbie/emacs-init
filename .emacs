@@ -130,7 +130,8 @@
 
 (use-package flycheck
   :init
-  (add-hook 'prog-mode-hook 'flycheck-mode))
+  (add-hook 'prog-mode-hook 'flycheck-mode)
+  (add-hook 'LaTeX-mode-hook 'flycheck-mode))
 
 (use-package flyspell
   :diminish flyspell-mode
