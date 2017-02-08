@@ -163,12 +163,15 @@
   ("M-x" . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("C-x C-g" . helm-recentf)
-  ("C-c C-i" . helm-imenu)
   ("C-c k" . helm-show-kill-ring)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
   (add-hook 'LaTeX-mode-hook 'helm-mode))
+
+(use-package imenu-anywhere
+  :bind
+  ("C-c C-i" . helm-imenu-anywhere))
 
 (use-package magit
   :bind
