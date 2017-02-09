@@ -157,6 +157,13 @@
   :init
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
+;; This package shows undo operations as a tree and allows for
+;; easy-peasy navigation in the undo history. Toggle with C-x u.
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :config
+  (global-undo-tree-mode))
+
 (use-package helm
   :diminish helm-mode
   :bind
