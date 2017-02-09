@@ -286,7 +286,8 @@
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
 
-(org-indent-mode t)
+;; I like indented headers very much.
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 (defun org-agenda-and-todos ()
   "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
