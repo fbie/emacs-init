@@ -177,6 +177,7 @@
   (add-hook 'LaTeX-mode-hook 'helm-mode))
 
 (use-package imenu-anywhere
+  :after helm
   :bind
   ("C-c C-i" . helm-imenu-anywhere))
 
@@ -205,6 +206,7 @@
   (add-hook 'ielm-mode-hook #'enable-paredit-mode))
 
 (use-package omnisharp
+  :after helm
   :bind
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
@@ -228,6 +230,7 @@
   :init (global-paren-face-mode))
 
 (use-package racket-mode
+  :after paredit
   :bind
   (:map racket-mode-map ("C-h f" . racket-describe))
   (:map racket-repl-mode-map ("C-h f" . racket-describe))
