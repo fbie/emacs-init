@@ -342,6 +342,17 @@
 (when (window-system)
   (set-frame-font "Fira Code Retina 11"))
 
+(defun duplicate-line-at-point ()
+  "Duplicate the line at point."
+  (interactive)
+  (save-excursion
+    (let ((line (buffer-substring (line-beginning-position) (line-end-position))))
+      (move-end-of-line nil)
+      (newline)
+      (insert line))))
+
+(global-unset-key (kbd  "C-d"))
+(global-set-key (kbd "C-c d") 'duplicate-line-at-point)
 
 (add-hook 'after-init-hook
 	  (lambda () (when (window-system)
