@@ -320,6 +320,7 @@
   :init
   (load-theme 'railscasts-reloaded t)
   ;; We don't like the large headings.
+  (require 'org)
   (dolist (level org-level-faces)
     (set-face-attribute level nil :height (face-attribute 'default :height))))
 
