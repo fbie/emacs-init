@@ -243,6 +243,7 @@
 
 (use-package fsharp-mode
   :config
+  (setq fsharp-doc-idle-delay 1.0)
   (setq inferior-fsharp-program
 	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))))
 
