@@ -46,7 +46,6 @@
 (global-hl-line-mode)
 (show-paren-mode)
 (global-eldoc-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq confirm-kill-emacs #'yes-or-no-p)
 
 (defun system-win? ()
@@ -126,6 +125,10 @@
 (unless (package-installed-p 'auctex)
   (package-install 'auctex))
 
+;; Allow imenu bindings also in LaTeX mode.
+(add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
 (use-package diminish)
 
 (use-package flycheck
@@ -180,7 +183,7 @@
 (use-package imenu-anywhere
   :after helm
   :bind
-  ("C-c C-i" . helm-imenu-anywhere))
+  ("C-c TAB" . helm-imenu-anywhere))
 
 (use-package magit
   :bind
