@@ -176,15 +176,11 @@
   ("C-x C-f" . helm-find-files)
   ("C-x C-g" . helm-recentf)
   ("C-c k" . helm-show-kill-ring)
+  ("C-c TAB" . helm-imenu)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
   (add-hook 'LaTeX-mode-hook 'helm-mode))
-
-(use-package imenu-anywhere
-  :after helm
-  :bind
-  ("C-c TAB" . helm-imenu-anywhere))
 
 (use-package magit
   :bind
