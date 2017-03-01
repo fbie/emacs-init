@@ -75,7 +75,7 @@
   (interactive)
   (setq split-height-threshold nil)
   (if (external-screen?)
-      (setq split-width-threshold 110)
+      (setq split-width-threshold 105)
     (setq split-width-threshold nil)))
 
 (defun dynamic-split-window-sensibly (&optional window)
@@ -128,6 +128,7 @@
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(add-hook 'LaTeX-mode-hook 'linum-mode)
 
 (use-package diminish)
 
