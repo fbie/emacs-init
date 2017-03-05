@@ -279,33 +279,35 @@
   :bind
   ("s-<pause>" . spotify-playpause)) ;; Works on Kinesis Advantage.
 
-(require 'org)
-(setq org-log-done t) ;; Log completion of tasks.
-(setq org-pretty-entities t)
-(setq org-support-shift-select t)
+(use-package org
+  :config
+  (setq org-log-done t) ;; Log completion of tasks.
 
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
+  (setq org-pretty-entities t)
+  (setq org-support-shift-select t)
 
-;; I like indented headers very much.
-(add-hook 'org-mode-hook 'org-indent-mode)
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
 
-(defun org-agenda-and-todos ()
-  "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
-  (interactive)
-  (org-agenda nil "n"))
+  ;; I like indented headers very much.
+  (add-hook 'org-mode-hook 'org-indent-mode)
 
-(setq org-directory "~/ownCloud/org/")
+  (defun org-agenda-and-todos ()
+    "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
+    (interactive)
+    (org-agenda nil "n"))
 
-;; Start emacs in agenda view.
-(when (and (directory-files org-directory) (window-system))
-  (add-to-list 'org-agenda-files org-directory)
-  (setq initial-buffer-choice (lambda ()
-				(save-window-excursion
-				  (org-agenda-and-todos)
-				  (get-buffer "*Org Agenda*")))))
+  (setq org-directory "~/ownCloud/org/")
 
-(global-set-key (kbd "C-c a") 'org-agenda-and-todos)
+  ;; Start emacs in agenda view.
+  (when (and (directory-files org-directory) (window-system))
+    (add-to-list 'org-agenda-files org-directory)
+    (setq initial-buffer-choice (lambda ()
+                                  (save-window-excursion
+                                    (org-agenda-and-todos)
+                                    (get-buffer "*Org Agenda*")))))
+
+  (global-set-key (kbd "C-c a") 'org-agenda-and-todos))
 
 (use-package org-journal
   :config
