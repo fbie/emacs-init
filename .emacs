@@ -328,13 +328,15 @@
                  (org-present-big)
                  (org-display-inline-images)
                  (org-present-hide-cursor)
-                 (org-present-read-only)))
+                 (org-present-read-only)
+                 (setq mode-line-format nil)))
   (add-hook 'org-present-mode-quit-hook
             (lambda ()
               (org-present-small)
               (org-remove-inline-images)
               (org-present-show-cursor)
-              (org-present-read-write))))
+              (org-present-read-write)
+              (setq mode-line-format (default-value 'mode-line-format)))))
 
 ;; (use-package professional-theme
 ;;   :init
