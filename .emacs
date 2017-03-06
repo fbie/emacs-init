@@ -46,6 +46,7 @@
 (global-hl-line-mode)
 (show-paren-mode)
 (global-eldoc-mode)
+(global-subword-mode 1)
 (setq confirm-kill-emacs #'yes-or-no-p)
 
 (defun system-win? ()
