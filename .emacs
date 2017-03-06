@@ -322,11 +322,13 @@
 
 (use-package railscasts-reloaded-theme
   :init
-  (load-theme 'railscasts-reloaded t)
-  ;; We don't like the large headings.
-  (require 'org)
-  (dolist (level org-level-faces)
-    (set-face-attribute level nil :height (face-attribute 'default :height))))
+  ;; A bit of grim reverse engineering to get rid of large header
+  ;; lines in org-mode while retaining scaling.
+  (require 'railscasts-reloaded-theme)
+  (custom-theme-set-faces 'railscasts-reloaded
+                          `(org-level-1 ((t (:foreground "#CC7733"))))
+                          `(org-level-2 ((t (:foreground "#FFC66D")))))
+  (load-theme 'railscasts-reloaded t))
 
 (use-package gnuplot-mode
   :mode "\\.gnuplot\\'")
