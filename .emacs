@@ -346,7 +346,6 @@
   :config
   ;; A bit of grim reverse engineering to get rid of large header
   ;; lines in org-mode while retaining scaling.
-  (require 'railscasts-reloaded-theme)
   (custom-theme-set-faces 'railscasts-reloaded
                           `(org-level-1 ((t (:foreground "#CC7733"))) t)
                           `(org-level-2 ((t (:foreground "#FFC66D"))) t))
