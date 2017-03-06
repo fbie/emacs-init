@@ -311,10 +311,30 @@
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos))
 
 (use-package org-journal
+  :after org
   :config
   (setq org-journal-file-format "%Y%m%d.org")
   (setq org-journal-dir (concat org-directory "journal"))
   (add-to-list 'org-agenda-files org-journal-dir))
+
+(use-package org-present
+  :after org
+  :bind
+  (:map org-present-mode-keymap
+        ("q" . org-present-quit))
+  :config
+  (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (org-present-big)
+                 (org-display-inline-images)
+                 (org-present-hide-cursor)
+                 (org-present-read-only)))
+  (add-hook 'org-present-mode-quit-hook
+            (lambda ()
+              (org-present-small)
+              (org-remove-inline-images)
+              (org-present-show-cursor)
+              (org-present-read-write))))
 
 ;; (use-package professional-theme
 ;;   :init
