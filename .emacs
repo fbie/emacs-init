@@ -49,6 +49,15 @@
 (global-subword-mode 1)
 (setq confirm-kill-emacs #'yes-or-no-p)
 
+(defun smart-back-to-indentation ()
+  "Jump between the beginning of line and the line's first character."
+  (interactive)
+  (if (not (s-matches? "\s" (buffer-substring-no-properties (- (point) 1) (point))))
+      (back-to-indentation)
+    (move-beginning-of-line nil)))
+
+(global-set-key (kbd "C-a") 'smart-back-to-indentation)
+
 (defun system-win? ()
   "True if current system is Windows."
   (or (eq system-type 'windows-nt)
