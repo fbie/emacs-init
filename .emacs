@@ -231,12 +231,13 @@
 	("C-." . omnisharp-run-code-action-refactoring)
 	("<f2>" . omnisharp-rename-interactively)
 	("<f5>" . omnisharp-build-in-emacs))
-  :init
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
   :config
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
   (setq omnisharp-company-template-use-yasnippet nil)
   (setq omnisharp-server-executable-path "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
-  (add-to-list 'company-backends 'company-omnisharp))
+  (add-to-list 'company-backends 'company-omnisharp)
+  (add-to-list 'auto-mode-alist '("\\.sln$" . xml-mode))
+  (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode)))
 
 (use-package paren-face
   :init (global-paren-face-mode))
@@ -256,7 +257,8 @@
   :config
   (setq fsharp-doc-idle-delay 1.0)
   (setq inferior-fsharp-program
-	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))))
+	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
+  (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
 (use-package centered-window-mode
   :if window-system
