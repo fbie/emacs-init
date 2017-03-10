@@ -401,6 +401,7 @@
 		       ;; Always run graphical Emacs in fullscreen.
 		       (toggle-frame-fullscreen)
 		       ;; Graphical Emacs instances may run as server.
-		       (unless (and (fboundp 'server-running-p) (server-running-p))
-			 (server-start)))))
+                       (when (fboundp 'server-running-p)
+                         (unless (and  (server-running-p))
+                           (server-start))))))
 
