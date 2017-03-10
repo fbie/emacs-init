@@ -188,6 +188,7 @@
   ("C-x C-g" . helm-recentf)
   ("C-c k" . helm-show-kill-ring)
   ("C-c TAB" . helm-imenu)
+  ("C-x b" . helm-buffers-list)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
