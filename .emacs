@@ -140,6 +140,8 @@
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'linum-mode)
+(add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
+(setq prettify-symbols-unprettify-at-point t)
 
 (use-package diminish)
 
