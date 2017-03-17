@@ -305,6 +305,8 @@
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
 
+  (setq org-agenda-sticky t)
+
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -312,6 +314,7 @@
     "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
     (interactive)
     (org-agenda nil "n"))
+  (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
   (setq org-directory "~/ownCloud/org/")
 
@@ -321,9 +324,9 @@
     (setq initial-buffer-choice (lambda ()
                                   (save-window-excursion
                                     (org-agenda-and-todos)
-                                    (get-buffer "*Org Agenda*")))))
-
-  (global-set-key (kbd "C-c a") 'org-agenda-and-todos))
+                                    (get-buffer (if org-agenda-sticky
+                                                    "*Org Agenda(n)*"
+                                                  "*Org Agenda*")))))))
 
 (use-package org-journal
   :after org
