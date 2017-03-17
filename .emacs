@@ -165,13 +165,13 @@
 
 (use-package flyspell
   :diminish flyspell-mode
-  :init
+  :config
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
 (use-package writegood-mode
   :diminish writegood-mode
-  :init
+  :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
 ;; This package shows undo operations as a tree and allows for
@@ -202,7 +202,7 @@
 
 (use-package company
   :diminish company-mode
-  :init
+  :config
   (global-company-mode))
 
 (use-package paredit
@@ -215,7 +215,7 @@
 	("C-<right>" . right-word)
 	("{" . paredit-open-curly)
 	("}" . paredit-close-curly))
-  :init
+  :config
   (add-hook 'lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
   (add-hook 'ielm-mode-hook #'enable-paredit-mode))
@@ -243,7 +243,7 @@
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode)))
 
 (use-package paren-face
-  :init (global-paren-face-mode))
+  :config (global-paren-face-mode))
 
 (use-package racket-mode
   :after paredit
@@ -265,7 +265,7 @@
 
 (use-package centered-window-mode
   :if window-system
-  :init
+  :config
   (centered-window-mode t)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
@@ -379,7 +379,7 @@
 ;; Includes ace-jump-mode and helm-swoop. Both are awesome!
 (use-package ace-isearch
   :diminish ace-isearch-mode
-  :init
+  :config
   (global-ace-isearch-mode 1)
   (setq ace-isearch-input-length 2))
 
