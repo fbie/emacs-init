@@ -356,9 +356,10 @@
               (org-present-read-write)
               (setq mode-line-format (default-value 'mode-line-format)))))
 
-;; (use-package professional-theme
-;;   :init
-;;   (load-theme 'professional t))
+(use-package professional-theme
+  :init
+  :disabled
+  (load-theme 'professional t))
 
 (use-package railscasts-reloaded-theme
   :config
