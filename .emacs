@@ -32,22 +32,38 @@
  ;; If there is more than one, they won't work right.
  '(fringe ((t (:background "White")))))
 
-;; General settings.
+;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(setq-default require-final-newline t)
-(setq-default indent-tabs-mode nil)
+
+(setq-default require-final-newline t
+              indent-tabs-mode nil
+              tab-width 4)
+
+;; Remove useless, annoying key-bindings.
 (global-unset-key (kbd "C-z")) ;; Don't minimize.
 (global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
 (global-unset-key (kbd "C-x C-l")) ;; Don't use downcase-region.
 (global-unset-key (kbd "C-x C-u")) ;; Don't use upcase-region.
+
+;; Why would you ever want them?
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Standard usability stuff.
 (global-hl-line-mode)
 (show-paren-mode)
 (global-eldoc-mode)
 (global-subword-mode 1)
+
+;; Never quit Emacs!
 (setq confirm-kill-emacs #'yes-or-no-p)
+
+;; But increase laziness.
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Kill, kill, kill!
+(setq kill-whole-line t)
 
 (defun smart-back-to-indentation ()
   "Jump between the beginning of line and the line's first character."
