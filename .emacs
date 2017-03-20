@@ -21,6 +21,10 @@
 
 ;; What a great .emacs file!
 
+;; Partially stolen from
+;; - Harry Schwartz (https://github.com/hrs/dotfiles) and
+;; - Michael Walker (https://github.com/barrucadu/dotfiles)
+
 ;;; Code:
 
 ;; I don't want this, but Emacs keeps setting it.  I'll put it at the
