@@ -332,7 +332,7 @@
   :after org
   :init
   (setq org-journal-file-format "%Y%m%d.org")
-  (setq org-journal-dir (concat org-directory "journal"))
+  (setq org-journal-dir (concat org-directory "journal/"))
   (add-to-list 'org-agenda-files org-journal-dir))
 
 (use-package org-present
