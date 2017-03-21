@@ -235,10 +235,10 @@
 	("C-<right>" . right-word)
 	("{" . paredit-open-curly)
 	("}" . paredit-close-curly))
-  :config
-  (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook #'enable-paredit-mode))
+  :init
+  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook 'enable-paredit-mode))
 
 (use-package omnisharp
   :after helm
@@ -254,8 +254,9 @@
 	("C-." . omnisharp-run-code-action-refactoring)
 	("<f2>" . omnisharp-rename-interactively)
 	("<f5>" . omnisharp-build-in-emacs))
-  :config
+  :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  :config
   (setq omnisharp-company-template-use-yasnippet nil)
   (setq omnisharp-server-executable-path "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
   (add-to-list 'company-backends 'company-omnisharp)
