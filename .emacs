@@ -423,6 +423,17 @@
 (global-unset-key (kbd  "C-d"))
 (global-set-key (kbd "C-c d") 'duplicate-line-at-point)
 
+(defun find-alternate-file-keep-point ()
+  "Like 'find-alternate-file' but restore point."
+  (interactive)
+  ;; I would like to implement this using save-excursion, but
+  ;; apparently, that does not work. Hence let-binding.
+  (let ((current (point)))
+    (call-interactively 'find-alternate-file)
+    (goto-char current)))
+
+(global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
+
 (add-hook 'after-init-hook
 	  (lambda () (when (window-system)
 		       ;; Always run graphical Emacs in fullscreen.
