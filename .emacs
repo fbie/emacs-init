@@ -361,7 +361,9 @@
   :after org
   :bind
   (:map org-present-mode-keymap
-        ("q" . org-present-quit))
+        ("q" . org-present-quit)
+        ("<prior>" . org-present-prev)
+        ("<next>" . org-present-next))
   :config
   (add-hook 'org-present-mode-hook
                (lambda ()
