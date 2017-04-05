@@ -27,7 +27,8 @@
 
 ;;; Code:
 
-
+(setq user-full-name "Florian Biermann"
+      user-mail-address "fbie@itu.dk")
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
@@ -64,7 +65,8 @@
 (setq kill-whole-line t)
 
 (defun smart-back-to-indentation ()
-  "Jump between the beginning of line and the line's first character."
+  "Jump between the beginning of line and the line's first
+character."
   (interactive)
   (let ((old-pos (point)))
     (move-beginning-of-line nil)
@@ -92,16 +94,20 @@
 (setq display-time-day-and-date 't)
 
 (defun external-screen? ()
-  "Non-nil if Emacs is running on an external screen."
+  "Non-nil if Emacs is running on an external screen, I think."
   (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
 
 (defun configure-splitting ()
-  "Configure frame splitting preferences based on screen setup."
+  "Configure frame splitting preferences based on screen setup.
+My built-in laptop monitor is tiny, so I only want to split
+vertically when I am running on an external screen.  That's what
+this does."
   (interactive)
   (setq split-height-threshold nil)
   (if (and window-system (external-screen?))
       (setq split-width-threshold 105)
     (setq split-width-threshold nil)))
+
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
@@ -144,6 +150,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Why wouldn't you?
 (setq use-package-always-ensure t)
 
 ;; Install auctex. use-package does not handle this well.
@@ -407,10 +414,12 @@
 (global-set-key (kbd "C-c d") 'duplicate-line-at-point)
 
 (defun find-alternate-file-keep-point ()
-  "Like 'find-alternate-file' but restore point."
+  "Like 'find-alternate-file' but restore point.
+
+I would like to implement this using 'save-excursion', but
+apparently, that does not work."
   (interactive)
-  ;; I would like to implement this using save-excursion, but
-  ;; apparently, that does not work. Hence let-binding.
+  ;;  Hence let-binding.
   (let ((current (point)))
     (call-interactively 'find-alternate-file)
     (goto-char current)))
@@ -418,7 +427,10 @@
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
 (defun run-graphical-setup ()
-  "Run my setup for graphical Emacs."
+  "Run my setup for graphical Emacs.
+
+Best with /usr/share/applications/emacs-snapshot.desktop running
+'Exec=emacsclient -c -e \"(run-graphical-setup)\" -a=\"\" %F'."
   (when (window-system)
     (set-frame-font "Fira Code Retina 11")
     (centered-window-mode)
