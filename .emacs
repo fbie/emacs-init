@@ -27,14 +27,7 @@
 
 ;;; Code:
 
-;; I don't want this, but Emacs keeps setting it.  I'll put it at the
-;; top to allow centered-window-mode to overwrite its value.
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(fringe ((t (:background "White")))))
+
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
@@ -339,16 +332,7 @@
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
   (setq org-directory "~/ownCloud/org/")
-
-  ;; Start emacs in agenda view.
-  (when (and (directory-files org-directory) (window-system))
-    (add-to-list 'org-agenda-files org-directory)
-    (setq initial-buffer-choice (lambda ()
-                                  (save-window-excursion
-                                    (org-agenda-and-todos)
-                                    (get-buffer (if org-agenda-sticky
-                                                    "*Org Agenda(n)*"
-                                                  "*Org Agenda*")))))))
+  (add-to-list 'org-agenda-files org-directory))
 
 (use-package org-journal
   :after org
@@ -410,10 +394,6 @@
 
 (use-package ssh-config-mode)
 
-;; TODO: Re-enable ligatures.
-(when (window-system)
-  (set-frame-font "Fira Code Retina 11"))
-
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
   (interactive)
@@ -437,12 +417,15 @@
 
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
-(add-hook 'after-init-hook
-	  (lambda () (when (window-system)
-		       ;; Always run graphical Emacs in fullscreen.
-		       (toggle-frame-fullscreen)
-		       ;; Graphical Emacs instances may run as server.
-                       (when (fboundp 'server-running-p)
-                         (unless (and  (server-running-p))
-                           (server-start))))))
+(defun run-graphical-setup ()
+  "Run my setup for graphical Emacs."
+  (when (window-system)
+    (set-frame-font "Fira Code Retina 11")
+    (centered-window-mode)
+    (org-agenda-and-todos)
+    (toggle-frame-fullscreen)))
 
+(add-hook 'after-init-hook 'run-graphical-setup)
+
+(provide 'emacs)
+;;; .emacs ends here
