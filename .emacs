@@ -259,7 +259,7 @@ this does."
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path "~/src/omnisharp-server/OmniSharp/bin/Release/OmniSharp.exe")
+  (setq omnisharp-server-executable-path "~/.emacs.d/omnisharp-roslyn-mono/omnisharp.sh")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.sln$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode)))
