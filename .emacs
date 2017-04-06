@@ -288,7 +288,6 @@ this does."
 (use-package centered-window-mode
   :if window-system
   :config
-  (centered-window-mode t)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
 ;; Downloading bibliography from CiteULike
