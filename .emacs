@@ -35,6 +35,8 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+(setq inhibit-startup-screen 1)
+
 (setq-default require-final-newline t
               indent-tabs-mode nil
               tab-width 4)
@@ -306,8 +308,9 @@ this does."
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
 (use-package centered-window-mode
-  :if window-system
   :config
+  (setq cwm-left-fringe-ratio 0)
+  (centered-window-mode 1)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
 ;; Downloading bibliography from CiteULike
@@ -452,7 +455,6 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 'Exec=emacsclient -c -e \"(run-graphical-setup)\" -a=\"\" %F'."
   (when (window-system)
     (set-frame-font "Fira Code Retina 11")
-    (centered-window-mode)
     (org-agenda-and-todos)
     (toggle-frame-fullscreen)))
 
