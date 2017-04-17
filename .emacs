@@ -168,6 +168,45 @@ this does."
 
 (use-package diminish)
 
+(use-package org
+  :config
+  (setq org-log-done t) ;; Log completion of tasks.
+
+  (setq org-pretty-entities t)
+  (setq org-support-shift-select t)
+
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+
+  (setq org-agenda-sticky t)
+
+  ;; I like indented headers very much.
+  (add-hook 'org-mode-hook 'org-indent-mode)
+
+  (defun org-agenda-and-todos ()
+    "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
+    (interactive)
+    (org-agenda nil "n"))
+  (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
+
+  (setq org-directory "~/ownCloud/org/")
+  (add-to-list 'org-agenda-files org-directory))
+
+;; Loading this as early as possible, to define the function even if
+;; there is a subsequent error in the execution of the file.
+(defun run-graphical-setup ()
+  "Run my setup for graphical Emacs.
+
+Best with /usr/share/applications/emacs-snapshot.desktop running
+'Exec=emacsclient -c -e \"(run-graphical-setup)\" -a=\"\" %F'."
+  (when (window-system)
+    (set-frame-font "Fira Code Retina 11")
+    (org-agenda-and-todos)
+    (toggle-frame-fullscreen)))
+
+(add-hook 'after-init-hook 'run-graphical-setup)
+
+
 (use-package flycheck
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode)
@@ -339,30 +378,6 @@ this does."
   :bind
   ("s-<pause>" . spotify-playpause)) ;; Works on Kinesis Advantage.
 
-(use-package org
-  :config
-  (setq org-log-done t) ;; Log completion of tasks.
-
-  (setq org-pretty-entities t)
-  (setq org-support-shift-select t)
-
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-
-  (setq org-agenda-sticky t)
-
-  ;; I like indented headers very much.
-  (add-hook 'org-mode-hook 'org-indent-mode)
-
-  (defun org-agenda-and-todos ()
-    "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
-    (interactive)
-    (org-agenda nil "n"))
-  (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-
-  (setq org-directory "~/ownCloud/org/")
-  (add-to-list 'org-agenda-files org-directory))
-
 (use-package org-journal
   :after org
   :init
@@ -448,17 +463,19 @@ apparently, that does not work."
 
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
-(defun run-graphical-setup ()
-  "Run my setup for graphical Emacs.
-
-Best with /usr/share/applications/emacs-snapshot.desktop running
-'Exec=emacsclient -c -e \"(run-graphical-setup)\" -a=\"\" %F'."
-  (when (window-system)
-    (set-frame-font "Fira Code Retina 11")
-    (org-agenda-and-todos)
-    (toggle-frame-fullscreen)))
-
-(add-hook 'after-init-hook 'run-graphical-setup)
-
 (provide 'emacs)
 ;;; .emacs ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (helm-org-rifle writegood-mode use-package undo-tree ssh-config-mode spotify railscasts-reloaded-theme racket-mode professional-theme paren-face paredit org-present org-journal omnisharp markdown-mode magithub helm-pass gnuplot-mode fsharp-mode diff-hl centered-window-mode auctex ace-isearch))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(fringe ((t (:background "#232323")))))
