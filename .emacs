@@ -24,6 +24,7 @@
 ;; Partially stolen from
 ;; - Harry Schwartz (https://github.com/hrs/dotfiles) and
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
+;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
 
 ;;; Code:
 
@@ -179,6 +180,14 @@ this does."
   (setq org-src-tab-acts-natively t)
 
   (setq org-agenda-sticky t)
+
+  ;; From Sacha Chua's config.
+  (setq org-agenda-inhibit-startup t)
+  (setq org-agenda-use-tag-inheritance t)
+  (setq org-agenda-show-log t)
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
