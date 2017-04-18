@@ -26,6 +26,16 @@
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
 ;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("cd0d4fdf764f757fd659ee2697239a62f38d15203000ced1ad8e43c978942c68" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(fci-rule-color "#383838"))
+
 ;;; Code:
 
 (setq user-full-name "Florian Biermann"
@@ -455,7 +465,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
                           `(org-level-1 ((t (:foreground "#CC7733"))) t)
                           `(org-level-2 ((t (:foreground "#FFC66D"))) t))
   :init
-  (load-theme 'railscasts-reloaded t))
+  (load-theme 'railscasts-reloaded))
 
 
 (use-package smart-mode-line
