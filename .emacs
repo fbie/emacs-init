@@ -31,6 +31,8 @@
 (setq user-full-name "Florian Biermann"
       user-mail-address "fbie@itu.dk")
 
+(setq load-prefer-newer t)
+
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
