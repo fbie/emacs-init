@@ -238,16 +238,19 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
     :modes (latex-mode LaTeX-mode text-mode markdown-mode gfm-mode))
   (add-to-list 'flycheck-checkers 'proselint))
 
+
 (use-package flyspell
   :diminish flyspell-mode
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
+
 (use-package writegood-mode
   :diminish writegood-mode
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
+
 
 ;; This package shows undo operations as a tree and allows for
 ;; easy-peasy navigation in the undo history. Toggle with C-x u.
@@ -256,6 +259,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   :config
   (global-undo-tree-mode)
   (setq undo-tree-visualizer-diff t))
+
 
 (use-package helm
   :diminish helm-mode
@@ -271,14 +275,17 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (helm-autoresize-mode 'true)
   (add-hook 'LaTeX-mode-hook 'helm-mode))
 
+
 (use-package magit
   :bind
   ("C-c i" . magit-status))
+
 
 (use-package company
   :diminish company-mode
   :config
   (global-company-mode))
+
 
 (use-package paredit
   :diminish paredit-mode
@@ -294,6 +301,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (add-hook 'lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'ielm-mode-hook 'enable-paredit-mode))
+
 
 (use-package omnisharp
   :after helm
@@ -338,8 +346,10 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
   (add-hook 'csharp-mode-hook 'maybe-start-omnisharp))
 
+
 (use-package paren-face
   :config (global-paren-face-mode))
+
 
 (use-package racket-mode
   :after paredit
@@ -352,6 +362,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
+
 (use-package fsharp-mode
   :config
   (setq fsharp-doc-idle-delay 1.0)
@@ -359,19 +370,24 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
+
 (use-package centered-window-mode
   :config
   (setq cwm-left-fringe-ratio 0)
   (centered-window-mode 1)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
+
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user
   "fbie"
   "The CiteULike user to download bibliography from.")
+
+
 (defconst citeulike-url
   "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1"
   "The URL to fetch from to get a .bib file with generated citation keys.")
+
 
 (defun citeulike-download-bibliography ()
   "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
@@ -386,10 +402,12 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
        (file-path (read-file-name "Write to: " nil nil nil default-path nil)))
     (url-copy-file citeulike-url-usr file-path 'true)))
 
+
 (use-package spotify
   :if (not (system-win?))
   :bind
   ("s-<pause>" . spotify-playpause)) ;; Works on Kinesis Advantage.
+
 
 (use-package org-journal
   :after org
@@ -397,6 +415,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (setq org-journal-file-format "%Y%m%d.org")
   (setq org-journal-dir (concat org-directory "journal/"))
   (add-to-list 'org-agenda-files org-journal-dir))
+
 
 (use-package org-present
   :after org
@@ -421,10 +440,12 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
               (org-present-read-write)
               (setq mode-line-format (default-value 'mode-line-format)))))
 
+
 (use-package professional-theme
   :init
   :disabled
   (load-theme 'professional t))
+
 
 (use-package railscasts-reloaded-theme
   :config
@@ -436,11 +457,14 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   :init
   (load-theme 'railscasts-reloaded t))
 
+
 (use-package gnuplot-mode
   :mode "\\.gnuplot\\'")
 
+
 (use-package markdown-mode
   :mode "\\.md\\'")
+
 
 ;; Includes ace-jump-mode and helm-swoop. Both are awesome!
 (use-package ace-isearch
@@ -451,6 +475,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 (use-package ssh-config-mode)
 
+
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
   (interactive)
@@ -460,8 +485,10 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
       (newline)
       (insert line))))
 
+
 (global-unset-key (kbd  "C-d"))
 (global-set-key (kbd "C-c d") 'duplicate-line-at-point)
+
 
 (defun find-alternate-file-keep-point ()
   "Like 'find-alternate-file' but restore point.
@@ -475,6 +502,7 @@ apparently, that does not work."
     (goto-char current)))
 
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
+
 
 (provide 'emacs)
 ;;; .emacs ends here
