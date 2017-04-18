@@ -33,6 +33,7 @@
 
 (setq load-prefer-newer t)
 
+
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -171,9 +172,6 @@ this does."
 
 (use-package diminish)
 
-(use-package smart-mode-line
-  :init
-  (smart-mode-line-enable))
 
 (use-package org
   :config
@@ -458,6 +456,12 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
                           `(org-level-2 ((t (:foreground "#FFC66D"))) t))
   :init
   (load-theme 'railscasts-reloaded t))
+
+
+(use-package smart-mode-line
+  :after railscasts-reloaded-theme
+  :init
+  (smart-mode-line-enable))
 
 
 (use-package gnuplot-mode
