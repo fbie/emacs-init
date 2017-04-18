@@ -169,6 +169,10 @@ this does."
 
 (use-package diminish)
 
+(use-package smart-mode-line
+  :init
+  (smart-mode-line-enable))
+
 (use-package org
   :config
   (setq org-log-done t) ;; Log completion of tasks.
