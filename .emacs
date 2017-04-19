@@ -199,7 +199,6 @@ this does."
   (setq org-agenda-inhibit-startup t)
   (setq org-agenda-use-tag-inheritance t)
   (setq org-agenda-show-log t)
-  (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
   (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
 
