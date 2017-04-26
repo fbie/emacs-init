@@ -70,6 +70,7 @@
 (global-eldoc-mode)
 (global-subword-mode 1)
 (column-number-mode 1)
+(electric-pair-mode)
 
 ;; Never quit Emacs!
 (setq confirm-kill-emacs #'yes-or-no-p)
