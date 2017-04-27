@@ -453,11 +453,11 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 (use-package professional-theme
   :init
-  :disabled
   (load-theme 'professional t))
 
 
 (use-package railscasts-reloaded-theme
+  :disabled
   :config
   ;; A bit of grim reverse engineering to get rid of large header
   ;; lines in org-mode while retaining scaling.
