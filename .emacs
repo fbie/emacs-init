@@ -107,8 +107,8 @@ character."
 
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 1)
-(setq display-time-24hr-format 't)
-(setq display-time-day-and-date 't)
+(setq display-time-24hr-format 't
+      display-time-day-and-date 't)
 
 (defun external-screen? ()
   "Non-nil if Emacs is running on an external screen, I think."
@@ -186,22 +186,19 @@ this does."
 
 (use-package org
   :config
-  (setq org-log-done t) ;; Log completion of tasks.
+   (setq org-log-done t ;; Log completion of tasks.
+         org-pretty-entities t
+         org-support-shift-select t
+         org-src-fontify-nativeyl t
+         org-src-tab-acts-natively t
+         org-agenda-sticky t
+         org-startup-folded t
 
-  (setq org-pretty-entities t)
-  (setq org-support-shift-select t)
-
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-
-  (setq org-agenda-sticky t)
-
-  ;; From Sacha Chua's config.
-  (setq org-agenda-inhibit-startup t)
-  (setq org-agenda-use-tag-inheritance t)
-  (setq org-agenda-show-log t)
-  (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+         ;; From Sacha Chua's config.
+         org-agenda-use-tag-inheritance t
+         org-agenda-show-log t
+         org-agenda-skip-deadline-if-done t
+         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
