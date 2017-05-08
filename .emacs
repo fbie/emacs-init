@@ -193,11 +193,13 @@ this does."
          org-src-tab-acts-natively t
          org-agenda-sticky t
          org-startup-folded t
+         org-inhibit-startup nil
 
          ;; From Sacha Chua's config.
          org-agenda-use-tag-inheritance t
          org-agenda-show-log t
-         org-agenda-skip-deadline-if-done t
+         org-agenda-skip-scheduled-if-done nil
+         org-agenda-skip-deadline-if-done nil
          org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
 
   ;; I like indented headers very much.
@@ -448,12 +450,22 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
               (setq mode-line-format (default-value 'mode-line-format)))))
 
 
+(use-package smart-mode-line
+  :init
+  (smart-mode-line-enable))
+
+
 (use-package professional-theme
+  :after smart-mode-line
+  :config
+  (setq sml/theme 'light)
+  (sml/setup)
   :init
   (load-theme 'professional t))
 
 
 (use-package railscasts-reloaded-theme
+  :after smart-mode-line
   :disabled
   :config
   ;; A bit of grim reverse engineering to get rid of large header
@@ -461,14 +473,10 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (custom-theme-set-faces 'railscasts-reloaded
                           `(org-level-1 ((t (:foreground "#CC7733"))) t)
                           `(org-level-2 ((t (:foreground "#FFC66D"))) t))
+  (setq sml/theme 'dark)
+  (sml/setup)
   :init
   (load-theme 'railscasts-reloaded))
-
-
-(use-package smart-mode-line
-  :after railscasts-reloaded-theme
-  :init
-  (smart-mode-line-enable))
 
 
 (use-package gnuplot-mode
