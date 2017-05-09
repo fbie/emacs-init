@@ -92,10 +92,12 @@ character."
 
 (global-set-key (kbd "C-a") 'smart-back-to-indentation)
 
+
 (defun system-win? ()
   "True if current system is Windows."
   (or (eq system-type 'windows-nt)
       (eq system-type 'ms-dos)))
+
 
 (defun system-osx? ()
   "True if current system is Mac OSX."
@@ -105,14 +107,17 @@ character."
   "True if current system is Linux."
   (not (or (system-win?) (system-osx?))))
 
+
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 1)
 (setq display-time-24hr-format 't
       display-time-day-and-date 't)
 
+
 (defun external-screen? ()
   "Non-nil if Emacs is running on an external screen, I think."
   (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
+
 
 (defun configure-splitting ()
   "Configure frame splitting preferences based on screen setup.
@@ -131,9 +136,11 @@ this does."
   (configure-splitting)
   (split-window-sensibly window))
 
+
 (setq split-window-preferred-function 'dynamic-split-window-sensibly)
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
+
 
 ;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
 ;; PATH environment variable. Important for running external programs,
@@ -145,6 +152,7 @@ this does."
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
+
 ;; Set-up Okular to view PDFs from Latex mode.
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
@@ -155,6 +163,7 @@ this does."
 		    TeX-view-program-list)
 	      (push '(output-pdf "Okular") TeX-view-program-selection))))
 
+
 ;; Set-up MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -162,17 +171,21 @@ this does."
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+
 ;; Install use-package if needed.
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
+
 ;; Why wouldn't you?
 (setq use-package-always-ensure t)
+
 
 ;; Install auctex. use-package does not handle this well.
 (unless (package-installed-p 'auctex)
   (package-install 'auctex))
+
 
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
@@ -180,6 +193,7 @@ this does."
 (add-hook 'LaTeX-mode-hook 'linum-mode)
 (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point t)
+
 
 (use-package diminish)
 
@@ -213,6 +227,7 @@ this does."
 
   (setq org-directory "~/ownCloud/org/")
   (add-to-list 'org-agenda-files org-directory))
+
 
 ;; Loading this as early as possible, to define the function even if
 ;; there is a subsequent error in the execution of the file.
@@ -505,7 +520,6 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
       (move-end-of-line nil)
       (newline)
       (insert line))))
-
 
 (global-unset-key (kbd  "C-d"))
 (global-set-key (kbd "C-c d") 'duplicate-line-at-point)
