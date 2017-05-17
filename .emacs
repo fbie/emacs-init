@@ -81,6 +81,7 @@
 ;; Kill, kill, kill!
 (setq kill-whole-line t)
 
+
 (defun smart-back-to-indentation ()
   "Jump between the beginning of line and the line's first
 character."
@@ -142,17 +143,6 @@ this does."
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
 
-;; If Emacs is not started from shell, e.g. on Mac OSX, this fixes the
-;; PATH environment variable. Important for running external programs,
-;; such as latex.
-(when (system-osx?)
-  (let ((path-from-shell
-	 (replace-regexp-in-string "[\t\n]*$" ""
-				   (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
-
-
 ;; Set-up Okular to view PDFs from Latex mode.
 (add-hook 'LaTeX-mode-hook
 	  (lambda ()
@@ -180,6 +170,11 @@ this does."
 
 ;; Why wouldn't you?
 (setq use-package-always-ensure t)
+
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :config
+  (exec-path-from-shell-initialize))
 
 
 ;; Install auctex. use-package does not handle this well.
