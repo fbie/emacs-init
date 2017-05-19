@@ -306,6 +306,13 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (global-company-mode))
 
 
+(use-package helm-projectile
+  :diminish projectile-mode
+  :config
+  (projectile-mode 1)
+  (helm-projectile-on))
+
+
 (use-package paredit
   :diminish paredit-mode
   :bind
