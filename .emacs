@@ -437,6 +437,8 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 (use-package org-journal
   :after org
+  :config
+  (setq org-journal-carryover-items nil)
   :init
   (setq org-journal-file-format "%Y%m%d.org")
   (setq org-journal-dir (concat org-directory "journal/"))
