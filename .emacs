@@ -143,17 +143,6 @@ this does."
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
 
-;; Set-up Okular to view PDFs from Latex mode.
-(add-hook 'LaTeX-mode-hook
-	  (lambda ()
-	    (when (system-linux?)
-	      (push '("%(masterdir)" (lambda nil (file-truename (TeX-master-directory))))
-		    TeX-expand-list)
-	      (push '("Okular" "okular --unique %o#src:%n%(masterdir)./%b")
-		    TeX-view-program-list)
-	      (push '(output-pdf "Okular") TeX-view-program-selection))))
-
-
 ;; Set-up MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
