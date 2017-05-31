@@ -187,7 +187,7 @@ this does."
    (setq org-log-done t ;; Log completion of tasks.
          org-pretty-entities t
          org-support-shift-select t
-         org-src-fontify-nativeyl t
+         org-src-fontify-natively t
          org-src-tab-acts-natively t
          org-agenda-sticky t
          org-startup-folded t
@@ -199,6 +199,7 @@ this does."
          org-agenda-skip-scheduled-if-done nil
          org-agenda-skip-deadline-if-done nil
          org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+
          org-agenda-skip-scheduled-if-deadline-is-shown t)
 
   ;; I like indented headers very much.
