@@ -139,6 +139,7 @@ this does."
 
 
 (setq split-window-preferred-function 'dynamic-split-window-sensibly)
+(global-set-key (kbd "C-x C-o") 'window-swap-states)
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
