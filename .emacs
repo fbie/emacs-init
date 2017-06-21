@@ -429,6 +429,10 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 (use-package org-journal
   :after org
+  :bind
+  (:map org-journal-mode-map
+        ("C-c s" . org-journal-search)
+        ("C-s C-s" . org-schedule))
   :config
   (setq org-journal-carryover-items nil)
   :init
