@@ -376,7 +376,9 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (:map racket-repl-mode-map ("C-h f" . racket-describe))
   :init
   (add-hook 'racket-mode-hook #'enable-paredit-mode)
+  (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook #'enable-paredit-mode)
+  (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
