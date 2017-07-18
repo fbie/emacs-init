@@ -183,6 +183,11 @@ this does."
 (use-package diminish)
 
 
+(use-package multiple-cursors
+  :bind
+  ("C->" . mc/mark-next-like-this)
+  ("C-<" . mc/mark-previous-like-this))
+
 (use-package org
   :config
    (setq org-log-done t ;; Log completion of tasks.
