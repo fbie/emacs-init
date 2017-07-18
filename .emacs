@@ -383,6 +383,15 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
 
+(use-package rainbow-delimiters
+  :after racket-mode
+  :init
+  (add-hook 'racket-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'racket-repl-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+  (add-hook 'ielm-mode-hook 'rainbow-delimiters-mode))
+
+
 (use-package fsharp-mode
   :config
   (setq fsharp-doc-idle-delay 1.0)
