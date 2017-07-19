@@ -43,6 +43,10 @@
 
 (setq load-prefer-newer t)
 
+;; Finally no new clutter
+(defvar live-tmp-dir "~/.emacs.d/tmp/")
+(defvar live-autosaves-dir "~/.emacs.d/autosaves/")
+(defvar live-backups-dir "~/.emacs.d/backups/")
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
