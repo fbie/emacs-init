@@ -529,8 +529,6 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (global-ace-isearch-mode 1)
   (setq ace-isearch-input-length 2))
 
-(use-package ssh-config-mode)
-
 
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
