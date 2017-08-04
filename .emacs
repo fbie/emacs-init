@@ -559,5 +559,14 @@ apparently, that does not work."
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
 
+(use-package ess
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((R . t)))
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (setq org-confirm-babel-evaluate nil))
+
+
 (provide 'emacs)
 ;;; .emacs ends here
