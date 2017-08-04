@@ -210,7 +210,9 @@ this does."
          org-agenda-skip-deadline-if-done nil
          org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
 
-         org-agenda-skip-scheduled-if-deadline-is-shown t)
+         org-agenda-skip-scheduled-if-deadline-is-shown t
+
+         org-startup-with-inline-images t)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
