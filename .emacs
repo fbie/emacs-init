@@ -214,6 +214,9 @@ this does."
 
          org-startup-with-inline-images t)
 
+   ;; Seems not to work with :bind, so we do it here instead.
+   (bind-key (kbd "C-w") 'org-agenda-month-view org-agenda-mode-map)
+
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
