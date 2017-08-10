@@ -193,29 +193,29 @@ this does."
   ("C-<" . mc/mark-previous-like-this))
 
 (use-package org
+  :init
+  ;; Seems not to work with :bind, so we do it here instead.
+  (bind-key (kbd "C-w") 'org-agenda-month-view org-agenda-mode-map)
   :config
-   (setq org-log-done t ;; Log completion of tasks.
-         org-pretty-entities t
-         org-support-shift-select t
-         org-src-fontify-natively t
-         org-src-tab-acts-natively t
-         org-agenda-sticky t
-         org-startup-folded t
-         org-inhibit-startup nil
+  (setq org-log-done t ;; Log completion of tasks.
+        org-pretty-entities t
+        org-support-shift-select t
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-agenda-sticky t
+        org-startup-folded t
+        org-inhibit-startup nil
 
-         ;; From Sacha Chua's config.
-         org-agenda-use-tag-inheritance t
-         org-agenda-show-log t
-         org-agenda-skip-scheduled-if-done nil
-         org-agenda-skip-deadline-if-done nil
-         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
+        ;; From Sacha Chua's config.
+        org-agenda-use-tag-inheritance t
+        org-agenda-show-log t
+        org-agenda-skip-scheduled-if-done nil
+        org-agenda-skip-deadline-if-done nil
+        org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
 
-         org-agenda-skip-scheduled-if-deadline-is-shown t
+        org-agenda-skip-scheduled-if-deadline-is-shown t
 
-         org-startup-with-inline-images t)
-
-   ;; Seems not to work with :bind, so we do it here instead.
-   (bind-key (kbd "C-w") 'org-agenda-month-view org-agenda-mode-map)
+        org-startup-with-inline-images t)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
