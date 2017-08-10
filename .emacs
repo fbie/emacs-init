@@ -563,12 +563,23 @@ apparently, that does not work."
 
 
 (use-package ess
+  :bind
+  (:map org-mode-map
+        ("C-c e" . insert-R-code-block))
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((R . t)))
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  (setq org-confirm-babel-evaluate nil))
+  (setq org-confirm-babel-evaluate nil)
+
+  (defun insert-R-code-block ()
+    "Insert a new R code block at point."
+    (interactive)
+    (insert "#+begin_src R :session :exports both :results value")
+    (newline)
+    (insert "#+end_src")
+    (newline)))
 
 
 (provide 'emacs)
