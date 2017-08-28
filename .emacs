@@ -356,27 +356,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (add-to-list 'auto-mode-alist '("\\.sln$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   :init
-
-  (defun find-vs-solution-upwards (dirname)
-    "Recursively find first VS solution file from this directory upwards."
-    (unless (or (string-empty-p dirname) (string-equal dirname "/"))
-      (let ((slns (directory-files dirname 't "\\.sln$")))
-        (if slns
-            (car slns)
-          (find-vs-solution-upwards (expand-file-name (concat (file-name-as-directory dirname) "..")))))))
-
-  (defun omnisharp-server-running? ()
-    "Non-nil if there is a buffer called \"OmniServer\"."
-    (get-buffer "OmniServer"))
-
-  (defun maybe-start-omnisharp ()
-    "Does what it says."
-    (interactive)
-    (unless (omnisharp-server-running?)
-      (omnisharp-start-omnisharp-server (find-vs-solution-upwards (file-name-directory (buffer-file-name))))))
-
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'csharp-mode-hook 'maybe-start-omnisharp))
+  (add-hook 'csharp-mode-hook 'omnisharp-mode))
 
 
 (use-package paren-face
