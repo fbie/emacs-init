@@ -545,7 +545,7 @@ apparently, that does not work."
 (use-package ess
   :bind
   (:map org-mode-map
-        ("C-c e" . insert-R-code-block))
+        ("C-c r" . insert-R-code-block))
   :config
   (org-babel-do-load-languages
    'org-babel-load-languages
