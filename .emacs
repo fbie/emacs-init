@@ -504,7 +504,11 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 
 (use-package markdown-mode
-  :mode "\\.md\\'")
+  :mode "\\.md\\'"
+  :bind
+  (:map markdown-mode-map
+        ("M-<right>" . markdown-demote)
+        ("M-<left>"  . markdown-promote)))
 
 
 ;; Includes ace-jump-mode and helm-swoop. Both are awesome!
