@@ -565,6 +565,9 @@ apparently, that does not work."
     (insert "#+end_src")
     (newline)))
 
+;; For testing my great Analog Emacs mode before putting it on MELPA.
+(require 'analog "/home/fbie/src/analog-indicator/analog.el")
+(analog-indicator-mode)
 
 (provide 'emacs)
 ;;; .emacs ends here
