@@ -511,9 +511,12 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
         ("M-<left>"  . markdown-promote)))
 
 
-;; Includes ace-jump-mode and helm-swoop. Both are awesome!
+(use-package ace-jump-mode)
+(use-package helm-swoop)
+
 (use-package ace-isearch
   :diminish ace-isearch-mode
+  :after ace-jump-mode helm-swoop
   :config
   (global-ace-isearch-mode 1)
   (setq ace-isearch-input-length 2))
