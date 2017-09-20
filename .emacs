@@ -26,6 +26,7 @@
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
 ;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
 
+;; Require this on top thanks to safe themes.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -33,8 +34,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "cd0d4fdf764f757fd659ee2697239a62f38d15203000ced1ad8e43c978942c68" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
- '(fci-rule-color "#383838"))
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
 
 ;;; Code:
 
@@ -476,7 +476,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 
 (use-package professional-theme
-  :after smart-mode-line
+  :after smart-mode-line centered-window-mode
   :config
   (setq sml/theme 'light)
   (sml/setup)
@@ -485,7 +485,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 
 (use-package railscasts-reloaded-theme
-  :after smart-mode-line
+  :after smart-mode-line centered-window-mode
   :disabled
   :config
   ;; A bit of grim reverse engineering to get rid of large header
@@ -569,6 +569,7 @@ apparently, that does not work."
     (newline)))
 
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
+(use-package delight)
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 (analog-indicator-mode)
 
