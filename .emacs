@@ -472,6 +472,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
 
 (use-package smart-mode-line
   :init
+  (setq sml/no-confirm-load-theme t)
   (smart-mode-line-enable))
 
 
@@ -479,7 +480,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   :after smart-mode-line centered-window-mode
   :config
   (setq sml/theme 'light)
-  (sml/setup)
+   (sml/setup)
   :init
   (load-theme 'professional t))
 
@@ -496,7 +497,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   (setq sml/theme 'dark)
   (sml/setup)
   :init
-  (load-theme 'railscasts-reloaded))
+  (load-theme 'railscasts-reloaded t))
 
 
 (use-package gnuplot-mode
