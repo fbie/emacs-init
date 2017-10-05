@@ -570,6 +570,23 @@ apparently, that does not work."
     (insert "#+end_src")
     (newline)))
 
+
+(use-package merlin
+  :diminish
+  :preface (defconst merlin-path "~/.opam/system/bin/ocamlmerlin")
+  :if (file-exists-p merlin-path)
+  :config
+  (setq merlin-command merlin-path))
+
+
+(use-package tuareg
+  :after merlin
+  :config
+  (setq tuareg-indent-align-with-first-arg 't)
+  (when (package-installed-p 'merlin)
+    (add-hook 'tuareg-mode-hook 'merlin-mode)))
+
+
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
 (use-package delight)
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
