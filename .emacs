@@ -481,7 +481,7 @@ Best with /usr/share/applications/emacs-snapshot.desktop running
   :after smart-mode-line centered-window-mode
   :config
   (setq sml/theme 'light)
-   (sml/setup)
+  (sml/setup)
   :init
   (load-theme 'professional t))
 
