@@ -587,6 +587,12 @@ apparently, that does not work."
     (add-hook 'tuareg-mode-hook 'merlin-mode)))
 
 
+(use-package auto-package-update
+  :config
+  (auto-package-update-at-time "13:00")
+  (setq auto-package-update-delete-old-versions t))
+
+
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
 (use-package delight)
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
