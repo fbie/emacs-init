@@ -35,19 +35,23 @@
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
- )
+ '(package-selected-packages
+   (quote
+    (auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch)))
+ '(tramp-syntax (quote default) nil (tramp)))
 
 ;;; Code:
 
 (setq user-full-name "Florian Biermann"
       user-mail-address "fbie@itu.dk")
 
-(setq load-prefer-newer t)
-
-;; Finally no new clutter
-(defvar live-tmp-dir "~/.emacs.d/tmp/")
-(defvar live-autosaves-dir "~/.emacs.d/autosaves/")
-(defvar live-backups-dir "~/.emacs.d/backups/")
+(setq backup-directory-alist `(("." . "./.emacs.b"))
+      backup-by-copying t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t
+      load-prefer-newer t)
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
