@@ -592,6 +592,7 @@ apparently, that does not work."
 
 
 (use-package auto-package-update
+  :demand
   :config
   (auto-package-update-at-time "13:00")
   (setq auto-package-update-delete-old-versions t))
