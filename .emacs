@@ -238,14 +238,11 @@ this does."
 ;; Loading this as early as possible, to define the function even if
 ;; there is a subsequent error in the execution of the file.
 (defun run-graphical-setup ()
-  "Run my setup for graphical Emacs.
-
-Best with /usr/share/applications/emacs-snapshot.desktop running
-'Exec=emacsclient -c -e \"(run-graphical-setup)\" -a=\"\" %F'."
+  "Run my setup for graphical Emacs."
+  (toggle-frame-fullscreen)
+  (set-frame-font "Fira Code Retina 10")
   (when (window-system)
-    (set-frame-font "Fira Code Retina 11")
-    (org-agenda-and-todos)
-    (toggle-frame-fullscreen)))
+    (org-agenda-and-todos)))
 
 (add-hook 'after-init-hook 'run-graphical-setup)
 
