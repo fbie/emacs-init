@@ -82,7 +82,7 @@
 (electric-pair-mode)
 
 ;; Never quit Emacs!
-(setq confirm-kill-emacs #'yes-or-no-p)
+(setq confirm-kill-emacs 'yes-or-no-p)
 
 ;; But increase laziness.
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -198,9 +198,6 @@ this does."
   ("C-<" . mc/mark-previous-like-this))
 
 (use-package org
-  :init
-  ;; Seems not to work with :bind, so we do it here instead.
-  (bind-key (kbd "C-w") 'org-agenda-month-view org-agenda-mode-map)
   :config
   (setq org-log-done t ;; Log completion of tasks.
         org-pretty-entities t
@@ -220,31 +217,21 @@ this does."
 
         org-agenda-skip-scheduled-if-deadline-is-shown t
 
-        org-startup-with-inline-images t)
+        org-startup-with-inline-images t
+
+        org-agenda-window-setup 'current-window)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
-  (defun org-agenda-and-todos ()
+  (defun org-agenda-and-todos (&optional arg)
     "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
     (interactive)
-    (org-agenda nil "n"))
+    (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
   (setq org-directory "~/ownCloud/org/")
   (add-to-list 'org-agenda-files org-directory))
-
-
-;; Loading this as early as possible, to define the function even if
-;; there is a subsequent error in the execution of the file.
-(defun run-graphical-setup ()
-  "Run my setup for graphical Emacs."
-  (toggle-frame-fullscreen)
-  (set-frame-font "Fira Code Retina 10")
-  (when (window-system)
-    (org-agenda-and-todos)))
-
-(add-hook 'after-init-hook 'run-graphical-setup)
 
 
 (use-package flycheck
