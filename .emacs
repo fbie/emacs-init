@@ -37,8 +37,7 @@
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(package-selected-packages
    (quote
-    (auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch)))
- '(tramp-syntax (quote default) nil (tramp)))
+    (visual-fill-column auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch))))
 
 ;;; Code:
 
