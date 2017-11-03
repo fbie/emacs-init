@@ -184,7 +184,6 @@ this does."
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(add-hook 'LaTeX-mode-hook 'linum-mode)
 (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point t)
 
@@ -384,11 +383,21 @@ this does."
 
 
 (use-package centered-window-mode
+  :disabled
   :config
-  (setq cwm-left-fringe-ratio 0)
+  (setq cwm-left-fringe-ratio 0
+        cwm-frame-internal-border 0)
   (centered-window-mode 1)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
 
+
+(use-package visual-fill-column
+  :init
+  (setq visual-fill-column-center-text t)
+  (setq visual-fill-column-width 110)
+  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+  (add-hook 'text-mode-hook 'visual-fill-column-mode)
+  (add-hook 'prog-mode-hook 'visual-fill-column-mode))
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user
