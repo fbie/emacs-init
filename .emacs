@@ -45,7 +45,7 @@
 (setq user-full-name "Florian Biermann"
       user-mail-address "fbie@itu.dk")
 
-(setq backup-directory-alist `(("." . "./.emacs.b"))
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
       delete-old-versions t
       kept-new-versions 6
