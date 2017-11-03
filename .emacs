@@ -135,16 +135,16 @@ My built-in laptop monitor is tiny, so I only want to split
 vertically when I am running on an external screen.  That's what
 this does."
   (interactive)
-  (setq split-height-threshold nil)
-  (if (and window-system (external-screen?))
-      (setq split-width-threshold 105)
-    (setq split-width-threshold nil)))
+  (setq split-height-threshold (if (external-screen?) 0 nil))
+  (setq split-width-threshold  (if (external-screen?) nil 0)))
 
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (configure-splitting)
-  (split-window-sensibly window))
+  (if (and (external-screen?) (one-window-p t))
+      (split-window-horizontally)
+    (configure-splitting)
+    (split-window-sensibly window)))
 
 
 (setq split-window-preferred-function 'dynamic-split-window-sensibly)
