@@ -375,15 +375,6 @@ character."
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
 
-(use-package centered-window-mode
-  :disabled
-  :config
-  (setq cwm-left-fringe-ratio 0
-        cwm-frame-internal-border 0)
-  (centered-window-mode 1)
-  (add-hook 'text-mode-hook 'turn-on-visual-line-mode))
-
-
 (use-package visual-fill-column
   :init
   (setq visual-fill-column-center-text t)
@@ -391,6 +382,7 @@ character."
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
   (add-hook 'prog-mode-hook 'visual-fill-column-mode))
+
 
 ;; Downloading bibliography from CiteULike
 (defcustom citeulike-user
@@ -468,7 +460,7 @@ character."
 
 
 (use-package professional-theme
-  :after smart-mode-line centered-window-mode
+  :after smart-mode-line
   :config
   (setq sml/theme 'light)
   (sml/setup)
