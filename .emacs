@@ -128,21 +128,15 @@ character."
   (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
 
 
-(defun configure-splitting ()
-  "Configure frame splitting preferences based on screen setup.
-My built-in laptop monitor is tiny, so I only want to split
-vertically when I am running on an external screen.  That's what
-this does."
-  (interactive)
-  (setq split-height-threshold (if (external-screen?) 0 nil))
-  (setq split-width-threshold  (if (external-screen?) nil 0)))
-
-
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (and (external-screen?) (one-window-p t))
-      (split-window-horizontally)
-    (configure-splitting)
+  (if (one-window-p t) ;; Behave ina special way if only one window.
+      (if (external-screen?)
+          (split-window-right)
+        (split-window-below))
+    ;; Otherwise, configure splitting and split sensibly away!
+    (setq split-height-threshold (if (external-screen?) 0 nil)
+          split-width-threshold  (if (external-screen?) nil 0))
     (split-window-sensibly window)))
 
 
