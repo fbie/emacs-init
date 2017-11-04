@@ -211,7 +211,7 @@ character."
 
         org-startup-with-inline-images t
 
-        org-agenda-window-setup 'current-window)
+        org-agenda-window-setup 'other-window)
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
