@@ -377,8 +377,8 @@ character."
 
 (use-package visual-fill-column
   :init
-  (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 110)
+  (setq visual-fill-column-center-text t
+        visual-fill-column-width       110)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
   (add-hook 'prog-mode-hook 'visual-fill-column-mode))
