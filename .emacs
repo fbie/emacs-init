@@ -573,5 +573,16 @@ apparently, that does not work."
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 (analog-indicator-mode)
 
+;; Since auto-update does not work, I use this homegrown package
+;; update function.
+(defun update-all-packages ()
+  "Update all packages."
+  (interactive)
+  (save-excursion
+    (save-window-excursion
+      (list-packages)
+      (message (package-menu-mark-upgrades))
+      (package-menu-execute 'no-query))))
+
 (provide 'emacs)
 ;;; .emacs ends here
