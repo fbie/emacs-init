@@ -146,7 +146,7 @@ character."
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
 
-;; Set-up MELPA.
+;; Set-up melpa stable and gnu repositories.
 (require 'package)
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (when (< emacs-major-version 24)
@@ -158,6 +158,8 @@ character."
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Only now add melpa, to avoid use-package updating itself to some
+;; bleeding-edge version that doesn't know about the :pin keyword.
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
