@@ -595,8 +595,9 @@ apparently, that does not work."
     (add-hook 'tuareg-mode-hook 'merlin-mode)))
 
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
-;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
-;; (analog-indicator-mode)
+(use-package delight)
+(require 'analog "/home/fbie/src/analog-indicator/analog.el")
+(analog-indicator-mode)
 
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
