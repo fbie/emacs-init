@@ -533,7 +533,9 @@ character."
   :pin "melpa-stable"
   :bind
   ("C-x o" . ace-window)
-  ("C-x C-o" . ace-swap-window))
+  ("C-x C-o" . ace-swap-window)
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
