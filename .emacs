@@ -529,6 +529,12 @@ character."
   :bind
   ("C-S-s" . ace-jump-mode))
 
+(use-package ace-window
+  :pin "melpa-stable"
+  :bind
+  ("C-x o" . ace-window)
+  ("C-x C-o" . ace-swap-window))
+
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
   (interactive)
