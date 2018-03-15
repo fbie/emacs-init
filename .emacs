@@ -195,6 +195,7 @@ character."
 (use-package org
   :config
   (setq org-log-done t ;; Log completion of tasks.
+        org-use-sub-superscripts "{}"
         org-pretty-entities t
         org-support-shift-select t
         org-src-fontify-natively t
