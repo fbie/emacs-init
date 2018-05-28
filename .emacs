@@ -599,11 +599,19 @@ apparently, that does not work."
 (use-package tuareg
   :pin "melpa-stable"
   :demand
+  (:map tuareg-mode-map
+        ("C-c TAB" . helm-imenu))
   :after merlin
   :config
-  (setq tuareg-indent-align-with-first-arg 't)
+  (setq tuareg-indent-align-with-first-arg 't
+        tuareg-electric-close-vector 't)
   (when (package-installed-p 'merlin)
     (add-hook 'tuareg-mode-hook 'merlin-mode)))
+
+(use-package merlin-eldoc
+  :pin "melpa-stable"
+  :config
+  (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
 (use-package delight)
