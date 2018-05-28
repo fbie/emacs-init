@@ -297,6 +297,8 @@ character."
   :bind
   ("C-c i" . magit-status))
 
+(use-package gitconfig
+  :pin "melpa-stable")
 
 (use-package company
   :pin "melpa-stable"
