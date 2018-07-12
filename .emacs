@@ -123,6 +123,7 @@ character."
       display-time-day-and-date 't)
 
 
+;; TODO: I have given up my old setup, so this should be updated.
 (defun external-screen? ()
   "Non-nil if Emacs is running on an external screen, I think."
   (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
@@ -130,11 +131,13 @@ character."
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (one-window-p t) ;; Behave ina special way if only one window.
+  (if (one-window-p t)
+      ;; If only one window is present, split it vertically when using
+      ;; an external screen, otherwise split horizontally.
       (if (external-screen?)
           (split-window-right)
         (split-window-below))
-    ;; Otherwise, configure splitting and split sensibly away!
+    ;; Otherwise, configure splitting and split sensibly.
     (setq split-height-threshold (if (external-screen?) 0 nil)
           split-width-threshold  (if (external-screen?) nil 0))
     (split-window-sensibly window)))
@@ -226,6 +229,7 @@ character."
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
+  ;; TODO: My ITU ownCloud account will be closed soon; alternatives?
   (setq org-directory "~/ownCloud/org/")
   (add-to-list 'org-agenda-files org-directory))
 
@@ -286,6 +290,7 @@ character."
   ("C-c TAB" . helm-imenu)
   ("C-x b" . helm-buffers-list)
   ("C-s" . helm-occur)
+  ("C-c s" . isearch-forward)
   :init
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
@@ -351,7 +356,6 @@ character."
   (setq omnisharp-company-template-use-yasnippet nil)
   (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
   (add-to-list 'company-backends 'company-omnisharp)
-  (add-to-list 'auto-mode-alist '("\\.sln$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode))
@@ -369,10 +373,10 @@ character."
   (:map racket-mode-map ("C-h f" . racket-describe))
   (:map racket-repl-mode-map ("C-h f" . racket-describe))
   :init
-  (add-hook 'racket-mode-hook #'enable-paredit-mode)
-  (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
-  (add-hook 'racket-repl-mode-hook #'enable-paredit-mode)
-  (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable)
+  (add-hook 'racket-mode-hook      'enable-paredit-mode)
+  (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
+  (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
+  (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
@@ -429,13 +433,6 @@ character."
        (default-path (concat current-path citeulike-user ".bib"))
        (file-path (read-file-name "Write to: " nil nil nil default-path nil)))
     (url-copy-file citeulike-url-usr file-path 'true)))
-
-
-(use-package spotify
-  :pin "melpa-stable"
-  :if (not (system-win?))
-  :bind
-  ("s-<pause>" . spotify-playpause)) ;; Works on Kinesis Advantage.
 
 
 (use-package org-journal
@@ -531,6 +528,7 @@ character."
   :bind
   ("C-S-s" . ace-jump-mode))
 
+
 (use-package ace-window
   :pin "melpa-stable"
   :bind
@@ -538,6 +536,7 @@ character."
   ("C-x C-o" . ace-swap-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+
 
 (defun duplicate-line-at-point ()
   "Duplicate the line at point."
@@ -566,27 +565,6 @@ apparently, that does not work."
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
 
-(use-package ess
-  :pin "melpa-stable"
-  :bind
-  (:map org-mode-map
-        ("C-c r" . insert-R-code-block))
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   (cons '(R . t) org-babel-load-languages))
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  (setq org-confirm-babel-evaluate nil)
-
-  (defun insert-R-code-block ()
-    "Insert a new R code block at point."
-    (interactive)
-    (insert "#+begin_src R :session :exports both :results value")
-    (newline)
-    (insert "#+end_src")
-    (newline)))
-
-
 (use-package merlin
   :pin "melpa-stable"
   :diminish
@@ -605,6 +583,7 @@ apparently, that does not work."
   :config
   (setq tuareg-indent-align-with-first-arg 't
         tuareg-electric-close-vector 't)
+  (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
   (when (package-installed-p 'merlin)
     (add-hook 'tuareg-mode-hook 'merlin-mode)))
 
@@ -613,13 +592,19 @@ apparently, that does not work."
   :config
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
+;; TODO: Experiment with ocp-indent
+;; (use-package ocp-indent
+;;   :pin "melpa-stable")
+
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
 (use-package delight)
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
-(analog-indicator-mode)
+;;(analog-indicator-mode)
+
 
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
+;; TODO: When did I use this last?
 (defun update-all-packages ()
   "Update all packages."
   (interactive)
@@ -628,6 +613,7 @@ apparently, that does not work."
       (list-packages)
       (message (package-menu-mark-upgrades))
       (package-menu-execute 'no-query))))
+
 
 (provide 'emacs)
 ;;; .emacs ends here
