@@ -42,7 +42,7 @@
 ;;; Code:
 
 (setq user-full-name "Florian Biermann"
-      user-mail-address "fbie@itu.dk")
+      user-mail-address "flbm@simcorp.com")
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
@@ -79,6 +79,10 @@
 (global-subword-mode 1)
 (column-number-mode 1)
 (electric-pair-mode)
+
+(when (window-system)
+  ;; TODO: Do not break when not installed.
+  (set-frame-font "Fira Code Retina 11"))
 
 ;; Never quit Emacs!
 (setq confirm-kill-emacs 'yes-or-no-p)
@@ -122,28 +126,19 @@ character."
 (setq display-time-24hr-format 't
       display-time-day-and-date 't)
 
-
-;; TODO: I have given up my old setup, so this should be updated.
-(defun external-screen? ()
-  "Non-nil if Emacs is running on an external screen, I think."
-  (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
-
+;; Otherwise, configure splitting and split sensibly.
+(setq split-width-threshold  nil)
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (one-window-p t)
+  (if (and (one-window-p t) (> (window-width) 110))
       ;; If only one window is present, split it vertically when using
       ;; an external screen, otherwise split horizontally.
-      (if (external-screen?)
-          (split-window-right)
-        (split-window-below))
-    ;; Otherwise, configure splitting and split sensibly.
-    (setq split-height-threshold (if (external-screen?) 0 nil)
-          split-width-threshold  (if (external-screen?) nil 0))
+      (split-window-right)
     (split-window-sensibly window)))
 
 
-(setq split-window-preferred-function 'dynamic-split-window-sensibly)
+;; (setq split-window-preferred-function 'dynamic-split-window-sensibly)
 (global-set-key (kbd "C-x C-o") 'window-swap-states)
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
@@ -230,7 +225,7 @@ character."
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
 
   ;; TODO: My ITU ownCloud account will be closed soon; alternatives?
-  (setq org-directory "~/ownCloud/org/")
+  (setq org-directory "f:/flbm/org/")
   (add-to-list 'org-agenda-files org-directory))
 
 
@@ -271,12 +266,12 @@ character."
 
 ;; This package shows undo operations as a tree and allows for
 ;; easy-peasy navigation in the undo history. Toggle with C-x u.
-(use-package undo-tree
-  :pin "melpa"
-  :diminish undo-tree-mode
-  :config
-  (global-undo-tree-mode)
-  (setq undo-tree-visualizer-diff t))
+;; (use-package undo-tree
+;;   :pin "melpa"
+;;   :diminish undo-tree-mode
+;;   :config
+;;   (global-undo-tree-mode)
+;;   (setq undo-tree-visualizer-diff t))
 
 
 (use-package helm
@@ -568,7 +563,7 @@ apparently, that does not work."
 (use-package merlin
   :pin "melpa-stable"
   :diminish
-  :preface (defconst merlin-path "~/.opam/system/bin/ocamlmerlin")
+  :preface (defconst merlin-path "c:/dev/ml-mono/mlfi/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
   :config
   (setq merlin-command merlin-path))
@@ -585,7 +580,8 @@ apparently, that does not work."
         tuareg-electric-close-vector 't)
   (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
   (when (package-installed-p 'merlin)
-    (add-hook 'tuareg-mode-hook 'merlin-mode)))
+    (add-hook 'tuareg-mode-hook 'merlin-mode))
+  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?$" . tuareg-mode)))
 
 (use-package merlin-eldoc
   :pin "melpa-stable"
@@ -597,8 +593,8 @@ apparently, that does not work."
 ;;   :pin "melpa-stable")
 
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
-(use-package delight)
-(require 'analog "/home/fbie/src/analog-indicator/analog.el")
+;; (use-package delight)
+;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 ;;(analog-indicator-mode)
 
 
