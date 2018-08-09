@@ -106,21 +106,6 @@ character."
 (global-set-key (kbd "C-a") 'smart-back-to-indentation)
 
 
-(defun system-win? ()
-  "True if current system is Windows."
-  (or (eq system-type 'windows-nt)
-      (eq system-type 'ms-dos)))
-
-
-(defun system-osx? ()
-  "True if current system is Mac OSX."
-  (eq system-type 'darwin))
-
-(defun system-linux? ()
-  "True if current system is Linux."
-  (not (or (system-win?) (system-osx?))))
-
-
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 1)
 (setq display-time-24hr-format 't
@@ -131,14 +116,14 @@ character."
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (and (one-window-p t) (> (window-width) 110))
+  (if (and (one-window-p t) (> (frame-width) 110))
       ;; If only one window is present, split it vertically when using
       ;; an external screen, otherwise split horizontally.
       (split-window-right)
     (split-window-sensibly window)))
 
 
-;; (setq split-window-preferred-function 'dynamic-split-window-sensibly)
+(setq split-window-preferred-function 'dynamic-split-window-sensibly)
 (global-set-key (kbd "C-x C-o") 'window-swap-states)
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
