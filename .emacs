@@ -44,7 +44,7 @@
 (setq user-full-name "Florian Biermann"
       user-mail-address "flbm@simcorp.com")
 
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
+(setq backup-directory-alist `(("." . (concat user-emacs-directory "backups")))
       backup-by-copying t
       delete-old-versions t
       kept-new-versions 6
