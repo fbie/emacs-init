@@ -44,6 +44,11 @@
 (setq user-full-name "Florian Biermann"
       user-mail-address "flbm@simcorp.com")
 
+;; Make Emacs Cygwin aware
+;; See https://github.com/magit/magit/issues/1318#issuecomment-109546395
+(add-to-list 'load-path "f:/flbm/emacs-init/lib/")
+(require 'setup-cygwin)
+
 (setq backup-directory-alist `(("." . (concat user-emacs-directory "backups")))
       backup-by-copying t
       delete-old-versions t
