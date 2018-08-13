@@ -285,7 +285,29 @@ character."
 (use-package magit
   :pin "melpa-stable"
   :bind
-  ("C-c i" . magit-status))
+  ("C-c i" . magit-status)
+  :config
+  (defconst siebelinfo "c:/dev/ml-mono/bin/siebelinfo.exe")
+  (defun sc/cr-commit-msg (cr)
+    "Generate a message for committing with the correct CR if it exists."
+    (interactive "nSiebel CR: ")
+    (let ((msg (with-temp-buffer
+                 (call-process siebelinfo nil t nil (int-to-string cr) (user-login-name))
+                 (if (< (buffer-size) 2)
+                     (progn
+                       (message (format "Cannot find CR %d" cr))
+                       nil)
+                   (save-match-data
+                     (let ((str (buffer-string)))
+                       (string-match "INCIDENT OPN [[:digit:]]+ \\(.*\\)$" str)
+                       (match-string-no-properties 1 str)))))))
+      (when msg
+        (save-excursion
+          (insert (format "CR c#%d: %s" cr msg))
+          (newline)
+          (newline)
+          (insert (format "http://go/cr/%s" cr))
+          (newline))))))
 
 (use-package gitconfig
   :pin "melpa-stable")
