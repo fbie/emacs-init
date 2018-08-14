@@ -293,14 +293,13 @@ character."
     (interactive "nSiebel CR: ")
     (let ((msg (with-temp-buffer
                  (call-process siebelinfo nil t nil (int-to-string cr) (user-login-name))
-                 (if (< (buffer-size) 2)
-                     (progn
-                       (message (format "Cannot find CR %d" cr))
-                       nil)
-                   (save-match-data
-                     (let ((str (buffer-string)))
-                       (string-match "INCIDENT OPN [[:digit:]]+ \\(.*\\)$" str)
-                       (match-string-no-properties 1 str)))))))
+                 (save-match-data
+                   (if (buffer-size)
+                       (let ((str (buffer-string)))
+                         (string-match "INCIDENT OPN [[:digit:]]+ \\(.*\\)$" str)
+                         (match-string-no-properties 1 str))
+                     (message (format "Cannot find CR %d." cr))
+                     nil)))))
       (when msg
         (save-excursion
           (insert (format "CR c#%d: %s" cr msg))
