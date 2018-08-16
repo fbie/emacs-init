@@ -291,6 +291,8 @@ character."
   (defun sc/cr-commit-msg (cr)
     "Generate a message for committing with the correct CR if it exists."
     (interactive "nSiebel CR: ")
+    (when (not (file-exists-p siebelinfo))
+      (error  "Could not find siebelinfo.exe in the default location"))
     (let ((msg (with-temp-buffer
                  (call-process siebelinfo nil t nil (int-to-string cr) (user-login-name))
                  (save-match-data
