@@ -592,12 +592,13 @@ apparently, that does not work."
         ("C-c TAB" . helm-imenu))
   :after merlin
   :config
-  (setq tuareg-indent-align-with-first-arg 't
+  (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
   (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
   (when (package-installed-p 'merlin)
     (add-hook 'tuareg-mode-hook 'merlin-mode))
-  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?$" . tuareg-mode)))
+  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?$" . tuareg-mode))
+  (add-hook 'tuareg-mode-hook (lambda () (visual-fill-column-mode 0))))
 
 (use-package merlin-eldoc
   :pin "melpa-stable"
