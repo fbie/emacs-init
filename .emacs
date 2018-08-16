@@ -325,6 +325,10 @@ character."
   (projectile-mode 1)
   (helm-projectile-on))
 
+(use-package helm-git-grep
+  :pin "melpa"
+  :after helm
+  :bind ("C-c g" . helm-git-grep))
 
 (use-package paredit
   :pin "melpa-stable"
