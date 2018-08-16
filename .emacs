@@ -348,7 +348,7 @@ character."
 
 
 (use-package omnisharp
-  :pin "melpa-stable"
+  :pin "melpa"
   :after helm
   :bind
   (:map omnisharp-mode-map
@@ -364,7 +364,8 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
+  (setq omnisharp-server-executable-path
+        "~/.emacs.d/.cache/omnisharp/server/v1.31.1/OmniSharp.exe")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   :init
