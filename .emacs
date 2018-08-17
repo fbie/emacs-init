@@ -317,6 +317,7 @@ character."
   :pin "melpa-stable"
   :diminish company-mode
   :config
+  (setq company-idle-delay 1)
   (global-company-mode))
 
 
