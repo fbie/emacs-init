@@ -287,6 +287,7 @@ character."
   :bind
   ("C-c i" . magit-status)
   :config
+  (setq magit-git-executable "/usr/bin/git")
   (defconst siebelinfo "c:/dev/ml-mono/bin/siebelinfo.exe")
   (defun sc/cr-commit-msg (cr)
     "Generate a message for committing with the correct CR if it exists."
