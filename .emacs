@@ -585,6 +585,9 @@ apparently, that does not work."
   :diminish
   :preface (defconst merlin-path "c:/dev/ml-mono/mlfi/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
+  :bind
+  ("M-," . merlin-pop-stack)
+  ("M-." . merlin-locate)
   :config
   (setq merlin-command merlin-path))
 
