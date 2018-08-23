@@ -49,7 +49,7 @@
 (add-to-list 'load-path "f:/flbm/emacs-init/lib/")
 (require 'setup-cygwin)
 
-(setq backup-directory-alist `(("." . "c:/cygwin/home/flbm/.emacs.d/backups"))
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
       delete-old-versions t
       kept-new-versions 6
