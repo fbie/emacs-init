@@ -287,7 +287,8 @@ character."
   :bind
   ("C-c i" . magit-status)
   :config
-  (setq magit-git-executable "/usr/bin/git")
+  (setq vc-handles-backends nil
+        magit-git-executable "/usr/bin/git")
   (defconst siebelinfo "c:/dev/ml-mono/bin/siebelinfo.exe")
   (defun sc/cr-commit-msg (cr)
     "Generate a message for committing with the correct CR if it exists."
@@ -318,7 +319,7 @@ character."
   :pin "melpa-stable"
   :diminish company-mode
   :config
-  (setq company-idle-delay 1)
+  (setq company-idle-delay 1.5)
   (global-company-mode))
 
 
@@ -589,8 +590,9 @@ apparently, that does not work."
   ("M-," . merlin-pop-stack)
   ("M-." . merlin-locate)
   :config
-  (setq merlin-command merlin-path))
-
+  (setq merlin-command merlin-path
+        merlin-completion-with-doc 't
+        merlin-completion-dwim nil))
 
 (use-package tuareg
   :pin "melpa-stable"
