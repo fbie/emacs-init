@@ -40,6 +40,9 @@
     (erlang railscasts-reloaded-theme visual-fill-column auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch))))
 
 ;;; Code:
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
 (setq user-full-name "Florian Biermann"
       user-mail-address "flbm@simcorp.com")
