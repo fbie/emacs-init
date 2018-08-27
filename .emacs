@@ -287,7 +287,7 @@ character."
   :bind
   ("C-c i" . magit-status)
   :config
-  (setq vc-handles-backends nil
+  (setq vc-handled-backends nil
         magit-git-executable "/usr/bin/git")
   (defconst siebelinfo "c:/dev/ml-mono/bin/siebelinfo.exe")
   (defun sc/cr-commit-msg (cr)
