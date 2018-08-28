@@ -91,10 +91,6 @@
 (column-number-mode 1)
 (electric-pair-mode)
 
-(when (window-system)
-  ;; TODO: Do not break when not installed.
-  (set-frame-font "Fira Code Retina 11"))
-
 ;; Never quit Emacs!
 (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -642,6 +638,11 @@ apparently, that does not work."
       (message (package-menu-mark-upgrades))
       (package-menu-execute 'no-query))))
 
-
 (provide 'emacs)
 ;;; .emacs ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#FFFFDD" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "outline" :family "Fira Code Retina")))))
