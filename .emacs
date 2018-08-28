@@ -52,6 +52,9 @@
 (add-to-list 'load-path "f:/flbm/emacs-init/lib/")
 (require 'setup-cygwin)
 
+;; This seems to improve merlin's performance, but no guarantees yet.
+(setq shell-file-name "/bin/sh")
+
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
       delete-old-versions t
