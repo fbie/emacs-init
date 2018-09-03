@@ -367,8 +367,7 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path
-        "~/.emacs.d/.cache/omnisharp/server/v1.31.1/OmniSharp.exe")
+  (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.32.3/OmniSharp.exe")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   :init
