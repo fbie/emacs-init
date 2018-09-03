@@ -609,6 +609,7 @@ apparently, that does not work."
 (use-package merlin-eldoc
   :pin "melpa-stable"
   :config
+  (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
 ;; TODO: Experiment with ocp-indent
