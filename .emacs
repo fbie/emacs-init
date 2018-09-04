@@ -275,8 +275,10 @@ character."
   ("C-s" . helm-occur)
   ("C-c s" . isearch-forward)
   :init
+  (setq helm-ff-skip-boring-files t)
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
+  ; I cannot recall why I needed the line below?
   (add-hook 'LaTeX-mode-hook 'helm-mode))
 
 
