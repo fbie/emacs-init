@@ -327,7 +327,8 @@ character."
   :pin "melpa-stable"
   :diminish projectile-mode
   :config
-  (projectile-mode 1)
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
 (use-package helm-git-grep
@@ -583,7 +584,7 @@ apparently, that does not work."
 (use-package merlin
   :pin "melpa-stable"
   :diminish
-  :preface (defconst merlin-path "c:/dev/ml-mono/mlfi/merlin/ocamlmerlin.exe")
+  :preface (defconst merlin-path "c:/dev/ml-mono/tools/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
   :bind
   ("M-," . merlin-pop-stack)
