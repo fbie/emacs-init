@@ -110,7 +110,7 @@ character."
 
 
 ;; Too annoying to move the mouse to check time when in full screen
-(display-time-mode 1)
+(display-time-mode 0)
 (setq display-time-24hr-format 't
       display-time-day-and-date 't)
 
