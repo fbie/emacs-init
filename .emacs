@@ -624,6 +624,10 @@ apparently, that does not work."
 ;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 ;;(analog-indicator-mode)
 
+(use-package transpose-frame
+  :bind ("C-x t o" . transpose-frame))
+
+(require 'sc-tracer-mode "/cygdrive/c/dev/sc-tracer-mode/sc-tracer.el")
 
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
