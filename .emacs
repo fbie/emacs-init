@@ -601,7 +601,7 @@ apparently, that does not work."
         ("C-c TAB" . helm-imenu))
   :after merlin
   :config
-  (setq tuareg-indent-align-with-first-arg 't
+  (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
   (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
   (when (package-installed-p 'merlin)
