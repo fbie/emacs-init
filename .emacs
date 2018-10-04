@@ -59,6 +59,9 @@
       version-control t
       load-prefer-newer t)
 
+;; Lines in DIMAPI code are incredibly long, so I need this.
+(put 'scroll-left 'disabled nil)
+
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
