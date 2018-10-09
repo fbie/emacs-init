@@ -631,6 +631,7 @@ apparently, that does not work."
   :bind ("C-x t o" . transpose-frame))
 
 (require 'sc-tracer-mode "/cygdrive/c/dev/sc-tracer-mode/sc-tracer.el")
+(add-hook 'sc-tracer-mode-hook (lambda () (text-scale-set -2)))
 
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
