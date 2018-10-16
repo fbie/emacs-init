@@ -26,19 +26,6 @@
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
 ;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
 
-;; Require this on top thanks to safe themes.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
- '(package-selected-packages
-   (quote
-    (erlang railscasts-reloaded-theme visual-fill-column auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch))))
-
 ;;; Code:
 (setq user-full-name "Florian Biermann"
       user-mail-address "flbm@simcorp.com")
@@ -57,7 +44,8 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t
-      load-prefer-newer t)
+      load-prefer-newer t
+      w32-get-true-file-attributes nil)
 
 ;; Lines in DIMAPI code are incredibly long, so I need this.
 (put 'scroll-left 'disabled nil)
@@ -222,6 +210,7 @@ character."
 
 (use-package flycheck
   :pin "melpa-stable"
+  :disabled
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'LaTeX-mode-hook 'flycheck-mode)
@@ -241,6 +230,7 @@ character."
 
 
 (use-package flyspell
+  :disabled
   :pin "melpa-stable"
   :diminish flyspell-mode
   :config
@@ -585,7 +575,9 @@ apparently, that does not work."
 
 
 (use-package merlin
-  :pin "melpa-stable"
+  :ensure f
+  :load-path "c:/dev/ml-mono/tools/merlin/emacs"
+  ;; :pin "melpa-stable"
   :diminish
   :preface (defconst merlin-path "c:/dev/ml-mono/tools/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
@@ -594,7 +586,7 @@ apparently, that does not work."
   ("M-." . merlin-locate)
   :config
   (setq merlin-command merlin-path
-        merlin-completion-with-doc 't
+        merlin-completion-with-doc nil
         merlin-completion-dwim nil))
 
 (use-package tuareg
@@ -647,6 +639,7 @@ apparently, that does not work."
 
 (provide 'emacs)
 ;;; .emacs ends here
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
