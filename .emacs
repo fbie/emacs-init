@@ -99,6 +99,16 @@ character."
 
 (global-set-key (kbd "C-a") 'smart-back-to-indentation)
 
+(defun smart-make-frame ()
+  "Open current buffer in a new frame if there is more than one window open."
+  (interactive)
+  (let ((frame (selected-frame))
+        (buffer (current-buffer)))
+    (when (not (one-window-p frame))
+      (make-frame)
+      (delete-windows-on buffer frame))))
+
+(global-set-key (kbd "C-x w") 'smart-make-frame)
 
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 0)
