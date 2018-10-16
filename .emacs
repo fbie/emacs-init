@@ -278,7 +278,9 @@ character."
   ("C-s" . helm-occur)
   ("C-c s" . isearch-forward)
   :init
-  (setq helm-ff-skip-boring-files t)
+  (setq helm-ff-skip-boring-files t
+        helm-occur-show-buffer-name t
+        helm-moccur-show-buffer-fontification t)
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
   ; I cannot recall why I needed the line below?
