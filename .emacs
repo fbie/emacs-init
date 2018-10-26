@@ -32,7 +32,7 @@
 
 ;; Make Emacs Cygwin aware
 ;; See https://github.com/magit/magit/issues/1318#issuecomment-109546395
-(add-to-list 'load-path "f:/flbm/emacs-init/lib/")
+(add-to-list 'load-path (expand-file-name "./lib"))
 (require 'setup-cygwin)
 
 ;; This seems to improve merlin's performance, but no guarantees yet.
@@ -240,10 +240,11 @@ character."
 
 
 (use-package flyspell
-  :disabled
+  ;; :disabled
   :pin "melpa-stable"
   :diminish flyspell-mode
   :config
+  (setq-default ispell-program-name "aspell")
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
@@ -253,7 +254,6 @@ character."
   :diminish writegood-mode
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
-
 
 ;; This package shows undo operations as a tree and allows for
 ;; easy-peasy navigation in the undo history. Toggle with C-x u.
@@ -269,14 +269,14 @@ character."
   :pin melpa-stable
   :diminish helm-mode
   :bind
-  ("M-x" . helm-M-x)
+  ("M-x"     . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("C-x C-g" . helm-recentf)
-  ("C-c k" . helm-show-kill-ring)
+  ("C-c k"   . helm-show-kill-ring)
   ("C-c TAB" . helm-imenu)
-  ("C-x b" . helm-buffers-list)
-  ("C-s" . helm-occur)
-  ("C-c s" . isearch-forward)
+  ("C-x b"   . helm-buffers-list)
+  ("C-s"     . helm-occur)
+  ("C-c s"   . isearch-forward)
   :init
   (setq helm-ff-skip-boring-files t
         helm-occur-show-buffer-name t
@@ -293,29 +293,7 @@ character."
   ("C-c i" . magit-status)
   :config
   (setq vc-handled-backends nil
-        magit-git-executable "/usr/bin/git")
-  (defconst siebelinfo "c:/dev/ml-mono/bin/siebelinfo.exe")
-  (defun sc/cr-commit-msg (cr)
-    "Generate a message for committing with the correct CR if it exists."
-    (interactive "nSiebel CR: ")
-    (when (not (file-exists-p siebelinfo))
-      (error  "Could not find siebelinfo.exe in the default location"))
-    (let ((msg (with-temp-buffer
-                 (call-process siebelinfo nil t nil (int-to-string cr) (user-login-name))
-                 (save-match-data
-                   (if (buffer-size)
-                       (let ((str (buffer-string)))
-                         (string-match "INCIDENT OPN [[:digit:]]+ \\(.*\\)$" str)
-                         (match-string-no-properties 1 str))
-                     (message (format "Cannot find CR %d." cr))
-                     nil)))))
-      (when msg
-        (save-excursion
-          (insert (format "CR c#%d: %s" cr msg))
-          (newline)
-          (newline)
-          (insert (format "http://go/cr/%s" cr))
-          (newline))))))
+        magit-git-executable "/usr/bin/git"))
 
 (use-package gitconfig
   :pin "melpa-stable")
@@ -339,7 +317,7 @@ character."
 (use-package helm-git-grep
   :pin "melpa"
   :after helm
-  :bind ("C-c g" . helm-git-grep))
+  :bind ("C-c g" . helm-git-grep-at-point))
 
 (use-package paredit
   :pin "melpa-stable"
@@ -599,7 +577,10 @@ apparently, that does not work."
   :config
   (setq merlin-command merlin-path
         merlin-completion-with-doc nil
-        merlin-completion-dwim nil))
+        merlin-completion-dwim nil)
+  (defun helm-merlin-occurrences ()
+    (interactive)
+    (helm :sources '(merlin-occurrences))))
 
 (use-package tuareg
   :pin "melpa-stable"
@@ -610,6 +591,7 @@ apparently, that does not work."
   :config
   (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
+  ;; Why is this keybinding defined twice?
   (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
   (when (package-installed-p 'merlin)
     (add-hook 'tuareg-mode-hook 'merlin-mode))
@@ -634,8 +616,24 @@ apparently, that does not work."
 (use-package transpose-frame
   :bind ("C-x t o" . transpose-frame))
 
-(require 'sc-tracer-mode "/cygdrive/c/dev/sc-tracer-mode/sc-tracer.el")
+(use-package origami
+  :pin "melpa-stable"
+  :bind ("M-<return>" . origami-toggle-node)
+  :config
+  ;; This is here to keep deleting trailing whitespaces even if
+  ;; yafolding is disabled.
+  (global-origami-mode))
+
+(use-package json-mode
+  :pin "melpa-stable"
+  :mode "\\.\\(json\\|new\\)\\'"
+  :config
+  (add-hook 'json-mode-hook 'paredit-mode))
+
+(require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
 (add-hook 'sc-tracer-mode-hook (lambda () (text-scale-set -2)))
+
+(require 'sc-tools "c:/dev/sc-tools-el/sc-tools.el")
 
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
@@ -648,6 +646,24 @@ apparently, that does not work."
       (list-packages)
       (message (package-menu-mark-upgrades))
       (package-menu-execute 'no-query))))
+
+(add-hook 'align-load-hook
+          (lambda ()
+            ;; Less code for adding alignment rules.
+            (defun add-align-rule (title regexp)
+              (add-to-list 'align-rules-list
+                           `(,title
+                             (regexp . ,regexp)
+                             (group  . 1)
+                             (modes  . (list 'tuareg-mode))
+                             (repeat . nil))))
+            ;; Borrowed from Manuel Odendahl
+            ;; https://github.com/wesen/emacs/blob/dcd8f020ca020d32837196000615ef1cd05e7929/dot-emacs#L946
+            (add-align-rule 'ocaml-colon "\\(\\s-*\\):" )
+            (add-align-rule 'ocaml-arrow "\\(\\s-*\\)->")
+            (add-align-rule 'ocaml-of    "\\(\\s-*\\)of")
+
+            (global-set-key (kbd "M-a") 'align-current)))
 
 (provide 'emacs)
 ;;; .emacs ends here
