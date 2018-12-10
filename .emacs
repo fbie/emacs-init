@@ -356,6 +356,7 @@ character."
   (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.32.3/OmniSharp.exe")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
+  (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode))
 
@@ -376,6 +377,7 @@ character."
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
+  (add-hook 'racket-mode-hook 'visual-fill-column-mode)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
@@ -406,7 +408,7 @@ character."
         visual-fill-column-width       110)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
-  (add-hook 'prog-mode-hook 'visual-fill-column-mode))
+  (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
 
 
 ;; Downloading bibliography from CiteULike
