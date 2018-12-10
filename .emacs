@@ -32,7 +32,7 @@
 
 ;; Make Emacs Cygwin aware
 ;; See https://github.com/magit/magit/issues/1318#issuecomment-109546395
-(add-to-list 'load-path (expand-file-name "./lib"))
+(add-to-list 'load-path (expand-file-name "lib/" (file-name-directory load-file-name)))
 (require 'setup-cygwin)
 
 ;; This seems to improve merlin's performance, but no guarantees yet.
