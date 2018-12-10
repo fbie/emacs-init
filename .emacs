@@ -632,6 +632,13 @@ apparently, that does not work."
   :config
   (add-hook 'json-mode-hook 'paredit-mode))
 
+(use-package vlf
+  :bind
+  (:map vlf-mode-map
+        ("C-s" . vlf-occur))
+  :config
+  (require 'vlf-setup))
+
 (require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
 (add-hook 'sc-tracer-mode-hook (lambda () (text-scale-set -2)))
 
