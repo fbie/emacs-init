@@ -280,7 +280,8 @@ character."
   :init
   (setq helm-ff-skip-boring-files t
         helm-occur-show-buffer-name t
-        helm-moccur-show-buffer-fontification t)
+        helm-moccur-show-buffer-fontification t
+        helm-buffer-max-length nil)
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
   ; I cannot recall why I needed the line below?
@@ -601,6 +602,7 @@ apparently, that does not work."
   (add-hook 'tuareg-mode-hook (lambda () (visual-fill-column-mode 0))))
 
 (use-package merlin-eldoc
+  :disabled
   :pin "melpa-stable"
   :config
   (setq merlin-eldoc-type-verbosity 'min)
@@ -638,6 +640,18 @@ apparently, that does not work."
         ("C-s" . vlf-occur))
   :config
   (require 'vlf-setup))
+
+(use-package auto-dim-other-buffers
+  :diminish auto-dim-other-buffers-mode
+  :config
+  (auto-dim-other-buffers-mode 't)
+  (setq auto-dim-other-buffers-dim-on-switch-to-minibuffer nil
+        auto-dim-other-buffers-dim-on-focus-out nil))
+
+(use-package yascroll
+  :diminish yascroll-mode
+  :config
+  (global-yascroll-bar-mode 1))
 
 (require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
 (add-hook 'sc-tracer-mode-hook (lambda () (text-scale-set -2)))
