@@ -70,6 +70,9 @@
   (dolist (binding bindings)
     (global-unset-key binding)))
 
+;; Revert automatically; this saves me a few key strokes on revert.
+(global-auto-revert-mode t)
+
 ;; This is easier for my fingers:
 (global-set-key (kbd "C-=") 'set-mark-command)
 
