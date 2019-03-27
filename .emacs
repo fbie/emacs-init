@@ -62,10 +62,16 @@
               tab-width 4)
 
 ;; Remove useless, annoying key-bindings.
-(global-unset-key (kbd "C-z")) ;; Don't minimize.
-(global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
-(global-unset-key (kbd "C-x C-l")) ;; Don't use downcase-region.
-(global-unset-key (kbd "C-x C-u")) ;; Don't use upcase-region.
+(let ((bindings
+       (list (kbd "C-z")        ;; Don't minimize.
+             (kbd "C-x C-b")    ;; Don't show buffer overview.
+             (kbd "C-x C-l")    ;; Don't use downcase-region.
+             (kbd "C-x C-u")))) ;; Don't use upcase-region.
+  (dolist (binding bindings)
+    (global-unset-key binding)))
+
+;; This is easier for my fingers:
+(global-set-key (kbd "C-=") 'set-mark-command)
 
 ;; Why would you ever want them?
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -619,14 +625,6 @@ apparently, that does not work."
 
 (use-package transpose-frame
   :bind ("C-x t o" . transpose-frame))
-
-(use-package origami
-  :pin "melpa-stable"
-  :bind ("M-<return>" . origami-toggle-node)
-  :config
-  ;; This is here to keep deleting trailing whitespaces even if
-  ;; yafolding is disabled.
-  (global-origami-mode))
 
 (use-package json-mode
   :pin "melpa-stable"
