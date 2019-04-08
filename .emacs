@@ -301,6 +301,7 @@ character."
 
 (use-package helm-projectile
   :diminish projectile-mode
+  :bind ("C-c p" . projectile-command-map)
   :config
   (projectile-global-mode)
   (setq projectile-completion-system 'helm
@@ -548,8 +549,9 @@ apparently, that does not work."
   :preface (defconst merlin-path "c:/dev/ml-mono/tools/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
   :bind
-  ("M-," . merlin-pop-stack)
-  ("M-." . merlin-locate)
+  (:map merlin-mode-map
+        ("M-," . merlin-pop-stack)
+        ("M-." . merlin-locate))
   :config
   (setq merlin-command merlin-path
         merlin-completion-with-doc nil
@@ -560,23 +562,21 @@ apparently, that does not work."
 
 (use-package tuareg
   :demand
+  :bind
   (:map tuareg-mode-map
         ("C-c TAB" . helm-imenu))
   :after merlin
+  :init
+  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?" . tuareg-mode))
   :config
   (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
-  ;; Why is this keybinding defined twice?
-  (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
-  (when (package-installed-p 'merlin)
-    (add-hook 'tuareg-mode-hook 'merlin-mode))
-  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?$" . tuareg-mode))
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
   (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
   (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.annot$")
-  (add-hook 'tuareg-mode-hook (lambda () (visual-fill-column-mode 0))))
+  (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
 
 (use-package merlin-eldoc
   :disabled
