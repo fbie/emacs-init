@@ -144,7 +144,7 @@ character."
 
 ;; Set-up melpa stable and gnu repositories.
 (require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
@@ -153,11 +153,6 @@ character."
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
-;; Only now add melpa, to avoid use-package updating itself to some
-;; bleeding-edge version that doesn't know about the :pin keyword.
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
 
 ;; Why wouldn't you?
 (setq use-package-always-ensure t)
@@ -183,7 +178,6 @@ character."
 
 
 (use-package multiple-cursors
-  :pin "melpa-stable"
   :bind
   ("C->" . mc/mark-next-like-this)
   ("C-<" . mc/mark-previous-like-this))
@@ -221,14 +215,11 @@ character."
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-
-  ;; TODO: My ITU ownCloud account will be closed soon; alternatives?
   (setq org-directory "f:/flbm/org/")
   (add-to-list 'org-agenda-files org-directory))
 
 
 (use-package flycheck
-  :pin "melpa-stable"
   :disabled
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode)
@@ -249,8 +240,6 @@ character."
 
 
 (use-package flyspell
-  ;; :disabled
-  :pin "melpa-stable"
   :diminish flyspell-mode
   :config
   (setq-default ispell-program-name "aspell")
@@ -259,7 +248,6 @@ character."
 
 
 (use-package writegood-mode
-  :pin "melpa-stable"
   :diminish writegood-mode
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
@@ -267,7 +255,6 @@ character."
 ;; This package shows undo operations as a tree and allows for
 ;; easy-peasy navigation in the undo history. Toggle with C-x u.
 ;; (use-package undo-tree
-;;   :pin "melpa"
 ;;   :diminish undo-tree-mode
 ;;   :config
 ;;   (global-undo-tree-mode)
@@ -275,7 +262,6 @@ character."
 
 
 (use-package helm
-  :pin melpa-stable
   :diminish helm-mode
   :bind
   ("M-x"     . helm-M-x)
@@ -298,18 +284,15 @@ character."
 
 
 (use-package magit
-  :pin "melpa-stable"
   :bind
   ("C-c i" . magit-status)
   :config
   (setq vc-handled-backends nil
         magit-git-executable "/usr/bin/git"))
 
-(use-package gitconfig
-  :pin "melpa-stable")
+(use-package gitconfig)
 
 (use-package company
-  :pin "melpa-stable"
   :diminish company-mode
   :config
   (setq company-idle-delay 1.5)
@@ -317,7 +300,6 @@ character."
 
 
 (use-package helm-projectile
-  :pin "melpa-stable"
   :diminish projectile-mode
   :config
   (projectile-global-mode)
@@ -325,12 +307,10 @@ character."
   (helm-projectile-on))
 
 (use-package helm-git-grep
-  :pin "melpa"
   :after helm
   :bind ("C-c g" . helm-git-grep-at-point))
 
 (use-package paredit
-  :pin "melpa-stable"
   :diminish paredit-mode
   :bind
   (:map paredit-mode-map
@@ -347,7 +327,6 @@ character."
 
 
 (use-package omnisharp
-  :pin "melpa"
   :after helm
   :bind
   (:map omnisharp-mode-map
@@ -372,12 +351,10 @@ character."
 
 
 (use-package paren-face
-  :pin "melpa-stable"
   :config (global-paren-face-mode))
 
 
 (use-package racket-mode
-  :pin "melpa"
   :after paredit
   :bind
   (:map racket-mode-map ("C-h f" . racket-describe))
@@ -393,7 +370,6 @@ character."
 
 
 (use-package rainbow-delimiters
-  :pin "melpa-stable"
   :after racket-mode
   :init
   (add-hook 'racket-mode-hook      'rainbow-delimiters-mode)
@@ -403,7 +379,6 @@ character."
 
 
 (use-package fsharp-mode
-  :pin "melpa-stable"
   :config
   (setq fsharp-doc-idle-delay 1.0)
   (setq inferior-fsharp-program
@@ -412,7 +387,6 @@ character."
 
 
 (use-package visual-fill-column
-  :pin "melpa-stable"
   :init
   (setq visual-fill-column-center-text t
         visual-fill-column-width       110)
@@ -447,7 +421,6 @@ character."
 
 
 (use-package org-journal
-  :pin "melpa-stable"
   :after org
   :bind
   (:map org-journal-mode-map
@@ -463,7 +436,6 @@ character."
 
 (use-package org-present
   :disabled
-  :pin "melpa"
   :after org
   :bind
   (:map org-present-mode-keymap
@@ -488,14 +460,12 @@ character."
 
 
 (use-package smart-mode-line
-  :pin "melpa-stable"
   :init
   (setq sml/no-confirm-load-theme t)
   (smart-mode-line-enable))
 
 
 (use-package professional-theme
-  :pin "melpa"
   :after smart-mode-line
   :config
   (setq sml/theme 'light)
@@ -506,7 +476,6 @@ character."
 
 (use-package railscasts-reloaded-theme
   :disabled
-  :pin "melpa-stable"
   :after smart-mode-line centered-window-mode
   :config
   ;; A bit of grim reverse engineering to get rid of large header
@@ -521,12 +490,10 @@ character."
 
 
 (use-package gnuplot-mode
-  :pin "melpa"
   :mode "\\.gnuplot\\'")
 
 
 (use-package markdown-mode
-  :pin "melpa-stable"
   :mode "\\.md\\'"
   :bind
   (:map markdown-mode-map
@@ -535,13 +502,11 @@ character."
 
 
 (use-package ace-jump-mode
-  :pin "melpa-stable"
   :bind
   ("C-S-s" . ace-jump-mode))
 
 
 (use-package ace-window
-  :pin "melpa-stable"
   :bind
   ("C-x o" . ace-window)
   ("C-x C-o" . ace-swap-window)
@@ -577,9 +542,6 @@ apparently, that does not work."
 
 
 (use-package merlin
-  :ensure f
-  :load-path "c:/dev/ml-mono/tools/merlin/emacs"
-  ;; :pin "melpa-stable"
   :diminish
   :preface (defconst merlin-path "c:/dev/ml-mono/tools/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
@@ -595,7 +557,6 @@ apparently, that does not work."
     (helm :sources '(merlin-occurrences))))
 
 (use-package tuareg
-  :pin "melpa-stable"
   :demand
   (:map tuareg-mode-map
         ("C-c TAB" . helm-imenu))
@@ -612,14 +573,12 @@ apparently, that does not work."
 
 (use-package merlin-eldoc
   :disabled
-  :pin "melpa-stable"
   :config
   (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
 ;; TODO: Experiment with ocp-indent
-;; (use-package ocp-indent
-;;   :pin "melpa-stable")
+;; (use-package ocp-indent)
 
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
 ;; (use-package delight)
@@ -630,7 +589,6 @@ apparently, that does not work."
   :bind ("C-x t o" . transpose-frame))
 
 (use-package json-mode
-  :pin "melpa-stable"
   :mode "\\.\\(json\\|new\\)\\'"
   :config
   (add-hook 'json-mode-hook 'paredit-mode))
