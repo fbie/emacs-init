@@ -303,7 +303,9 @@ character."
   :diminish projectile-mode
   :config
   (projectile-global-mode)
-  (setq projectile-completion-system 'helm)
+  (setq projectile-completion-system 'helm
+        projectile-enable-caching t
+        projectile-indexing-method 'turbo-alien)
   (helm-projectile-on))
 
 (use-package helm-git-grep
