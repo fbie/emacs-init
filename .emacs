@@ -571,6 +571,11 @@ apparently, that does not work."
   (when (package-installed-p 'merlin)
     (add-hook 'tuareg-mode-hook 'merlin-mode))
   (add-to-list 'auto-mode-alist '("\\.mf[iylp]?$" . tuareg-mode))
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.annot$")
   (add-hook 'tuareg-mode-hook (lambda () (visual-fill-column-mode 0))))
 
 (use-package merlin-eldoc
