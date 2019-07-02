@@ -26,21 +26,7 @@
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
 ;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
 
-;; Require this on top thanks to safe themes.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
- '(package-selected-packages
-   (quote
-    (erlang railscasts-reloaded-theme visual-fill-column auto-package-update merlin tuareg writegood-mode use-package undo-tree spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-present org-journal omnisharp multiple-cursors markdown-mode magit helm-swoop helm-projectile haskell-mode gnuplot-mode fsharp-mode exec-path-from-shell ess delight centered-window-mode auctex ace-jump-mode ace-isearch))))
-
 ;;; Code:
-
 (setq user-full-name "Florian Biermann"
       user-mail-address "fbie@itu.dk")
 
@@ -50,7 +36,8 @@
       kept-new-versions 6
       kept-old-versions 2
       version-control t
-      load-prefer-newer t)
+      load-prefer-newer t
+      w32-get-true-file-attributes nil)
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
@@ -64,10 +51,19 @@
               tab-width 4)
 
 ;; Remove useless, annoying key-bindings.
-(global-unset-key (kbd "C-z")) ;; Don't minimize.
-(global-unset-key (kbd "C-x C-b")) ;; Don't show buffer overview.
-(global-unset-key (kbd "C-x C-l")) ;; Don't use downcase-region.
-(global-unset-key (kbd "C-x C-u")) ;; Don't use upcase-region.
+(let ((bindings
+       (list (kbd "C-z")        ;; Don't minimize.
+             (kbd "C-x C-b")    ;; Don't show buffer overview.
+             (kbd "C-x C-l")    ;; Don't use downcase-region.
+             (kbd "C-x C-u")))) ;; Don't use upcase-region.
+  (dolist (binding bindings)
+    (global-unset-key binding)))
+
+;; Revert automatically; this saves me a few key strokes on revert.
+(global-auto-revert-mode t)
+
+;; This is easier for my fingers:
+(global-set-key (kbd "C-=") 'set-mark-command)
 
 ;; Why would you ever want them?
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -101,45 +97,31 @@ character."
 
 (global-set-key (kbd "C-a") 'smart-back-to-indentation)
 
+(defun smart-make-frame ()
+  "Open current buffer in a new frame if there is more than one window open."
+  (interactive)
+  (let ((frame (selected-frame))
+        (buffer (current-buffer)))
+    (when (not (one-window-p frame))
+      (make-frame)
+      (delete-windows-on buffer frame))))
 
-(defun system-win? ()
-  "True if current system is Windows."
-  (or (eq system-type 'windows-nt)
-      (eq system-type 'ms-dos)))
-
-
-(defun system-osx? ()
-  "True if current system is Mac OSX."
-  (eq system-type 'darwin))
-
-(defun system-linux? ()
-  "True if current system is Linux."
-  (not (or (system-win?) (system-osx?))))
-
+(global-set-key (kbd "C-x w") 'smart-make-frame)
 
 ;; Too annoying to move the mouse to check time when in full screen
-(display-time-mode 1)
+(display-time-mode 0)
 (setq display-time-24hr-format 't
       display-time-day-and-date 't)
 
-
-;; TODO: I have given up my old setup, so this should be updated.
-(defun external-screen? ()
-  "Non-nil if Emacs is running on an external screen, I think."
-  (not (string-equal "eDP1" (cdr (assoc 'name (car (display-monitor-attributes-list)))))))
-
+;; Otherwise, configure splitting and split sensibly.
+(setq split-width-threshold  nil)
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (one-window-p t)
+  (if (and (one-window-p t) (> (frame-width) 110))
       ;; If only one window is present, split it vertically when using
       ;; an external screen, otherwise split horizontally.
-      (if (external-screen?)
-          (split-window-right)
-        (split-window-below))
-    ;; Otherwise, configure splitting and split sensibly.
-    (setq split-height-threshold (if (external-screen?) 0 nil)
-          split-width-threshold  (if (external-screen?) nil 0))
+      (split-window-right)
     (split-window-sensibly window)))
 
 
@@ -151,7 +133,7 @@ character."
 
 ;; Set-up melpa stable and gnu repositories.
 (require 'package)
-(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
@@ -160,11 +142,6 @@ character."
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
-;; Only now add melpa, to avoid use-package updating itself to some
-;; bleeding-edge version that doesn't know about the :pin keyword.
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
 
 ;; Why wouldn't you?
 (setq use-package-always-ensure t)
@@ -190,7 +167,6 @@ character."
 
 
 (use-package multiple-cursors
-  :pin "melpa-stable"
   :bind
   ("C->" . mc/mark-next-like-this)
   ("C-<" . mc/mark-previous-like-this))
@@ -235,7 +211,7 @@ character."
 
 
 (use-package flycheck
-  :pin "melpa-stable"
+  :disabled
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'LaTeX-mode-hook 'flycheck-mode)
@@ -255,7 +231,6 @@ character."
 
 
 (use-package flyspell
-  :pin "melpa-stable"
   :diminish flyspell-mode
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
@@ -263,65 +238,72 @@ character."
 
 
 (use-package writegood-mode
-  :pin "melpa-stable"
   :diminish writegood-mode
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
-
 ;; This package shows undo operations as a tree and allows for
 ;; easy-peasy navigation in the undo history. Toggle with C-x u.
-(use-package undo-tree
-  :pin "melpa"
-  :diminish undo-tree-mode
-  :config
-  (global-undo-tree-mode)
-  (setq undo-tree-visualizer-diff t))
+;; (use-package undo-tree
+;;   :diminish undo-tree-mode
+;;   :config
+;;   (global-undo-tree-mode)
+;;   (setq undo-tree-visualizer-diff t))
 
 
 (use-package helm
-  :pin melpa-stable
   :diminish helm-mode
   :bind
-  ("M-x" . helm-M-x)
+  ("M-x"     . helm-M-x)
   ("C-x C-f" . helm-find-files)
   ("C-x C-g" . helm-recentf)
-  ("C-c k" . helm-show-kill-ring)
+  ("C-c k"   . helm-show-kill-ring)
   ("C-c TAB" . helm-imenu)
-  ("C-x b" . helm-buffers-list)
-  ("C-s" . helm-occur)
-  ("C-c s" . isearch-forward)
+  ("C-x b"   . helm-buffers-list)
+  ("C-s"     . helm-occur)
+  ("C-c s"   . isearch-forward)
   :init
+  (setq helm-ff-skip-boring-files t
+        helm-occur-show-buffer-name t
+        helm-moccur-show-buffer-fontification t
+        helm-buffer-max-length nil)
   (helm-mode 'true)
   (helm-autoresize-mode 'true)
+  ; I cannot recall why I needed the line below?
   (add-hook 'LaTeX-mode-hook 'helm-mode))
 
 
 (use-package magit
-  :pin "melpa-stable"
   :bind
-  ("C-c i" . magit-status))
+  ("C-c i" . magit-status)
+  :config
+  (setq vc-handled-backends nil
+        magit-git-executable "/usr/bin/git"))
 
-(use-package gitconfig
-  :pin "melpa-stable")
+(use-package gitconfig)
 
 (use-package company
-  :pin "melpa-stable"
   :diminish company-mode
   :config
+  (setq company-idle-delay 1.5)
   (global-company-mode))
 
 
 (use-package helm-projectile
-  :pin "melpa-stable"
   :diminish projectile-mode
+  :bind ("C-c p" . projectile-command-map)
   :config
-  (projectile-mode 1)
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm
+        projectile-enable-caching t
+        projectile-indexing-method 'turbo-alien)
   (helm-projectile-on))
 
+(use-package helm-git-grep
+  :after helm
+  :bind ("C-c g" . helm-git-grep-at-point))
 
 (use-package paredit
-  :pin "melpa-stable"
   :diminish paredit-mode
   :bind
   (:map paredit-mode-map
@@ -338,7 +320,6 @@ character."
 
 
 (use-package omnisharp
-  :pin "melpa-stable"
   :after helm
   :bind
   (:map omnisharp-mode-map
@@ -357,17 +338,16 @@ character."
   (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
+  (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode))
 
 
 (use-package paren-face
-  :pin "melpa-stable"
   :config (global-paren-face-mode))
 
 
 (use-package racket-mode
-  :pin "melpa"
   :after paredit
   :bind
   (:map racket-mode-map ("C-h f" . racket-describe))
@@ -377,12 +357,12 @@ character."
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
+  (add-hook 'racket-mode-hook 'visual-fill-column-mode)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
 
 (use-package rainbow-delimiters
-  :pin "melpa-stable"
   :after racket-mode
   :init
   (add-hook 'racket-mode-hook      'rainbow-delimiters-mode)
@@ -392,7 +372,6 @@ character."
 
 
 (use-package fsharp-mode
-  :pin "melpa-stable"
   :config
   (setq fsharp-doc-idle-delay 1.0)
   (setq inferior-fsharp-program
@@ -401,13 +380,12 @@ character."
 
 
 (use-package visual-fill-column
-  :pin "melpa-stable"
   :init
   (setq visual-fill-column-center-text t
         visual-fill-column-width       110)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
   (add-hook 'text-mode-hook 'visual-fill-column-mode)
-  (add-hook 'prog-mode-hook 'visual-fill-column-mode))
+  (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
 
 
 ;; Downloading bibliography from CiteULike
@@ -436,7 +414,6 @@ character."
 
 
 (use-package org-journal
-  :pin "melpa-stable"
   :after org
   :bind
   (:map org-journal-mode-map
@@ -452,7 +429,6 @@ character."
 
 (use-package org-present
   :disabled
-  :pin "melpa"
   :after org
   :bind
   (:map org-present-mode-keymap
@@ -477,14 +453,12 @@ character."
 
 
 (use-package smart-mode-line
-  :pin "melpa-stable"
   :init
   (setq sml/no-confirm-load-theme t)
   (smart-mode-line-enable))
 
 
 (use-package professional-theme
-  :pin "melpa"
   :after smart-mode-line
   :config
   (setq sml/theme 'light)
@@ -495,7 +469,6 @@ character."
 
 (use-package railscasts-reloaded-theme
   :disabled
-  :pin "melpa-stable"
   :after smart-mode-line centered-window-mode
   :config
   ;; A bit of grim reverse engineering to get rid of large header
@@ -510,12 +483,10 @@ character."
 
 
 (use-package gnuplot-mode
-  :pin "melpa"
   :mode "\\.gnuplot\\'")
 
 
 (use-package markdown-mode
-  :pin "melpa-stable"
   :mode "\\.md\\'"
   :bind
   (:map markdown-mode-map
@@ -524,13 +495,11 @@ character."
 
 
 (use-package ace-jump-mode
-  :pin "melpa-stable"
   :bind
   ("C-S-s" . ace-jump-mode))
 
 
 (use-package ace-window
-  :pin "melpa-stable"
   :bind
   ("C-x o" . ace-window)
   ("C-x C-o" . ace-swap-window)
@@ -566,30 +535,41 @@ apparently, that does not work."
 
 
 (use-package merlin
-  :pin "melpa-stable"
   :diminish
   :preface (defconst merlin-path "~/.opam/system/bin/ocamlmerlin")
   :if (file-exists-p merlin-path)
+  :bind
+  (:map merlin-mode-map
+        ("M-," . merlin-pop-stack)
+        ("M-." . merlin-locate))
   :config
-  (setq merlin-command merlin-path))
-
+  (setq merlin-command merlin-path
+        merlin-completion-with-doc nil
+        merlin-completion-dwim nil)
+  (defun helm-merlin-occurrences ()
+    (interactive)
+    (helm :sources '(merlin-occurrences))))
 
 (use-package tuareg
-  :pin "melpa-stable"
   :demand
+  :bind
   (:map tuareg-mode-map
         ("C-c TAB" . helm-imenu))
   :after merlin
   :config
-  (setq tuareg-indent-align-with-first-arg 't
+  (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
-  (define-key tuareg-mode-map (kbd "C-c TAB") 'helm-imenu)
-  (when (package-installed-p 'merlin)
-    (add-hook 'tuareg-mode-hook 'merlin-mode)))
+  (add-hook 'tuareg-mode-hook 'merlin-mode)
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
 
 (use-package merlin-eldoc
-  :pin "melpa-stable"
+  :disabled
   :config
+  (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
 ;; TODO: Experiment with ocp-indent
@@ -601,7 +581,18 @@ apparently, that does not work."
 (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 ;;(analog-indicator-mode)
 
+(use-package transpose-frame
+  :bind ("C-x t o" . transpose-frame))
 
+(use-package json-mode
+  :mode "\\.\\(json\\|new\\)\\'"
+  :config
+  (add-hook 'json-mode-hook 'paredit-mode))
+
+(use-package yascroll
+  :diminish yascroll-mode
+  :config
+  (global-yascroll-bar-mode 1))
 ;; Since auto-update does not work, I use this homegrown package
 ;; update function.
 ;; TODO: When did I use this last?
@@ -617,3 +608,10 @@ apparently, that does not work."
 
 (provide 'emacs)
 ;;; .emacs ends here
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#FFFFDD" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "outline" :family "Fira Code Retina")))))
