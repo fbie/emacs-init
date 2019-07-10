@@ -276,11 +276,10 @@ character."
   (setq helm-ff-skip-boring-files t
         helm-occur-show-buffer-name t
         helm-moccur-show-buffer-fontification t
-        helm-buffer-max-length nil)
+        helm-buffer-max-length nil
+        helm-grep-default-command "grep -I --color=always -a -d skip %e -n%cH -e %p %f")
   (helm-mode 'true)
-  (helm-autoresize-mode 'true)
-  ; I cannot recall why I needed the line below?
-  (add-hook 'LaTeX-mode-hook 'helm-mode))
+  (helm-autoresize-mode 'true))
 
 
 (use-package magit
