@@ -562,12 +562,10 @@ apparently, that does not work."
 
 (use-package tuareg
   :demand
+  :mode ("\\.mf[iylp]?" . tuareg-mode)
   :bind
   (:map tuareg-mode-map
         ("C-c TAB" . helm-imenu))
-  :after merlin
-  :init
-  (add-to-list 'auto-mode-alist '("\\.mf[iylp]?" . tuareg-mode))
   :config
   (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
