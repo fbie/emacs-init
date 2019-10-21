@@ -96,6 +96,7 @@
 ;; Kill, kill, kill!
 (setq kill-whole-line t)
 
+(setq compilation-scroll-output 'first-error)
 
 (defun smart-back-to-indentation ()
   "Jump between the beginning of line and the line's first
@@ -205,8 +206,11 @@ character."
 
         org-startup-with-inline-images t
 
-        org-agenda-window-setup 'other-window)
-
+        org-agenda-window-setup 'other-window
+        org-todo-keywords '((sequence "TODO(t!)" "INPROGRESS(i!)" "|" "DONE(d!)"))
+        org-todo-keyword-faces '(("TODO"       . (:foreground "red"         :weight bold))
+                                 ("INPROGRESS" . (:foreground "orange"      :weight bold))
+                                 ("DONE"       . (:foreground "forestgreen" :weight bold))))
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -366,7 +370,6 @@ character."
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
-  (add-hook 'racket-mode-hook 'visual-fill-column-mode)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
@@ -393,8 +396,7 @@ character."
   (setq visual-fill-column-center-text t
         visual-fill-column-width       110)
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-  (add-hook 'text-mode-hook 'visual-fill-column-mode)
-  (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
+  (add-hook 'LaTeX-mode-hook 'visual-fill-column-mode))
 
 
 ;; Downloading bibliography from CiteULike
