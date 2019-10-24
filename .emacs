@@ -618,6 +618,18 @@ apparently, that does not work."
   :config
   (global-yascroll-bar-mode 1))
 
+(use-package focus
+  :diminish focus-mode)
+
+(use-package highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-auto-enabled nil)
+  (set-face-background 'highlight-indent-guides-odd-face "peach puff")
+  (set-face-background 'highlight-indent-guides-even-face "dark goldenrod")
+  (set-face-foreground 'highlight-indent-guides-character-face "peach puff")
+  (add-hook 'tuareg-mode-hook 'highlight-indent-guides-mode))
+
 (require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
 (add-hook 'sc-tracer-mode-hook (lambda () (text-scale-set -2)))
 
