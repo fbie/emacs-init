@@ -624,10 +624,11 @@ apparently, that does not work."
 (use-package highlight-indent-guides
   :config
   (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-auto-enabled nil)
-  (set-face-background 'highlight-indent-guides-odd-face "peach puff")
-  (set-face-background 'highlight-indent-guides-even-face "dark goldenrod")
-  (set-face-foreground 'highlight-indent-guides-character-face "peach puff")
+        highlight-indent-guides-auto-enabled nil
+        highlight-indent-guides-responsive 'stack)
+  (set-face-foreground 'highlight-indent-guides-character-face "light goldenrod")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "orange")
+  (set-face-foreground 'highlight-indent-guides-stack-character-face "dark goldenrod")
   (add-hook 'tuareg-mode-hook 'highlight-indent-guides-mode))
 
 (require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
