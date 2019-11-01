@@ -207,10 +207,17 @@ character."
         org-startup-with-inline-images t
 
         org-agenda-window-setup 'other-window
-        org-todo-keywords '((sequence "TODO(t!)" "INPROGRESS(i!)" "|" "DONE(d!)"))
+        org-todo-keywords '((sequence "TODO(t!)"
+                                      "INPROGRESS(i!)"
+                                      "INREVIEW(r!)"
+                                      "|"
+                                      "DONE(d!)"
+                                      "DELEGATED(l!)"))
         org-todo-keyword-faces '(("TODO"       . (:foreground "red"         :weight bold))
                                  ("INPROGRESS" . (:foreground "orange"      :weight bold))
-                                 ("DONE"       . (:foreground "forestgreen" :weight bold))))
+                                 ("INREVIEW"   . (:foreground "royal blue"      :weight bold))
+                                 ("DONE"       . (:foreground "forestgreen" :weight bold))
+                                 ("DELEGATED"  . (:foreground "forestgreen" :weight bold))))
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -622,6 +629,7 @@ apparently, that does not work."
   :diminish focus-mode)
 
 (use-package highlight-indent-guides
+  :diminish highlight-indent-guides-mode
   :config
   (setq highlight-indent-guides-method 'character
         highlight-indent-guides-auto-enabled nil
