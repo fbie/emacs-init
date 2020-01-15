@@ -146,8 +146,7 @@ character."
 ;; Set-up melpa stable and gnu repositories.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
 ;; Install use-package if needed.
@@ -156,6 +155,7 @@ character."
   (package-install 'use-package))
 
 ;; Why wouldn't you?
+(require 'use-package)
 (setq use-package-always-ensure t)
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
@@ -164,8 +164,8 @@ character."
 
 
 ;; Install auctex. use-package does not handle this well.
-(unless (package-installed-p 'auctex)
-  (package-install 'auctex))
+;(unless (package-installed-p 'auctex)
+;  (package-install 'auctex))
 
 
 ;; Allow imenu bindings also in LaTeX mode.
@@ -212,12 +212,14 @@ character."
                                       "INREVIEW(r!)"
                                       "|"
                                       "DONE(d!)"
-                                      "DELEGATED(l!)"))
+                                      "DELEGATED(l!)"
+                                      "ABANDONED(a!)"))
         org-todo-keyword-faces '(("TODO"       . (:foreground "red"         :weight bold))
                                  ("INPROGRESS" . (:foreground "orange"      :weight bold))
-                                 ("INREVIEW"   . (:foreground "royal blue"      :weight bold))
+                                 ("INREVIEW"   . (:foreground "royal blue"  :weight bold))
                                  ("DONE"       . (:foreground "forestgreen" :weight bold))
-                                 ("DELEGATED"  . (:foreground "forestgreen" :weight bold))))
+                                 ("DELEGATED"  . (:foreground "forestgreen" :weight bold))
+                                 ("ABANDONED"  . (:foreground "dim gray"    :weight bold))))
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -355,7 +357,7 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.32.3/OmniSharp.exe")
+  (setq omnisharp-server-executable-path (expand-file-name "~/.emacs.d/omnisharp.sh"))
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
@@ -476,28 +478,13 @@ character."
   (smart-mode-line-enable))
 
 
-(use-package professional-theme
+(use-package color-theme-sanityinc-tomorrow
   :after smart-mode-line
   :config
   (setq sml/theme 'light)
   (sml/setup)
   :init
-  (load-theme 'professional t))
-
-
-(use-package railscasts-reloaded-theme
-  :disabled
-  :after smart-mode-line centered-window-mode
-  :config
-  ;; A bit of grim reverse engineering to get rid of large header
-  ;; lines in org-mode while retaining scaling.
-  (custom-theme-set-faces 'railscasts-reloaded
-                          `(org-level-1 ((t (:foreground "#CC7733"))) t)
-                          `(org-level-2 ((t (:foreground "#FFC66D"))) t))
-  (setq sml/theme 'dark)
-  (sml/setup)
-  :init
-  (load-theme 'railscasts-reloaded t))
+  (color-theme-sanityinc-tomorrow-day))
 
 
 (use-package gnuplot-mode
@@ -614,6 +601,7 @@ apparently, that does not work."
   (require 'vlf-setup))
 
 (use-package auto-dim-other-buffers
+  :disabled
   :diminish auto-dim-other-buffers-mode
   :config
   (auto-dim-other-buffers-mode 't)
@@ -629,14 +617,15 @@ apparently, that does not work."
   :diminish focus-mode)
 
 (use-package highlight-indent-guides
+  :disabled
   :diminish highlight-indent-guides-mode
   :config
-  (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-auto-enabled nil
-        highlight-indent-guides-responsive 'stack)
-  (set-face-foreground 'highlight-indent-guides-character-face "light goldenrod")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "orange")
-  (set-face-foreground 'highlight-indent-guides-stack-character-face "dark goldenrod")
+  (setq highlight-indent-guides-method 'fill
+        highlight-indent-guides-responsive nil
+        highlight-indent-guides-delay 0
+        highlight-indent-guides-auto-odd-face-perc 15
+        highlight-indent-guides-auto-even-face-perc 15
+        highlight-indent-guides-auto-character-face-perc 25)
   (add-hook 'tuareg-mode-hook 'highlight-indent-guides-mode))
 
 (require 'sc-tracer-mode "c:/dev/sc-tracer-mode/sc-tracer.el")
@@ -674,12 +663,8 @@ apparently, that does not work."
 
             (global-set-key (kbd "M-a") 'align-current)))
 
+(set-face-font 'default "Fira Code Retina-11:medium")
+(add-hook 'after-init-hook (lambda () (set-face-font 'default "Fira Code Retina-11:medium")))
+
 (provide 'emacs)
 ;;; .emacs ends here
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#FFFFDD" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "outline" :family "Fira Code Retina")))))
