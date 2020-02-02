@@ -194,7 +194,21 @@ character."
 
         org-startup-with-inline-images t
 
-        org-agenda-window-setup 'other-window)
+        org-agenda-window-setup 'other-window
+
+        org-todo-keywords '((sequence "TODO(t!)"
+                                      "INPROGRESS(i!)"
+                                      "INREVIEW(r!)"
+                                      "|"
+                                      "DONE(d!)"
+                                      "DELEGATED(l!)"
+                                      "ABANDONED(a!)"))
+        org-todo-keyword-faces '(("TODO"       . (:foreground "red"         :weight bold))
+                                 ("INPROGRESS" . (:foreground "orange"      :weight bold))
+                                 ("INREVIEW"   . (:foreground "royal blue"  :weight bold))
+                                 ("DONE"       . (:foreground "forestgreen" :weight bold))
+                                 ("DELEGATED"  . (:foreground "forestgreen" :weight bold))
+                                 ("ABANDONED"  . (:foreground "dim gray"    :weight bold))))
 
   ;; I like indented headers very much.
   (add-hook 'org-mode-hook 'org-indent-mode)
@@ -457,29 +471,14 @@ character."
   (setq sml/no-confirm-load-theme t)
   (smart-mode-line-enable))
 
-
-(use-package professional-theme
+(use-package color-theme-sanityinc-tomorrow
   :after smart-mode-line
   :config
   (setq sml/theme 'light)
   (sml/setup)
   :init
-  (load-theme 'professional t))
-
-
-(use-package railscasts-reloaded-theme
-  :disabled
-  :after smart-mode-line centered-window-mode
-  :config
-  ;; A bit of grim reverse engineering to get rid of large header
-  ;; lines in org-mode while retaining scaling.
-  (custom-theme-set-faces 'railscasts-reloaded
-                          `(org-level-1 ((t (:foreground "#CC7733"))) t)
-                          `(org-level-2 ((t (:foreground "#FFC66D"))) t))
-  (setq sml/theme 'dark)
-  (sml/setup)
-  :init
-  (load-theme 'railscasts-reloaded t))
+  (color-theme-sanityinc-tomorrow-day)
+  (set-face-font 'default "Fira Code Retina-11"))
 
 
 (use-package gnuplot-mode
@@ -574,14 +573,10 @@ apparently, that does not work."
   (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
 
-;; TODO: Experiment with ocp-indent
-;; (use-package ocp-indent
-;;   :pin "melpa-stable")
-
 ;; For testing my great Analog Emacs mode before putting it on MELPA.
-(use-package delight)
-(require 'analog "/home/fbie/src/analog-indicator/analog.el")
-;;(analog-indicator-mode)
+;; (use-package delight)
+;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
+;; (analog-indicator-mode)
 
 (use-package transpose-frame
   :bind ("C-x t o" . transpose-frame))
@@ -595,18 +590,6 @@ apparently, that does not work."
   :diminish yascroll-mode
   :config
   (global-yascroll-bar-mode 1))
-;; Since auto-update does not work, I use this homegrown package
-;; update function.
-;; TODO: When did I use this last?
-(defun update-all-packages ()
-  "Update all packages."
-  (interactive)
-  (save-excursion
-    (save-window-excursion
-      (list-packages)
-      (message (package-menu-mark-upgrades))
-      (package-menu-execute 'no-query))))
-
 
 (provide 'emacs)
 ;;; .emacs ends here
@@ -616,6 +599,10 @@ apparently, that does not work."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-day)))
+ '(custom-safe-themes
+   (quote
+    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
  '(package-selected-packages
    (quote
     (dune yascroll json-mode transpose-frame helm-git-grep writegood-mode visual-fill-column use-package undo-tree tuareg synosaurus spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-journal omnisharp multiple-cursors merlin-eldoc merlin markdown-mode magit helm-projectile gnuplot-mode gitconfig-mode gitconfig fsharp-mode exec-path-from-shell ess delight auctex ace-window ace-jump-mode))))
