@@ -566,6 +566,8 @@ apparently, that does not work."
   (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
   (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
 
+(use-package dune)
+
 (use-package merlin-eldoc
   :disabled
   :config
@@ -609,9 +611,17 @@ apparently, that does not work."
 (provide 'emacs)
 ;;; .emacs ends here
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (dune yascroll json-mode transpose-frame helm-git-grep writegood-mode visual-fill-column use-package undo-tree tuareg synosaurus spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-journal omnisharp multiple-cursors merlin-eldoc merlin markdown-mode magit helm-projectile gnuplot-mode gitconfig-mode gitconfig fsharp-mode exec-path-from-shell ess delight auctex ace-window ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#FFFFDD" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "outline" :family "Fira Code Retina")))))
+ )
