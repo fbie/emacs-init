@@ -185,7 +185,7 @@ character."
 
 (use-package org
   :config
-  (setq org-log-done t ;; Log completion of tasks.
+  (setq org-log-done 'time ;; Log completion of tasks.
         org-use-sub-superscripts "{}"
         org-pretty-entities t
         org-support-shift-select t
@@ -195,20 +195,23 @@ character."
         org-startup-folded t
         org-inhibit-startup nil
 
-        ;; From Sacha Chua's config.
+        ;; Improve agenda experienec
         org-agenda-use-tag-inheritance t
-        org-agenda-show-log t
+        org-agenda-show-log nil
         org-agenda-skip-scheduled-if-done nil
         org-agenda-skip-deadline-if-done nil
         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
 
         org-agenda-skip-scheduled-if-deadline-is-shown t
+        org-agenda-use-time-grid nil
+        org-agenda-show-current-time-in-grid nil
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-window-setup 'other-window
 
         org-startup-with-inline-images t
 
-        org-agenda-window-setup 'other-window
         org-todo-keywords '((sequence "TODO(t!)"
-                                      "INPROGRESS(i!)"
+                                      "INPROGRESS(p!)"
                                       "INREVIEW(r!)"
                                       "|"
                                       "DONE(d!)"
