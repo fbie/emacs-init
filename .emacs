@@ -550,7 +550,8 @@ apparently, that does not work."
   :bind
   (:map merlin-mode-map
         ("M-," . merlin-pop-stack)
-        ("M-." . merlin-locate))
+        ("M-." . merlin-locate)
+        ("C-c x" . merlin-error-next))
   :config
   (setq merlin-command merlin-path
         merlin-completion-with-doc nil
