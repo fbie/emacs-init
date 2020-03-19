@@ -360,12 +360,13 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path (expand-file-name "~/.emacs.d/omnisharp.sh"))
+  (setq omnisharp-server-executable-path (expand-file-name "C:/Bin/omnisharp-win-x64/OmniSharp.exe"))
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
   :init
-  (add-hook 'csharp-mode-hook 'omnisharp-mode))
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-hook 'omnisharp-mode-hook 'eldoc-mode))
 
 
 (use-package paren-face
