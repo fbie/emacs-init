@@ -656,26 +656,5 @@ apparently, that does not work."
       (message (package-menu-mark-upgrades))
       (package-menu-execute 'no-query))))
 
-(add-hook 'align-load-hook
-          (lambda ()
-            ;; Less code for adding alignment rules.
-            (defun add-align-rule (title regexp)
-              (add-to-list 'align-rules-list
-                           `(,title
-                             (regexp . ,regexp)
-                             (group  . 1)
-                             (modes  . (list 'tuareg-mode))
-                             (repeat . nil))))
-            ;; Borrowed from Manuel Odendahl
-            ;; https://github.com/wesen/emacs/blob/dcd8f020ca020d32837196000615ef1cd05e7929/dot-emacs#L946
-            (add-align-rule 'ocaml-colon "\\(\\s-*\\):" )
-            (add-align-rule 'ocaml-arrow "\\(\\s-*\\)->")
-            (add-align-rule 'ocaml-of    "\\(\\s-*\\)of")
-
-            (global-set-key (kbd "M-a") 'align-current)))
-
-(set-face-font 'default "Fira Code Retina-11:medium")
-(add-hook 'after-init-hook (lambda () (set-face-font 'default "Fira Code Retina-11:medium")))
-
 (provide 'emacs)
 ;;; .emacs ends here
