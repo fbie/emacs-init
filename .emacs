@@ -302,8 +302,7 @@ character."
   :bind
   ("C-c i" . magit-status)
   :config
-  (setq vc-handled-backends nil
-        magit-git-executable "/usr/bin/git"))
+  (setq vc-handled-backends nil))
 
 (use-package gitconfig)
 
