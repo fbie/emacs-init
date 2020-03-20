@@ -396,11 +396,17 @@ character."
   (add-hook 'ielm-mode-hook        'rainbow-delimiters-mode))
 
 
+(use-package eglot)
+
 (use-package fsharp-mode
+  :bind (:map fsharp-mode-map ("C-c x" . flycheck-next-error))
   :config
-  (setq fsharp-doc-idle-delay 1.0)
-  (setq inferior-fsharp-program
-	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
+  ;; (require 'eglot-fsharp)
+  (setq ;;eglot-fsharp-server-runtime nil
+        fsharp-doc-idle-delay 1.0
+        ;; inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))
+        inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCpu.exe\" --mlcompatibility -g -d:TRACE -d:DEBUG"
+        )
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
 
