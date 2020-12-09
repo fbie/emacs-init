@@ -36,7 +36,7 @@
 (require 'setup-cygwin)
 
 ;; This seems to improve merlin's performance, but no guarantees yet.
-(setq shell-file-name "/bin/sh")
+(setq explicit-shell-file-name "/bin/sh")
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
@@ -47,13 +47,18 @@
       load-prefer-newer t
       w32-get-true-file-attributes nil)
 
-;; Lines in DIMAPI code are incredibly long, so I need this.
 (put 'scroll-left 'disabled nil)
 
-;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+(global-auto-revert-mode t)
+(global-hl-line-mode)
+(show-paren-mode)
+(global-eldoc-mode)
+(global-subword-mode 1)
+(column-number-mode 1)
+(electric-pair-mode)
 
 (setq inhibit-startup-screen 1)
 
@@ -61,7 +66,6 @@
               indent-tabs-mode nil
               tab-width 4)
 
-;; Remove useless, annoying key-bindings.
 (let ((bindings
        (list (kbd "C-z")        ;; Don't minimize.
              (kbd "C-x C-b")    ;; Don't show buffer overview.
@@ -70,22 +74,10 @@
   (dolist (binding bindings)
     (global-unset-key binding)))
 
-;; Revert automatically; this saves me a few key strokes on revert.
-(global-auto-revert-mode t)
-
-;; This is easier for my fingers:
 (global-set-key (kbd "C-=") 'set-mark-command)
+(global-set-key (kbd "C-x t o") 'transpose-frame)
 
-;; Why would you ever want them?
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Standard usability stuff.
-(global-hl-line-mode)
-(show-paren-mode)
-(global-eldoc-mode)
-(global-subword-mode 1)
-(column-number-mode 1)
-(electric-pair-mode)
 
 ;; Never quit Emacs!
 (setq confirm-kill-emacs 'yes-or-no-p)
@@ -142,21 +134,35 @@ character."
 (global-set-key (kbd "M-<down>") 'shrink-window)
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
-
 ;; Set-up melpa stable and gnu repositories.
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(package-initialize)
+;; (require 'package)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (package-initialize)
+;; (package-refresh-contents)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; Install use-package if needed.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default 't)
 
-;; Why wouldn't you?
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; (require 'use-package)
+;; (setq use-package-always-ensure t)
+
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
   :config
@@ -173,7 +179,6 @@ character."
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point t)
-
 
 (use-package diminish)
 
@@ -295,8 +300,13 @@ character."
         helm-buffer-max-length nil
         helm-grep-default-command "grep -I --color=always -a -d skip %e -n%cH -e %p %f")
   (helm-mode 'true)
-  (helm-autoresize-mode 'true))
+  (helm-autoresize-mode 'true)
+  (diminish 'helm-ff-cache-mode))
 
+(use-package which-key
+  :diminish
+  :init
+  (which-key-mode))
 
 (use-package magit
   :bind
@@ -317,7 +327,8 @@ character."
   :diminish projectile-mode
   :bind ("C-c p" . projectile-command-map)
   :config
-  (projectile-global-mode)
+  (require 'tramp)
+  (projectile-mode 1)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t
         projectile-indexing-method 'alien)
@@ -398,14 +409,14 @@ character."
 (use-package eglot)
 
 (use-package fsharp-mode
+  :after flycheck eglot
   :bind (:map fsharp-mode-map ("C-c x" . flycheck-next-error))
   :config
-  ;; (require 'eglot-fsharp)
-  (setq ;;eglot-fsharp-server-runtime nil
+  (require 'eglot)
+  (require 'eglot-fsharp)
+  (setq eglot-fsharp-server-runtime 'net-framework
         fsharp-doc-idle-delay 1.0
-        ;; inferior-fsharp-program (string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG"))
-        inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCpu.exe\" --mlcompatibility -g -d:TRACE -d:DEBUG"
-        )
+        inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCpu.exe\" --mlcompatibility -g -d:TRACE -d:DEBUG")
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
 
 
@@ -548,7 +559,24 @@ apparently, that does not work."
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
 
+(use-package tuareg
+  :demand
+  :mode ("\\.mf[iylp]?" . tuareg-mode)
+  :bind
+  (:map tuareg-mode-map
+        ("C-c TAB" . helm-imenu))
+  :config
+  (setq tuareg-indent-align-with-first-arg nil
+        tuareg-electric-close-vector 't)
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
+  (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
+
 (use-package merlin
+  :load-path ("c:/dev/ml-mono/tools/merlin/emacs/site-lisp")
+  :demand
   :diminish
   :preface (defconst merlin-path "c:/dev/ml-mono/tools/merlin/ocamlmerlin.exe")
   :if (file-exists-p merlin-path)
@@ -563,23 +591,8 @@ apparently, that does not work."
         merlin-completion-dwim nil)
   (defun helm-merlin-occurrences ()
     (interactive)
-    (helm :sources '(merlin-occurrences))))
-
-(use-package tuareg
-  :demand
-  :mode ("\\.mf[iylp]?" . tuareg-mode)
-  :bind
-  (:map tuareg-mode-map
-        ("C-c TAB" . helm-imenu))
-  :config
-  (setq tuareg-indent-align-with-first-arg nil
-        tuareg-electric-close-vector 't)
-  (add-hook 'tuareg-mode-hook 'merlin-mode)
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
+    (helm :sources '(merlin-occurrences)))
+  (add-hook 'tuareg-mode-hook 'merlin-mode))
 
 (use-package merlin-eldoc
   :disabled
@@ -594,9 +607,6 @@ apparently, that does not work."
 ;; (use-package delight)
 ;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
 ;;(analog-indicator-mode)
-
-(use-package transpose-frame
-  :bind ("C-x t o" . transpose-frame))
 
 (use-package json-mode
   :mode "\\.\\(json\\|new\\)\\'"
