@@ -28,7 +28,7 @@
 
 ;;; Code:
 (setq user-full-name "Florian Biermann"
-      user-mail-address "fbie@itu.dk")
+      user-mail-address "florian.biermann@protonmail.com")
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
@@ -185,7 +185,6 @@ character."
 
         ;; From Sacha Chua's config.
         org-agenda-use-tag-inheritance t
-        org-agenda-show-log t
         org-agenda-skip-scheduled-if-done nil
         org-agenda-skip-deadline-if-done nil
         org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
@@ -594,18 +593,6 @@ apparently, that does not work."
 (provide 'emacs)
 ;;; .emacs ends here
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (sanityinc-tomorrow-day)))
- '(custom-safe-themes
-   (quote
-    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" default)))
- '(package-selected-packages
-   (quote
-    (dune yascroll json-mode transpose-frame helm-git-grep writegood-mode visual-fill-column use-package undo-tree tuareg synosaurus spotify smart-mode-line rainbow-delimiters racket-mode professional-theme paren-face paredit org-journal omnisharp multiple-cursors merlin-eldoc merlin markdown-mode magit helm-projectile gnuplot-mode gitconfig-mode gitconfig fsharp-mode exec-path-from-shell ess delight auctex ace-window ace-jump-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
