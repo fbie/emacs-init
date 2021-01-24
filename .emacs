@@ -75,6 +75,7 @@
 (global-subword-mode 1)
 (column-number-mode 1)
 (electric-pair-mode)
+(setq compilation-scroll-output 'first-error)
 
 ;; Never quit Emacs!
 (setq confirm-kill-emacs 'yes-or-no-p)
@@ -131,30 +132,26 @@ character."
 (global-set-key (kbd "M-<up>") 'enlarge-window)
 
 
-;; Set-up melpa stable and gnu repositories.
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize)
-
-;; Install use-package if needed.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-;; Why wouldn't you?
-(setq use-package-always-ensure t)
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
-  :config
-  (exec-path-from-shell-initialize))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+      (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 
-;; Install auctex. use-package does not handle this well.
-(unless (package-installed-p 'auctex)
-  (package-install 'auctex))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default 't)
 
+
+(use-package tex-site
+  :straight auctex)
 
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
@@ -217,8 +214,6 @@ character."
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-
-  ;; TODO: My ITU ownCloud account will be closed soon; alternatives?
   (setq org-directory "~/ownCloud/org/")
   (add-to-list 'org-agenda-files org-directory))
 
@@ -246,6 +241,7 @@ character."
 (use-package flyspell
   :diminish flyspell-mode
   :config
+  ;; TODO: Maybe write some Windows-specific code, too?
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
@@ -255,14 +251,11 @@ character."
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
-;; This package shows undo operations as a tree and allows for
-;; easy-peasy navigation in the undo history. Toggle with C-x u.
 ;; (use-package undo-tree
 ;;   :diminish undo-tree-mode
 ;;   :config
 ;;   (global-undo-tree-mode)
 ;;   (setq undo-tree-visualizer-diff t))
-
 
 (use-package helm
   :diminish helm-mode
@@ -279,26 +272,28 @@ character."
   (setq helm-ff-skip-boring-files t
         helm-occur-show-buffer-name t
         helm-moccur-show-buffer-fontification t
-        helm-buffer-max-length nil)
+        helm-buffer-max-length nil
+        helm-grep-default-command "grep -I --color=always -a -d skip %e -n%cH -e %p %f")
   (helm-mode 'true)
-  (helm-autoresize-mode 'true)
-  ; I cannot recall why I needed the line below?
-  (add-hook 'LaTeX-mode-hook 'helm-mode))
+  (helm-autoresize-mode 'true))
 
+(use-package which-key
+  :diminish
+  :init
+  (which-key-mode))
 
 (use-package magit
   :bind
   ("C-c i" . magit-status)
   :config
-  (setq vc-handled-backends nil
-        magit-git-executable "/usr/bin/git"))
+  (setq vc-handled-backends nil))
 
 (use-package gitconfig)
 
 (use-package company
   :diminish company-mode
   :config
-  (setq company-idle-delay 1.5)
+  ;; (setq company-idle-delay 1.5) ;; Re-enable if displaying company stalls Emacs.
   (global-company-mode))
 
 
@@ -309,7 +304,7 @@ character."
   (projectile-global-mode)
   (setq projectile-completion-system 'helm
         projectile-enable-caching t
-        projectile-indexing-method 'turbo-alien)
+        projectile-indexing-method 'alien)
   (helm-projectile-on))
 
 (use-package helm-git-grep
@@ -348,12 +343,14 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
+  ;; Probably heavily outdated:
+  ;; (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
   :init
-  (add-hook 'csharp-mode-hook 'omnisharp-mode))
+  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+  (add-hook 'omnisharp-mode-hook 'eldoc-mode))
 
 
 (use-package paren-face
@@ -370,7 +367,7 @@ character."
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
-  (add-hook 'racket-mode-hook 'visual-fill-column-mode)
+  ;; (add-hook 'racket-mode-hook 'visual-fill-column-mode)
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
@@ -383,47 +380,13 @@ character."
   (add-hook 'emacs-lisp-mode-hook  'rainbow-delimiters-mode)
   (add-hook 'ielm-mode-hook        'rainbow-delimiters-mode))
 
-
-(use-package fsharp-mode
-  :config
-  (setq fsharp-doc-idle-delay 1.0)
-  (setq inferior-fsharp-program
-	(string-join (list inferior-fsharp-program " --mlcompatibility -g -d:TRACE -d:DEBUG")))
-  (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode)))
-
-
-(use-package visual-fill-column
-  :init
-  (setq visual-fill-column-center-text t
-        visual-fill-column-width       110)
-  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-  (add-hook 'text-mode-hook 'visual-fill-column-mode)
-  (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
-
-
-;; Downloading bibliography from CiteULike
-(defcustom citeulike-user
-  "fbie"
-  "The CiteULike user to download bibliography from.")
-
-
-(defconst citeulike-url
-  "http://www.citeulike.org/bibtex/user/%s?key_type=4&clean_urls=0&incl_amazon=0&smart_wrap=1"
-  "The URL to fetch from to get a .bib file with generated citation keys.")
-
-
-(defun citeulike-download-bibliography ()
-  "Retrieve the CiteULike bibliography of a user and store it as bibtex-file."
-  (interactive)
-  (let*
-      ((current-path
-	(if buffer-file-name
-	    (file-name-directory buffer-file-name)
-	  "~"))
-       (citeulike-url-usr (format citeulike-url citeulike-user))
-       (default-path (concat current-path citeulike-user ".bib"))
-       (file-path (read-file-name "Write to: " nil nil nil default-path nil)))
-    (url-copy-file citeulike-url-usr file-path 'true)))
+;; (use-package visual-fill-column
+;;   :init
+;;   (setq visual-fill-column-center-text t
+;;         visual-fill-column-width       110)
+;;   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+;;   (add-hook 'text-mode-hook 'visual-fill-column-mode)
+;;   (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
 
 
 (use-package org-journal
@@ -531,57 +494,47 @@ apparently, that does not work."
 
 (global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
 
-
-(use-package merlin
-  :diminish
-  :preface (defconst merlin-path "~/.opam/system/bin/ocamlmerlin")
-  :if (file-exists-p merlin-path)
-  :bind
-  (:map merlin-mode-map
-        ("M-," . merlin-pop-stack)
-        ("M-." . merlin-locate))
-  :config
-  (setq merlin-command merlin-path
-        merlin-completion-with-doc nil
-        merlin-completion-dwim nil)
-  (defun helm-merlin-occurrences ()
-    (interactive)
-    (helm :sources '(merlin-occurrences))))
-
 (use-package tuareg
-  :demand
+  :mode ("\\.ml[i]?" . tuareg-mode)
   :bind
   (:map tuareg-mode-map
         ("C-c TAB" . helm-imenu))
-  :after merlin
   :config
   (setq tuareg-indent-align-with-first-arg nil
         tuareg-electric-close-vector 't)
-  (add-hook 'tuareg-mode-hook 'merlin-mode)
   (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
   (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
   (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
 
+(use-package merlin
+  :diminish
+  :bind
+  (:map merlin-mode-map
+        ("M-," . merlin-pop-stack)
+        ("M-." . merlin-locate)
+        ("C-c x" . merlin-error-next))
+  :config
+  (setq merlin-completion-with-doc nil
+        merlin-completion-dwim nil)
+  (defun helm-merlin-occurrences ()
+    (interactive)
+    (helm :sources '(merlin-occurrences)))
+  (add-hook 'tuareg-mode-hook 'merlin-mode))
+
 (use-package dune)
 
 (use-package merlin-eldoc
-  :disabled
   :config
   (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
-
-;; For testing my great Analog Emacs mode before putting it on MELPA.
-;; (use-package delight)
-;; (require 'analog "/home/fbie/src/analog-indicator/analog.el")
-;; (analog-indicator-mode)
 
 (use-package transpose-frame
   :bind ("C-x t o" . transpose-frame))
 
 (use-package json-mode
-  :mode "\\.\\(json\\|new\\)\\'"
+  :mode "\\.json"
   :config
   (add-hook 'json-mode-hook 'paredit-mode))
 
