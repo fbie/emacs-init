@@ -159,6 +159,24 @@ character."
 (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point t)
 
+(use-package eglot)
+
+(use-package fsharp-mode
+  :straight (:host github
+             :repo "fbie/emacs-fsharp-mode"
+             :branch "no-project-el")
+  :after eglot
+  :bind (:map fsharp-mode-map ("C-c x" . flycheck-next-error))
+  :init
+  (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode))
+  (add-hook 'fsharp-mode-hook
+            (lambda ()
+              (require 'eglot)
+              (require 'eglot-fsharp)
+              (eglot-ensure)))
+  :config
+  (setq fsharp-doc-idle-delay 1.0)
+  (add-to-list 'helm-boring-file-regexp-list "^obj/"))
 
 (use-package diminish)
 
