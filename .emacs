@@ -175,7 +175,8 @@ character."
               (require 'eglot-fsharp)
               (eglot-ensure)))
   :config
-  (setq fsharp-doc-idle-delay 1.0)
+  (setq fsharp-doc-idle-delay 1.0
+        inferior-fsharp-program "dotnet fsi")
   (add-to-list 'helm-boring-file-regexp-list "^obj/"))
 
 (use-package diminish)
