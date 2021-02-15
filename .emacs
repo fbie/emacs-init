@@ -1,4 +1,4 @@
-;; .emacs --- .emacs file by Florian Biermann <fbie@itu.dk> -*- lexical-binding: t; -*-
+;; .emacs --- .emacs file by Florian Biermann <florian.biermann@protonmail.com> -*- lexical-binding: t; -*-
 
 ;; Permission is hereby granted, free of charge, to any person
 ;; obtaining a copy of this software and associated documentation
@@ -29,8 +29,8 @@
 ;;; Code:
 
 (defvar user-init-dir (file-name-directory
-                       (file-truename (or (file-symlink-p user-init-file)
-                                          user-init-file)))
+                       (concat "~/" (or (file-symlink-p user-init-file)
+                                        user-init-file)))
   "Root directory of emacs.el, after following symlinks, etc.")
 
 (setq custom-file (concat user-init-dir "custom.el"))
@@ -125,7 +125,7 @@ character."
       display-time-day-and-date 't)
 
 ;; Otherwise, configure splitting and split sensibly.
-(setq split-width-threshold  nil)
+(setq split-width-threshold nil)
 
 (defun dynamic-split-window-sensibly (&optional window)
   "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
@@ -236,6 +236,7 @@ character."
                                  ("ABANDONED"  . (:foreground "dim gray"    :weight bold))))
 
   ;; I like indented headers very much.
+  (require 'org-indent)
   (add-hook 'org-mode-hook 'org-indent-mode)
 
   (defun org-agenda-and-todos (&optional arg)
