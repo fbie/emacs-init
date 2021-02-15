@@ -22,11 +22,21 @@
 ;; What a great .emacs file!
 
 ;; Partially stolen from
-;; - Harry Schwartz (https://github.com/hrs/dotfiles) and
+;; - Harry Schwartz (https://github.com/hrs/dotfiles)
 ;; - Michael Walker (https://github.com/barrucadu/dotfiles)
 ;; - Sacha Chua (http://pages.sachachua.com/.emacs.d)
-
+;; - Ryan Davis (https://github.com/zenspider/elisp)
 ;;; Code:
+
+(defvar user-init-dir (file-name-directory
+                       (file-truename (or (file-symlink-p user-init-file)
+                                          user-init-file)))
+  "Root directory of emacs.el, after following symlinks, etc.")
+
+(setq custom-file (concat user-init-dir "custom.el"))
+(add-to-list 'load-path user-init-dir)
+(load-file custom-file)
+
 (setq user-full-name "Florian Biermann"
       user-mail-address "florian.biermann@protonmail.com")
 
@@ -564,10 +574,3 @@ apparently, that does not work."
 
 (provide 'emacs)
 ;;; .emacs ends here
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
