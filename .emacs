@@ -172,9 +172,6 @@ character."
 (use-package eglot)
 
 (use-package fsharp-mode
-  :straight (:host github
-             :repo "fbie/emacs-fsharp-mode"
-             :branch "no-project-el")
   :after eglot
   :bind (:map fsharp-mode-map ("C-c x" . flycheck-next-error))
   :init
@@ -183,6 +180,7 @@ character."
             (lambda ()
               (require 'eglot)
               (require 'eglot-fsharp)
+              (setq eglot-fsharp-server-version "0.41.1")
               (eglot-ensure)))
   :config
   (setq fsharp-doc-idle-delay 1.0
@@ -337,6 +335,14 @@ character."
         projectile-indexing-method 'alien)
   (helm-projectile-on))
 
+(use-package treemacs)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
+
 (use-package helm-git-grep
   :after helm
   :bind ("C-c g" . helm-git-grep-at-point))
@@ -358,7 +364,7 @@ character."
 
 
 (use-package omnisharp
-  :after helm
+  :after (helm company flycheck)
   :bind
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
@@ -373,14 +379,13 @@ character."
 	("<f5>" . omnisharp-build-in-emacs))
   :config
   (setq omnisharp-company-template-use-yasnippet nil)
-  ;; Probably heavily outdated:
-  ;; (setq omnisharp-server-executable-path "~/.emacs.d/.cache/omnisharp/server/v1.26.3/run")
   (add-to-list 'company-backends 'company-omnisharp)
   (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
   (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
   :init
   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'omnisharp-mode-hook 'eldoc-mode))
+  (add-hook 'omnisharp-mode-hook 'eldoc-mode)
+  (add-hook 'omnisharp-mode-hook 'flycheck-mode))
 
 
 (use-package paren-face
