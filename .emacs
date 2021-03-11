@@ -75,6 +75,16 @@
 ;; This is easier for my fingers:
 (global-set-key (kbd "C-=") 'set-mark-command)
 
+;; OSX, why?
+(when (eq system-type 'darwin)
+  (setq ns-right-option-modifier 'meta
+        ns-control-modifier 'control
+        ns-command-modifier 'none
+        ns-left-command-modifier 'super
+        ns-right-command-modifier 'control)
+  (global-set-key (kbd "<home>") 'beginning-of-line)
+  (global-set-key (kbd "<end>") 'end-of-line))
+
 ;; Why would you ever want them?
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -578,5 +588,17 @@ apparently, that does not work."
   :config
   (global-yascroll-bar-mode 1))
 
+(use-package solidity-mode
+  :mode "\\.sol"
+  :bind
+  (:map solidity-mode-map
+        ("C-c C-g" . solidity-estimate-gas-at-point)
+        ("C-c C-c" . compile))
+  :config
+  (setq solidity-comment-style 'slash))
+
+(use-package lsp-java
+  :config
+  (add-hook 'java-mode-hook 'lsp))
 (provide 'emacs)
 ;;; .emacs ends here
