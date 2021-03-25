@@ -206,6 +206,7 @@ character."
   ("C-<" . mc/mark-previous-like-this))
 
 (use-package org
+  :straight (:type built-in)
   :config
   (setq org-log-done t ;; Log completion of tasks.
         org-use-sub-superscripts "{}"
@@ -252,7 +253,7 @@ character."
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/ownCloud/org/")
+  (setq org-directory "~/Documents/org/")
   (add-to-list 'org-agenda-files org-directory))
 
 
