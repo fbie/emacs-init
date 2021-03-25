@@ -484,8 +484,7 @@ character."
   (setq sml/theme 'light)
   (sml/setup)
   :init
-  (color-theme-sanityinc-tomorrow-day)
-  (set-face-font 'default "Fira Code Retina-11"))
+  (color-theme-sanityinc-tomorrow-day))
 
 
 (use-package gnuplot-mode
