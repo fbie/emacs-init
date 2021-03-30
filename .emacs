@@ -170,6 +170,10 @@ character."
 (setq straight-use-package-by-default 't)
 
 
+(when (eq system-type 'cygwin)
+  (use-package cygwin-mount)
+  (use-package setup-cygwin))
+
 (use-package tex-site
   :straight auctex)
 
