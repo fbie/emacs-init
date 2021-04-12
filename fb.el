@@ -44,4 +44,4 @@ apparently, that does not work."
     (call-interactively 'find-alternate-file)
     (goto-char current)))
 
-(provide 'fb-fns)
+(provide 'fb)

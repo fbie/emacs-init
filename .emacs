@@ -107,7 +107,7 @@
 ;; Kill, kill, kill!
 (setq kill-whole-line t)
 
-(require 'fb-fns)
+(require 'fb)
 (global-set-key (kbd "C-a") 'fb/smart-back-to-indentation)
 (global-set-key (kbd "C-x w") 'fb/smart-make-frame)
 (global-set-key (kbd "C-x C-o") 'window-swap-states)
