@@ -107,28 +107,15 @@
 ;; Kill, kill, kill!
 (setq kill-whole-line t)
 
-
-(defun smart-back-to-indentation ()
-  "Jump between the beginning of line and the line's first
-character."
-  (interactive)
-  (let ((old-pos (point)))
-    (move-beginning-of-line nil)
-    (when (= old-pos (point))
-      (back-to-indentation))))
-
-(global-set-key (kbd "C-a") 'smart-back-to-indentation)
-
-(defun smart-make-frame ()
-  "Open current buffer in a new frame if there is more than one window open."
-  (interactive)
-  (let ((frame (selected-frame))
-        (buffer (current-buffer)))
-    (when (not (one-window-p frame))
-      (make-frame)
-      (delete-windows-on buffer frame))))
-
-(global-set-key (kbd "C-x w") 'smart-make-frame)
+(require 'fb-fns)
+(global-set-key (kbd "C-a") 'fb/smart-back-to-indentation)
+(global-set-key (kbd "C-x w") 'fb/smart-make-frame)
+(global-set-key (kbd "C-x C-o") 'window-swap-states)
+(global-set-key (kbd "M-<down>") 'shrink-window)
+(global-set-key (kbd "M-<up>") 'enlarge-window)
+(global-unset-key (kbd  "C-d"))
+(global-set-key (kbd "C-c d") 'fb/duplicate-line-at-point)
+(global-set-key (kbd "C-x C-v") 'fb/find-alternate-file-keep-point)
 
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 0)
@@ -137,21 +124,7 @@ character."
 
 ;; Otherwise, configure splitting and split sensibly.
 (setq split-width-threshold nil)
-
-(defun dynamic-split-window-sensibly (&optional window)
-  "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (and (one-window-p t) (> (frame-width) 110))
-      ;; If only one window is present, split it vertically when using
-      ;; an external screen, otherwise split horizontally.
-      (split-window-right)
-    (split-window-sensibly window)))
-
-
-(setq split-window-preferred-function 'dynamic-split-window-sensibly)
-(global-set-key (kbd "C-x C-o") 'window-swap-states)
-(global-set-key (kbd "M-<down>") 'shrink-window)
-(global-set-key (kbd "M-<up>") 'enlarge-window)
-
+(setq split-window-preferred-function 'fb/dynamic-split-window-sensibly)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -184,28 +157,6 @@ character."
 (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point t)
 
-(use-package eglot)
-
-(use-package fsharp-mode
-  :after eglot
-  :bind (:map fsharp-mode-map ("C-c x" . flycheck-next-error))
-  :init
-  (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode))
-  :config
-  (setq fsharp-doc-idle-delay 1.0
-        inferior-fsharp-program "dotnet fsi")
-  (add-to-list 'helm-boring-file-regexp-list "^obj/"))
-
-(use-package eglot-fsharp
-  :after fsharp-mode
-  :init
-  (add-hook 'fsharp-mode-hook
-            (lambda ()
-              (require 'eglot)
-              (require 'eglot-fsharp)
-              ;; (setq eglot-fsharp-server-version "0.41.1")
-              (eglot-ensure))))
-
 (use-package diminish)
 
 
@@ -214,56 +165,6 @@ character."
   ("C->" . mc/mark-next-like-this)
   ("C-<" . mc/mark-previous-like-this))
 
-(use-package org
-  :straight (:type built-in)
-  :config
-  (setq org-log-done t ;; Log completion of tasks.
-        org-use-sub-superscripts "{}"
-        org-pretty-entities t
-        org-support-shift-select t
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-agenda-sticky t
-        org-startup-folded t
-        org-inhibit-startup nil
-
-        ;; From Sacha Chua's config.
-        org-agenda-use-tag-inheritance t
-        org-agenda-skip-scheduled-if-done nil
-        org-agenda-skip-deadline-if-done nil
-        org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled
-
-        org-agenda-skip-scheduled-if-deadline-is-shown t
-
-        org-startup-with-inline-images t
-
-        org-agenda-window-setup 'other-window
-
-        org-todo-keywords '((sequence "TODO(t!)"
-                                      "INPROGRESS(i!)"
-                                      "INREVIEW(r!)"
-                                      "|"
-                                      "DONE(d!)"
-                                      "DELEGATED(l!)"
-                                      "ABANDONED(a!)"))
-        org-todo-keyword-faces '(("TODO"       . (:foreground "red"         :weight bold))
-                                 ("INPROGRESS" . (:foreground "orange"      :weight bold))
-                                 ("INREVIEW"   . (:foreground "royal blue"  :weight bold))
-                                 ("DONE"       . (:foreground "forestgreen" :weight bold))
-                                 ("DELEGATED"  . (:foreground "forestgreen" :weight bold))
-                                 ("ABANDONED"  . (:foreground "dim gray"    :weight bold))))
-
-  ;; I like indented headers very much.
-  (require 'org-indent)
-  (add-hook 'org-mode-hook 'org-indent-mode)
-
-  (defun org-agenda-and-todos (&optional arg)
-    "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
-    (interactive)
-    (org-agenda arg "n"))
-  (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/Documents/org/")
-  (add-to-list 'org-agenda-files org-directory))
 
 
 (use-package flycheck
@@ -344,17 +245,6 @@ character."
   ;; (setq company-idle-delay 1.5) ;; Re-enable if displaying company stalls Emacs.
   (global-company-mode))
 
-
-(use-package helm-projectile
-  :diminish projectile-mode
-  :bind ("C-c p" . projectile-command-map)
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'helm
-        projectile-enable-caching t
-        projectile-indexing-method 'alien)
-  (helm-projectile-on))
-
 (use-package treemacs
   :bind (:map global-map
               ("C-z"       . treemacs-select-window)
@@ -364,9 +254,6 @@ character."
               ;; ("C-x t C-t" . treemacs-find-file)
               ;; ("C-x t M-t" . treemacs-find-tag)
               ))
-
-(use-package treemacs-projectile
-  :after (treemacs projectile))
 
 (use-package treemacs-magit
   :after (treemacs magit))
@@ -443,54 +330,6 @@ character."
   (add-hook 'emacs-lisp-mode-hook  'rainbow-delimiters-mode)
   (add-hook 'ielm-mode-hook        'rainbow-delimiters-mode))
 
-;; (use-package visual-fill-column
-;;   :init
-;;   (setq visual-fill-column-center-text t
-;;         visual-fill-column-width       110)
-;;   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-;;   (add-hook 'text-mode-hook 'visual-fill-column-mode)
-;;   (add-hook 'emacs-lisp-mode-hook 'visual-fill-column-mode))
-
-
-(use-package org-journal
-  :after org
-  :bind
-  (:map org-journal-mode-map
-        ("C-c s" . org-journal-search)
-        ("C-c C-s" . org-schedule))
-  :config
-  (setq org-journal-carryover-items nil)
-  :init
-  (setq org-journal-file-format "%Y%m%d.org")
-  (setq org-journal-dir (concat org-directory "journal/"))
-  (add-to-list 'org-agenda-files org-journal-dir))
-
-
-(use-package org-present
-  :disabled
-  :after org
-  :bind
-  (:map org-present-mode-keymap
-        ("q" . org-present-quit)
-        ("<prior>" . org-present-prev)
-        ("<next>" . org-present-next))
-  :config
-  (add-hook 'org-present-mode-hook
-               (lambda ()
-                 (org-present-big)
-                 (org-display-inline-images)
-                 (org-present-hide-cursor)
-                 (org-present-read-only)
-                 (setq mode-line-format nil)))
-  (add-hook 'org-present-mode-quit-hook
-            (lambda ()
-              (org-present-small)
-              (org-remove-inline-images)
-              (org-present-show-cursor)
-              (org-present-read-write)
-              (setq mode-line-format (default-value 'mode-line-format)))))
-
-
 (use-package smart-mode-line
   :init
   (setq sml/no-confirm-load-theme t)
@@ -530,68 +369,6 @@ character."
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 
-(defun duplicate-line-at-point ()
-  "Duplicate the line at point."
-  (interactive)
-  (save-excursion
-    (let ((line (buffer-substring (line-beginning-position) (line-end-position))))
-      (move-end-of-line nil)
-      (newline)
-      (insert line))))
-
-(global-unset-key (kbd  "C-d"))
-(global-set-key (kbd "C-c d") 'duplicate-line-at-point)
-
-
-(defun find-alternate-file-keep-point ()
-  "Like 'find-alternate-file' but restore point.
-
-I would like to implement this using 'save-excursion', but
-apparently, that does not work."
-  (interactive)
-  ;;  Hence let-binding.
-  (let ((current (point)))
-    (call-interactively 'find-alternate-file)
-    (goto-char current)))
-
-(global-set-key (kbd "C-x C-v") 'find-alternate-file-keep-point)
-
-(use-package tuareg
-  :mode ("\\.ml[i]?" . tuareg-mode)
-  :bind
-  (:map tuareg-mode-map
-        ("C-c TAB" . helm-imenu))
-  :config
-  (setq tuareg-indent-align-with-first-arg nil
-        tuareg-electric-close-vector 't)
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.obj$")
-  (add-to-list 'helm-boring-file-regexp-list "\\.annot$"))
-
-(use-package merlin
-  :diminish
-  :bind
-  (:map merlin-mode-map
-        ("M-," . merlin-pop-stack)
-        ("M-." . merlin-locate)
-        ("C-c x" . merlin-error-next))
-  :config
-  (setq merlin-completion-with-doc nil
-        merlin-completion-dwim nil)
-  (defun helm-merlin-occurrences ()
-    (interactive)
-    (helm :sources '(merlin-occurrences)))
-  (add-hook 'tuareg-mode-hook 'merlin-mode))
-
-(use-package dune)
-
-(use-package merlin-eldoc
-  :config
-  (setq merlin-eldoc-type-verbosity 'min)
-  (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
-
 (use-package transpose-frame
   :bind ("C-x t o" . transpose-frame))
 
@@ -605,17 +382,12 @@ apparently, that does not work."
   :config
   (global-yascroll-bar-mode 1))
 
-(use-package solidity-mode
-  :mode "\\.sol"
-  :bind
-  (:map solidity-mode-map
-        ("C-c C-g" . solidity-estimate-gas-at-point)
-        ("C-c C-c" . compile))
-  :config
-  (setq solidity-comment-style 'slash))
-
 (use-package lsp-java
   :config
   (add-hook 'java-mode-hook 'lsp))
+
+(require 'fb-fsharp)
+(require 'fb-org)
+(require 'fb-ocaml)
 (provide 'emacs)
 ;;; .emacs ends here
