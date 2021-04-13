@@ -235,7 +235,8 @@
   :bind
   ("C-c i" . magit-status)
   :config
-  (setq vc-handled-backends nil))
+  (setq vc-handled-backends nil
+        magit-bind-magit-project-status nil))
 
 (use-package gitconfig)
 
