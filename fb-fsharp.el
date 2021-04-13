@@ -11,13 +11,17 @@
   (add-to-list 'helm-boring-file-regexp-list "^obj/"))
 
 (use-package eglot-fsharp
-  :after fsharp-mode
+  :after
+  fsharp-mode
+  eglot
+  project
   :init
-  (add-hook 'fsharp-mode-hook
-            (lambda ()
-              (require 'eglot)
-              (require 'eglot-fsharp)
-              ;; (setq eglot-fsharp-server-version "0.41.1")
-              (eglot-ensure))))
+  (unless (functionp 'project-root)
+    (defun project-root (project)
+      "A small alias for calling PROJECT-ROOT in Emacs 27."
+      (car (project-roots project))))
+  (add-hook 'fsharp-mode-hook (lambda ()
+                                (require 'eglot-fsharp)
+                                (eglot-ensure))))
 
 (provide 'fb-fsharp)
