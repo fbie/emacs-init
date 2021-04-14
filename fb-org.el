@@ -46,7 +46,7 @@
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/Documents/org/")
+  (setq org-directory "~/org/")
   (add-to-list 'org-agenda-files org-directory))
 
 (use-package org-journal
