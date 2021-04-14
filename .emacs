@@ -38,7 +38,7 @@
 (load-file custom-file)
 
 (setq user-full-name "Florian Biermann"
-      user-mail-address "florian.biermann@protonmail.com")
+      user-mail-address "flbm@simcorp.com")
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
@@ -390,5 +390,6 @@
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
+(require 'fb-simcorp)
 (provide 'emacs)
 ;;; .emacs ends here
