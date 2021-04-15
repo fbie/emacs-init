@@ -11,6 +11,10 @@
   (eval-after-load 'merlin
     (let ((ml-mono-dir "C:/Repos/ml-mono/"))
       (when (file-directory-p ml-mono-dir)
-        (setq merlin-command (concat ml-mono-dir "tools/merlin/ocamlmerlin.exe"))))))
+        (setq merlin-command (concat ml-mono-dir "tools/merlin/ocamlmerlin.exe")))))
+
+  (eval-after-load 'eglot-fsharp
+    (when (eq eglot-fsharp-server-runtime 'net-framework)
+      (setq inferior-fsharp-program "c:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"))))
 
 (provide 'fb-simcorp)
