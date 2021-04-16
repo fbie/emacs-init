@@ -5,6 +5,9 @@
   (require 'cygwin-mount)
   (require 'setup-cygwin)
 
+  (eval-after-load 'flyspell
+    (setq-default ispell-program-name "aspell"))
+
   (eval-after-load 'magit
     (setq magit-git-executable "c:/Program Files/Git/bin/git.exe"))
 
