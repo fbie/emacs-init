@@ -23,4 +23,10 @@
         (setq inferior-fsharp-program "c:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"
               eglot-fsharp-server-version "0.41.1")))))
 
+(use-package notgit
+  :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit")
+  :bind
+  (:map notgit-status-mode-map
+        ("q" . bury-buffer)))
+
 (provide 'fb-simcorp)
