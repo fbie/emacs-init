@@ -70,6 +70,8 @@
   (dolist (binding bindings)
     (global-unset-key binding)))
 
+(global-set-key (kbd "M-C-u") 'upcase-char)
+
 ;; Revert automatically; this saves me a few key strokes on revert.
 (global-auto-revert-mode t)
 
