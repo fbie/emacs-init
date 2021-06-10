@@ -24,7 +24,8 @@
         ("C-c x" . merlin-error-next))
   :config
   (setq merlin-completion-with-doc nil
-        merlin-completion-dwim nil)
+        merlin-completion-dwim nil
+        merlin-command "~/src/ml-mono/tools/merlin/ocamlmerlin.exe")
   (defun helm-merlin-occurrences ()
     (interactive)
     (helm :sources '(merlin-occurrences)))
