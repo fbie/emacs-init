@@ -24,7 +24,7 @@
         org-agenda-window-setup 'other-window
 
         org-todo-keywords '((sequence "TODO(t!)"
-                                      "INPROGRESS(i!)"
+                                      "INPROGRESS(p!)"
                                       "INREVIEW(r!)"
                                       "|"
                                       "DONE(d!)"
