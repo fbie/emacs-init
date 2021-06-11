@@ -9,7 +9,7 @@
     (setq-default ispell-program-name "aspell"))
 
   (eval-after-load 'magit
-    (setq magit-git-executable "c:/Program Files/Git/bin/git.exe"))
+    (setq magit-git-executable "C:/Program Files/Git/bin/git.exe"))
 
   (eval-after-load 'merlin
     (let ((ml-mono-dir "C:/Repos/ml-mono/"))
@@ -20,7 +20,7 @@
     (progn
       (require 'eglot-fsharp)
       (when (eq eglot-fsharp-server-runtime 'net-framework)
-        (setq inferior-fsharp-program "c:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"
+        (setq inferior-fsharp-program "C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"
               eglot-fsharp-server-version "0.41.1")))))
 
 (use-package notgit
