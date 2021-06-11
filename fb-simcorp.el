@@ -25,6 +25,7 @@
 
 (use-package notgit
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit")
+  :demand
   :bind
   (:map notgit-status-mode-map
         ("q" . bury-buffer)))
