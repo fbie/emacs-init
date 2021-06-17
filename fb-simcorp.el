@@ -28,6 +28,11 @@
   :demand
   :bind
   (:map notgit-status-mode-map
-        ("q" . bury-buffer)))
+        ("q" . bury-buffer))
+  (:map notgit-shelvesets-mode-map
+        ("q" . bury-buffer))
+  :config
+  (setq notgit-default-owner "FLBM"
+        notgit-default-workspace "DEVPATCH-P_OTC"))
 
 (provide 'fb-simcorp)
