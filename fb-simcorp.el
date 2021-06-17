@@ -18,7 +18,10 @@
       (require 'eglot-fsharp)
       (when (eq eglot-fsharp-server-runtime 'net-framework)
         (setq inferior-fsharp-program "C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"
-              eglot-fsharp-server-version "0.41.1")))))
+              eglot-fsharp-server-version "0.41.1"))))
+
+  (eval-after-load 'omnisharp
+    (setq omnisharp-server-executable-path "c:/Users/FLBM/Bin/omnisharp-win-x86/OmniSharp.exe")))
 
 (use-package notgit
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit")
