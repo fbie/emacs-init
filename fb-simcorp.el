@@ -43,4 +43,8 @@
                        notgit-default-workspace)))
     (helm-browse-project-find-files (concat "C:/Workspaces/" workspace "/DEVPATCH-P/IMS"))))
 
+(use-package apl-font
+  :straight (:type git :repo "https://simhub.simcorp.com/FLBM/apl-font.el")
+  :demand)
+
 (provide 'fb-simcorp)
