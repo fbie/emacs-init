@@ -44,4 +44,11 @@ apparently, that does not work."
     (call-interactively 'find-alternate-file)
     (goto-char current)))
 
+(defun fb/update-package (package)
+  "Update PACKAGE via a sequence of straight commands."
+  (interactive "sPackage: ")
+  (straight-fetch-package package)
+  (straight-pull-package-and-deps package)
+  (straight-rebuild-package package))
+
 (provide 'fb)
