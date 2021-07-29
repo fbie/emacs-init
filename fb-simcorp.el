@@ -28,11 +28,19 @@
   :demand
   :bind
   (:map notgit-status-mode-map
-        ("q" . bury-buffer))
+        ("q" . bury-buffer)
+        ("f" . fb-notgit-project-open-from-workspace)
+        ("e" . notgit-s))
   (:map notgit-shelvesets-mode-map
         ("q" . bury-buffer))
   :config
   (setq notgit-default-owner "FLBM"
-        notgit-default-workspace "DEVPATCH-P_OTC"))
+        notgit-default-workspace "DEVPATCH-P_OTC")
+  (defun fb-notgit-project-open-from-workspace (workspace)
+    (interactive (list (read-string (notgit-make-prompt "Workspace" notgit-default-workspace)
+                       nil
+                       nil
+                       notgit-default-workspace)))
+    (helm-browse-project-find-files (concat "C:/Workspaces/" workspace "/DEVPATCH-P/IMS"))))
 
 (provide 'fb-simcorp)
