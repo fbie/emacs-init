@@ -14,6 +14,7 @@
 
 (use-package merlin
   :diminish
+  :demand
   :after
   tuareg
   helm
@@ -24,8 +25,7 @@
         ("C-c x" . merlin-error-next))
   :config
   (setq merlin-completion-with-doc nil
-        merlin-completion-dwim nil
-        merlin-command "~/src/ml-mono/tools/merlin/ocamlmerlin.exe")
+        merlin-completion-dwim nil)
   (defun helm-merlin-occurrences ()
     (interactive)
     (helm :sources '(merlin-occurrences)))
