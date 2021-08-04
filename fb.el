@@ -16,14 +16,6 @@ character."
       (make-frame)
       (delete-windows-on buffer frame))))
 
-(defun fb/dynamic-split-window-sensibly (&optional window)
-  "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (and (one-window-p t) (> (frame-width) 110))
-      ;; If only one window is present, split it vertically when using
-      ;; an external screen, otherwise split horizontally.
-      (split-window-right)
-    (split-window-sensibly window)))
-
 (defun fb/duplicate-line-at-point ()
   "Duplicate the line at point."
   (interactive)

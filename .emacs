@@ -38,23 +38,34 @@
 (load-file custom-file)
 
 (setq user-full-name "Florian Biermann"
-      user-mail-address "flbm@simcorp.com")
-
-(setq backup-directory-alist `(("." . "~/.emacs.d/backups"))
+      user-mail-address "flbm@simcorp.com"
+      ;; I don't want any old stuff lying around.
+      backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
       delete-old-versions t
       kept-new-versions 6
       kept-old-versions 2
       version-control t
       load-prefer-newer t
-      w32-get-true-file-attributes nil)
+      w32-get-true-file-attributes nil
+      ;; This works fine on my work laptop.
+      split-width-threshold 127
+      ;; Startup screen is for n00bs.
+      inhibit-startup-screen 1
+      ;; I always want errors.
+      compilation-scroll-output 'first-error
+      ;; Never quit Emacs!
+      confirm-kill-emacs 'yes-or-no-p
+      ;; Kill, kill, kill!
+      kill-whole-line t
+      ;; Do everything the right way.
+      display-time-24hr-format 't
+      display-time-day-and-date 't)
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-
-(setq inhibit-startup-screen 1)
 
 (setq-default require-final-newline t
               indent-tabs-mode nil
@@ -98,16 +109,10 @@
 (global-subword-mode 1)
 (column-number-mode 1)
 (electric-pair-mode)
-(setq compilation-scroll-output 'first-error)
 
-;; Never quit Emacs!
-(setq confirm-kill-emacs 'yes-or-no-p)
 
 ;; But increase laziness.
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Kill, kill, kill!
-(setq kill-whole-line t)
 
 (require 'fb)
 (global-set-key (kbd "C-a") 'fb/smart-back-to-indentation)
@@ -121,12 +126,7 @@
 
 ;; Too annoying to move the mouse to check time when in full screen
 (display-time-mode 0)
-(setq display-time-24hr-format 't
-      display-time-day-and-date 't)
 
-;; Otherwise, configure splitting and split sensibly.
-(setq split-width-threshold nil)
-(setq split-window-preferred-function 'fb/dynamic-split-window-sensibly)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
