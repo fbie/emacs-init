@@ -43,4 +43,10 @@ apparently, that does not work."
   (straight-pull-package-and-deps package)
   (straight-rebuild-package package))
 
+(defun fb/ends-with (a b)
+  "Return t if A ends with B, nil otherwise."
+  (let ((la (length a))
+        (lb (length b)))
+    (and (>= la lb) (string-equal b (substring a (- la lb) la)))))
+
 (provide 'fb)
