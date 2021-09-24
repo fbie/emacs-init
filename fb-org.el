@@ -40,6 +40,7 @@
   ;; I like indented headers very much.
   (require 'org-indent)
   (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
 
   (defun org-agenda-and-todos (&optional arg)
     "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
