@@ -50,8 +50,9 @@
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit")
   :demand
   :bind
+  ("C-c n" . notgit-status)
   (:map notgit-status-mode-map
-        ("q" . bury-buffer)
+        ("q" . quit-window)
         ("f" . fb-notgit-project-open-from-workspace)
         ("e" . notgit-s))
   (:map notgit-shelvesets-mode-map
