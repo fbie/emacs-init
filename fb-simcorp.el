@@ -15,20 +15,26 @@
   (defconst fb/ml-mono-dir (concat "C:/Repos/" fb/ml-mono)
     "The directory pointing to a local ml-mono repository clone.")
 
-  (eval-after-load 'merlin
-    (when (file-directory-p fb/ml-mono-dir)
-      (setq merlin-command (concat fb/ml-mono-dir "/tools/merlin/ocamlmerlin.exe"))
+  (defun fb/ml-mono-exists ()
+    (file-directory-p fb/ml-mono-dir))
 
-      ;; Some project.el integration.
-      (require 'project)
-      (defun ocaml-find-ml-mono (dir)
-        "Find ml-mono/src directory from DIR when visiting a buffer whose path contains ml-mono."
-        (when (fb/ends-with dir (concat fb/ml-mono "/"))
-          (let ((ml-mono-src (concat dir "src")))
-            (cons 'ocaml ml-mono-src))))
-      (cl-defmethod project-roots ((project (head ocaml)))
-        (list (cdr project)))
-      (add-hook 'project-find-functions #'ocaml-find-ml-mono)))
+
+
+  ;; Some project.el integration.
+  (when (fb/ml-mono-exists)
+    (require 'project)
+    (defun ocaml-find-ml-mono (dir)
+      "Find ml-mono/src directory from DIR when visiting a buffer whose path contains ml-mono."
+      (when (fb/ends-with dir (concat fb/ml-mono "/"))
+        (let ((ml-mono-src (concat dir "src")))
+          (cons 'ocaml ml-mono-src))))
+    (cl-defmethod project-roots ((project (head ocaml)))
+      (list (cdr project)))
+    (add-hook 'project-find-functions #'ocaml-find-ml-mono))
+
+  (eval-after-load 'merlin
+    (when (fb/ml-mono-exists)
+      (setq merlin-command (concat fb/ml-mono-dir "/tools/merlin/ocamlmerlin.exe"))))
 
   (eval-after-load 'eglot-fsharp
     (progn
