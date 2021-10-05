@@ -340,7 +340,8 @@
   (setq sml/theme 'light)
   (sml/setup)
   :init
-  (color-theme-sanityinc-tomorrow-day))
+  (color-theme-sanityinc-tomorrow-day)
+  (set-background-color "light yellow"))
 
 
 (use-package gnuplot-mode
