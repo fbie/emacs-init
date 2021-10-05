@@ -341,7 +341,7 @@
   (sml/setup)
   :init
   (color-theme-sanityinc-tomorrow-day)
-  (set-background-color "light yellow"))
+  (set-background-color "ivory"))
 
 
 (use-package gnuplot-mode
