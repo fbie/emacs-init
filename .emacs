@@ -321,6 +321,7 @@
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
 (use-package rainbow-delimiters
+  :demand
   :init
   (add-hook 'prog-mode 'rainbow-delimiters-mode))
 
