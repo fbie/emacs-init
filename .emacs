@@ -320,33 +320,28 @@
   :config
   (setq racket-paren-face '(t (:inherit "shadow"))))
 
-
 (use-package rainbow-delimiters
-  :after racket-mode
   :init
-  (add-hook 'racket-mode-hook      'rainbow-delimiters-mode)
-  (add-hook 'racket-repl-mode-hook 'rainbow-delimiters-mode)
-  (add-hook 'emacs-lisp-mode-hook  'rainbow-delimiters-mode)
-  (add-hook 'ielm-mode-hook        'rainbow-delimiters-mode))
+  (add-hook 'prog-mode 'rainbow-delimiters-mode))
 
 (use-package smart-mode-line
   :init
   (setq sml/no-confirm-load-theme t)
   (smart-mode-line-enable))
 
-(use-package color-theme-sanityinc-tomorrow
+(use-package solarized-theme
+  :demand
   :after smart-mode-line
   :config
   (setq sml/theme 'light)
   (sml/setup)
   :init
-  (color-theme-sanityinc-tomorrow-day)
-  (set-background-color "ivory"))
-
+  (setq solarized-use-variable-pitch nil
+        solarized-scale-org-headlines nil)
+  (load-theme 'solarized-light t))
 
 (use-package gnuplot-mode
   :mode "\\.gnuplot\\'")
-
 
 (use-package markdown-mode
   :mode "\\.md\\'"
@@ -355,11 +350,9 @@
         ("M-<right>" . markdown-demote)
         ("M-<left>"  . markdown-promote)))
 
-
 (use-package ace-jump-mode
   :bind
   ("C-S-s" . ace-jump-mode))
-
 
 (use-package ace-window
   :bind
