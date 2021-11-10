@@ -49,4 +49,15 @@ apparently, that does not work."
         (lb (length b)))
     (and (>= la lb) (string-equal b (substring a (- la lb) la)))))
 
+;;; Now for some fantastic compatibility hacks that are needed thanks
+;;; to how straight.el works.  When using straight.el, package
+;;; dependencies will always be resolved to the latest version.  That
+;;; often messes things up.  Hence, we hack some things to make
+;;; problems go away.
+(unless (boundp 'show-paren-context-when-offscreen)
+  (defconst show-paren-context-when-offscreen nil "Emacs 27 compatibility hack."))
+
+(unless (functionp 'string-replace)
+  (defalias 'string-replace 'replace-regexp-in-string))
+
 (provide 'fb)
