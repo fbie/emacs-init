@@ -24,7 +24,7 @@
         org-agenda-window-setup 'other-window
 
         org-todo-keywords '((sequence "TODO(t!)"
-                                      "INPROGRESS(i!)"
+                                      "INPROGRESS(p!)"
                                       "INREVIEW(r!)"
                                       "|"
                                       "DONE(d!)"
@@ -40,13 +40,14 @@
   ;; I like indented headers very much.
   (require 'org-indent)
   (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
 
   (defun org-agenda-and-todos (&optional arg)
     "Display org agenda and todo list.  Equal to <M-x> org-agenda <RET> n."
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/Documents/org/")
+  (setq org-directory "~/org/")
   (add-to-list 'org-agenda-files org-directory))
 
 (use-package org-journal

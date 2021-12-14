@@ -16,14 +16,6 @@ character."
       (make-frame)
       (delete-windows-on buffer frame))))
 
-(defun fb/dynamic-split-window-sensibly (&optional window)
-  "Figure out splitting configuration and then call 'split-window-sensibly' with WINDOW."
-  (if (and (one-window-p t) (> (frame-width) 110))
-      ;; If only one window is present, split it vertically when using
-      ;; an external screen, otherwise split horizontally.
-      (split-window-right)
-    (split-window-sensibly window)))
-
 (defun fb/duplicate-line-at-point ()
   "Duplicate the line at point."
   (interactive)
@@ -43,5 +35,29 @@ apparently, that does not work."
   (let ((current (point)))
     (call-interactively 'find-alternate-file)
     (goto-char current)))
+
+(defun fb/update-package (package)
+  "Update PACKAGE via a sequence of straight commands."
+  (interactive "sPackage: ")
+  (straight-fetch-package package)
+  (straight-pull-package-and-deps package)
+  (straight-rebuild-package package))
+
+(defun fb/ends-with (a b)
+  "Return t if A ends with B, nil otherwise."
+  (let ((la (length a))
+        (lb (length b)))
+    (and (>= la lb) (string-equal b (substring a (- la lb) la)))))
+
+;;; Now for some fantastic compatibility hacks that are needed thanks
+;;; to how straight.el works.  When using straight.el, package
+;;; dependencies will always be resolved to the latest version.  That
+;;; often messes things up.  Hence, we hack some things to make
+;;; problems go away.
+(unless (boundp 'show-paren-context-when-offscreen)
+  (defconst show-paren-context-when-offscreen nil "Emacs 27 compatibility hack."))
+
+(unless (functionp 'string-replace)
+  (defalias 'string-replace 'replace-regexp-in-string))
 
 (provide 'fb)

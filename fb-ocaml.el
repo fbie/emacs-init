@@ -14,7 +14,10 @@
 
 (use-package merlin
   :diminish
-  :after '(tuareg helm)
+  :demand
+  :after
+  tuareg
+  helm
   :bind
   (:map merlin-mode-map
         ("M-," . merlin-pop-stack)
@@ -31,7 +34,9 @@
 (use-package dune)
 
 (use-package merlin-eldoc
-  :after '(tuareg merlin)
+  :after
+  tuareg
+  merlin
   :config
   (setq merlin-eldoc-type-verbosity 'min)
   (add-hook 'tuareg-mode-hook 'merlin-eldoc-setup))
