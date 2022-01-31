@@ -39,9 +39,7 @@
   (eval-after-load 'eglot-fsharp
     (progn
       (require 'eglot-fsharp)
-      (setq eglot-fsharp-server-runtime 'net-framework
-            inferior-fsharp-program "C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe"
-            eglot-fsharp-server-version "0.41.1")))
+      (setq inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe\"")))
 
   (eval-after-load 'omnisharp
     (setq omnisharp-server-executable-path "c:/Users/FLBM/Bin/omnisharp-win-x86/OmniSharp.exe")))
