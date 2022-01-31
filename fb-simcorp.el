@@ -59,7 +59,7 @@
         ("q" . bury-buffer))
   :config
   (setq notgit-default-owner "FLBM"
-        notgit-default-workspace "DEVPATCH-P_OTC")
+        notgit-default-workspace "DEVPATCH-P_OTC19")
   (defun fb-notgit-project-open-from-workspace (workspace)
     (interactive (list (read-string (notgit-make-prompt "Workspace" notgit-default-workspace)
                        nil
