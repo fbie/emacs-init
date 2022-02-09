@@ -8,15 +8,9 @@
   (setq fsharp-doc-idle-delay 1.0
         inferior-fsharp-program "dotnet fsi")
   (add-to-list 'helm-boring-file-regexp-list "^obj/")
-  (defun fsharp-eval-buffer ()
-    "Evaluate current buffer in FSI."
-    (interactive)
-    (save-mark-and-excursion
-      (fsharp-eval-region (point-min) (point-max))))
   :bind
   (:map fsharp-mode-map
-        ("C-c x" . flycheck-next-error)
-        ("C-c C-b" . fsharp-eval-buffer)))
+        ("C-c x" . flycheck-next-error)))
 
 (use-package eglot-fsharp
   :after
