@@ -380,6 +380,21 @@
   :config
   (add-hook 'java-mode-hook 'lsp))
 
+(use-package scala-mode
+  :mode "\\.scala"
+  :hook
+  (scala-mode . lsp-mode)
+  (scala-mode . company-mode)
+  :bind (:map scala-mode-map
+              ("C-c C-c" . scala-compile)))
+
+(use-package lsp-metals
+  :config
+  (setq lsp-metals-metals-store-path "~/.local/share/coursier/bin/metals"))
+
+(use-package haskell-mode
+  :mode "\\.hs")
+
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
