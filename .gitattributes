@@ -1,0 +1,3 @@
+cygwin-mount.el text working-tree-encoding=UTF-16
+setup-cygwin.el text working-tree-encoding=UTF-16
+*.el diff
