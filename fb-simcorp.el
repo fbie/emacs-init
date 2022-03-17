@@ -34,7 +34,8 @@
 
   (eval-after-load 'merlin
     (when (fb/ml-mono-exists)
-      (setq merlin-command (concat fb/ml-mono-dir "/tools/merlin/ocamlmerlin.exe"))))
+      (setq merlin-command (concat fb/ml-mono-dir "/tools/merlin/ocamlmerlin.exe")
+            merlin-eldoc-doc nil)))
 
   (eval-after-load 'eglot-fsharp
     (progn
