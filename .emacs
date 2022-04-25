@@ -110,6 +110,7 @@
 (column-number-mode 1)
 (electric-pair-mode)
 
+(add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines 1)))
 
 ;; But increase laziness.
 (defalias 'yes-or-no-p 'y-or-n-p)

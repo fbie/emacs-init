@@ -18,8 +18,6 @@
   (defun fb/ml-mono-exists ()
     (file-directory-p fb/ml-mono-dir))
 
-
-
   ;; Some project.el integration.
   (when (fb/ml-mono-exists)
     (require 'project)
@@ -52,8 +50,7 @@
   ("C-c n" . notgit-status)
   (:map notgit-status-mode-map
         ("q" . quit-window)
-        ("f" . fb-notgit-project-open-from-workspace)
-        ("e" . notgit-s))
+        ("f" . fb-notgit-project-open-from-workspace))
   (:map notgit-shelvesets-mode-map
         ("q" . bury-buffer))
   :config
