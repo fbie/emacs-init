@@ -43,8 +43,11 @@
   (eval-after-load 'omnisharp
     (setq omnisharp-server-executable-path "c:/Users/FLBM/Bin/omnisharp-win-x86/OmniSharp.exe")))
 
+(when (eq system-type 'gnu/linux) ;; WSL
+  (setq browse-url-browser-function (lambda (browse-url &rest args) (call-process "wslview" nil nil nil browse-url))))
+
 (use-package notgit
-  :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit")
+  :straight (:type git :repo "https://simhub.simcorp.com/NGWS/notgit" :files ("*"))
   :demand
   :bind
   ("C-c n" . notgit-status)
@@ -63,8 +66,10 @@
                        notgit-default-workspace)))
     (helm-browse-project-find-files (concat "C:/Workspaces/" workspace "/DEVPATCH-P/IMS"))))
 
-(use-package apl-font
-  :straight (:type git :repo "https://simhub.simcorp.com/FLBM/apl-font.el")
-  :demand)
+(use-package version2
+  :straight (:type git :repo "https://simhub.simcorp.com/NGWS/version2" :files ("*"))
+  :demand
+  :config
+  (setq version2-default-team "Oh No, More Lemmings"))
 
 (provide 'fb-simcorp)
