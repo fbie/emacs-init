@@ -111,6 +111,7 @@
 (electric-pair-mode)
 
 (add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines 1)))
+(add-hook 'text-mode-hook (lambda () (toggle-word-wrap 1)))
 
 ;; But increase laziness.
 (defalias 'yes-or-no-p 'y-or-n-p)
