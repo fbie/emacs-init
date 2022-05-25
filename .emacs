@@ -348,6 +348,7 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'"
+  :hook (markdown-mode . flyspell-mode)
   :bind
   (:map markdown-mode-map
         ("M-<right>" . markdown-demote)
