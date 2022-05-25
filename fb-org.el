@@ -1,5 +1,6 @@
 (use-package org
   :straight (:type built-in)
+  :bind (:map org-mode-map ("M-<return>" . org-insert-heading-respect-content))
   :config
   (setq org-log-done t ;; Log completion of tasks.
         org-use-sub-superscripts "{}"
