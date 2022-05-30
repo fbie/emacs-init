@@ -59,12 +59,9 @@
   :config
   (setq notgit-default-owner "FLBM"
         notgit-default-workspace "DEVPATCH-P_OTC19")
-  (defun fb-notgit-project-open-from-workspace (workspace)
-    (interactive (list (read-string (notgit-make-prompt "Workspace" notgit-default-workspace)
-                       nil
-                       nil
-                       notgit-default-workspace)))
-    (helm-browse-project-find-files (concat "C:/Workspaces/" workspace "/DEVPATCH-P/IMS"))))
+  (defun fb-notgit-project-open-from-workspace ()
+    (interactive)
+    (helm-browse-project-find-files (concat "C:/Workspaces/" notgit-current-workspace "/DEVPATCH-P/IMS"))))
 
 (use-package version2
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/version2" :files ("*"))
