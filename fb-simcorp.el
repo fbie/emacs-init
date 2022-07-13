@@ -67,6 +67,7 @@
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/version2" :files ("*"))
   :demand
   :config
-  (setq version2-default-team "Oh No, More Lemmings"))
+  (setq version2-default-team "Oh No, More Lemmings"
+        version2-default-person "FLBM"))
 
 (provide 'fb-simcorp)

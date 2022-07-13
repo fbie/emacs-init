@@ -29,7 +29,8 @@
         merlin-locate-in-new-window 'never)
   (defun helm-merlin-occurrences ()
     (interactive)
-    (helm :sources '(merlin-occurrences)))
+    (let ((occurrences (merlin-occurrences)))
+      (helm :sources occurrences)))
   (add-hook 'tuareg-mode-hook 'merlin-mode))
 
 (use-package dune)
