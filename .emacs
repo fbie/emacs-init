@@ -400,6 +400,7 @@
 
 (use-package drag-stuff
   :demand
+  :diminish
   :bind
   ("M-<up>" . drag-stuff-up)
   ("M-<down>" . drag-stuff-down)
