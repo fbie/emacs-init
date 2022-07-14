@@ -66,6 +66,7 @@
 (use-package version2
   :straight (:type git :repo "https://simhub.simcorp.com/NGWS/version2" :files ("*"))
   :demand
+  :bind (:map version2-item-mode-map ("q" . bury-buffer))  :config
   :config
   (setq version2-default-team "Oh No, More Lemmings"
         version2-default-person "FLBM"))
