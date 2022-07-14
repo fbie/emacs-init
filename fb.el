@@ -60,4 +60,16 @@ apparently, that does not work."
 (unless (functionp 'string-replace)
   (defalias 'string-replace 'replace-regexp-in-string))
 
+(defun fb/org-insert-src-block (mode)
+  "Open a new source block for MODE."
+  (interactive "sMode: ")
+  (insert "#+begin_src")
+  (when mode
+      (insert " ")
+      (insert mode))
+  (newline)
+  (newline)
+  (insert "#+end_src")
+  (line-move-visual -1))
+
 (provide 'fb)
