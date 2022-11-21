@@ -74,7 +74,6 @@
 ;; Remove useless, annoying key-bindings.
 (let ((bindings
        (list (kbd "C-z")              ;; Don't minimize.
-             (kbd "C-x C-b")          ;; Don't show buffer overview.
              (kbd "C-x C-l")          ;; Don't use downcase-region.
              (kbd "C-x C-u")          ;; Don't use upcase-region.
              (kbd "<Scroll_Lock>")))) ;; Nope!
