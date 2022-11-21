@@ -18,7 +18,8 @@
   eglot
   project
   :init
-  (setq eglot-fsharp-server-runtime 'net-core)
+  (setq eglot-fsharp-server-runtime 'net-core
+        eglot-fsharp-server-version "0.58.2")
   (unless (functionp 'project-root)
     (defun project-root (project)
       "A small alias for calling PROJECT-ROOT in Emacs 27."
