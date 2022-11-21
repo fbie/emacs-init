@@ -71,4 +71,12 @@
   (setq version2-default-team "Oh No, More Lemmings"
         version2-default-person "FLBM"))
 
+(use-package sc-tracer
+  :straight (:type git :repo "https://simhub.simcorp.com/FLBM/sc-tracer.el")
+  :demand
+  :config
+  (add-hook sc-tracer-mode-hook (lambda () (progn
+                                             (so-long-minor-mode)
+                                             (toggle-truncate-lines t)))))
+
 (provide 'fb-simcorp)
