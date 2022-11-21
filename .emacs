@@ -406,6 +406,8 @@
   :init
   (drag-stuff-global-mode 1))
 
+(use-package cil-mode
+  :mode "\\.il")
 
 (require 'fb-fsharp)
 (require 'fb-org)
