@@ -72,7 +72,6 @@
 
 
 (use-package org-present
-  :disabled
   :after org
   :bind
   (:map org-present-mode-keymap
