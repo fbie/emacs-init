@@ -9,6 +9,11 @@
   (eval-after-load 'magit
     (setq magit-git-executable "C:/Program Files/Git/bin/git.exe"))
 
+  (eval-after-load 'eglot-fsharp
+    (progn
+      (require 'eglot-fsharp)
+      (setq inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/FSharp/Tools/FsiAnyCpu.exe\"")))
+
   (defconst fb/ml-mono "ml-mono"
     "The ml-mono name as a string.")
 
@@ -35,10 +40,8 @@
       (setq merlin-command (concat fb/ml-mono-dir "/tools/merlin/ocamlmerlin.exe")
             merlin-eldoc-doc nil)))
 
-  (eval-after-load 'eglot-fsharp
-    (progn
-      (require 'eglot-fsharp)
-      (setq inferior-fsharp-program "\"C:/Program Files (x86)/Microsoft SDKs/F#/4.0/Framework/v4.0/FsiAnyCPU.exe\"")))
+  (require 'ruleql (concat fb/ml-mono-dir "/src/ruleql/emacs/ruleql.el"))
+  (setq ruleql-ml-mono-dir fb/ml-mono-dir)
 
   (eval-after-load 'omnisharp
     (setq omnisharp-server-executable-path "c:/Users/FLBM/Bin/omnisharp-win-x86/OmniSharp.exe")))
