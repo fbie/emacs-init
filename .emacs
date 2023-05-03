@@ -409,6 +409,9 @@
 (use-package cil-mode
   :mode "\\.il")
 
+(use-package feature-mode
+  :mode "\\.feature")
+
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
