@@ -147,7 +147,8 @@
 
 
 (use-package tex-site
-  :straight auctex)
+  :straight auctex
+  :init)
 
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
@@ -277,8 +278,12 @@
   (add-hook 'ielm-mode-hook 'enable-paredit-mode))
 
 
+(use-package csharp-mode
+  :bind (:map csharp-mode-map
+              ("C-c C-c" . compile)))
+
 (use-package omnisharp
-  :after (helm company flycheck)
+  :after (helm company flycheck csharp)
   :bind
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
@@ -388,7 +393,9 @@
   (scala-mode . lsp-mode)
   (scala-mode . company-mode)
   :bind (:map scala-mode-map
-              ("C-c C-c" . scala-compile)))
+              ("C-c C-c" . scala-compile))
+  :config
+  (add-hook 'scala-mode-hook (lambda () (setq indent-line-function 'indent-relative-maybe))))
 
 (use-package lsp-metals
   :config
