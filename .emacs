@@ -378,10 +378,24 @@
 
 (use-package lsp-java
   :config
-  (add-hook 'java-mode-hook 'lsp))
+  :hook (java-mode . lsp))
+
+(use-package scala-mode
+  :interpreter
+  ("scala" . scala-mode)
+  :hook (scala-mode . lsp)
+  :bind (:map scala-mode-map
+              ("C-c C-c" . scala-compile)))
+
+;; Add metals backend for lsp-mode
+(use-package lsp-metals
+  :after lsp
+  :config
+  (setq lsp-verify-signature nil))
 
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
+(require 'fb-cpp)
 (provide 'emacs)
 ;;; .emacs ends here
