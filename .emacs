@@ -74,7 +74,6 @@
 ;; Remove useless, annoying key-bindings.
 (let ((bindings
        (list (kbd "C-z")              ;; Don't minimize.
-             (kbd "C-x C-b")          ;; Don't show buffer overview.
              (kbd "C-x C-l")          ;; Don't use downcase-region.
              (kbd "C-x C-u")          ;; Don't use upcase-region.
              (kbd "<Scroll_Lock>")))) ;; Nope!
@@ -109,7 +108,8 @@
 (global-subword-mode 1)
 (column-number-mode 1)
 (electric-pair-mode)
-
+(add-hook 'prog-mode-hook (lambda () (toggle-truncate-lines 1)))
+(add-hook 'text-mode-hook (lambda () (toggle-word-wrap 1)))
 
 ;; But increase laziness.
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -118,8 +118,8 @@
 (global-set-key (kbd "C-a") 'fb/smart-back-to-indentation)
 (global-set-key (kbd "C-x w") 'fb/smart-make-frame)
 (global-set-key (kbd "C-x C-o") 'window-swap-states)
-(global-set-key (kbd "M-<down>") 'shrink-window)
-(global-set-key (kbd "M-<up>") 'enlarge-window)
+;; (global-set-key (kbd "M-<down>") 'shrink-window)
+;; (global-set-key (kbd "M-<up>") 'enlarge-window)
 (global-unset-key (kbd  "C-d"))
 (global-set-key (kbd "C-c d") 'fb/duplicate-line-at-point)
 (global-set-key (kbd "C-x C-v") 'fb/find-alternate-file-keep-point)
@@ -147,7 +147,8 @@
 
 
 (use-package tex-site
-  :straight auctex)
+  :straight auctex
+  :init)
 
 ;; Allow imenu bindings also in LaTeX mode.
 (add-hook 'LaTeX-mode-hook (lambda () (local-unset-key (kbd "C-c TAB"))))
@@ -277,8 +278,12 @@
   (add-hook 'ielm-mode-hook 'enable-paredit-mode))
 
 
+(use-package csharp-mode
+  :bind (:map csharp-mode-map
+              ("C-c C-c" . compile)))
+
 (use-package omnisharp
-  :after (helm company flycheck)
+  :after (helm company flycheck csharp)
   :bind
   (:map omnisharp-mode-map
 	("C-SPC" . company-search-candidates)
@@ -322,7 +327,7 @@
 
 (use-package rainbow-delimiters
   :demand
-  :init
+  :config
   (add-hook 'prog-mode 'rainbow-delimiters-mode))
 
 (use-package smart-mode-line
@@ -346,6 +351,7 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'"
+  :hook (markdown-mode . flyspell-mode)
   :bind
   (:map markdown-mode-map
         ("M-<right>" . markdown-demote)
@@ -358,6 +364,7 @@
 (use-package ace-window
   :bind
   ("C-x o" . ace-window)
+  ("C-x i" . ace-delete-window)
   ("C-x C-o" . ace-swap-window)
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
@@ -378,20 +385,39 @@
 
 (use-package lsp-java
   :config
-  :hook (java-mode . lsp))
+  (add-hook 'java-mode-hook 'lsp))
 
 (use-package scala-mode
-  :interpreter
-  ("scala" . scala-mode)
-  :hook (scala-mode . lsp)
+  :mode "\\.scala"
+  :hook
+  (scala-mode . lsp-mode)
+  (scala-mode . company-mode)
   :bind (:map scala-mode-map
-              ("C-c C-c" . scala-compile)))
-
-;; Add metals backend for lsp-mode
-(use-package lsp-metals
-  :after lsp
+              ("C-c C-c" . scala-compile))
   :config
-  (setq lsp-verify-signature nil))
+  (add-hook 'scala-mode-hook (lambda () (setq indent-line-function 'indent-relative-maybe))))
+
+(use-package lsp-metals
+  :config
+  (setq lsp-metals-metals-store-path "~/.local/share/coursier/bin/metals"))
+
+(use-package haskell-mode
+  :mode "\\.hs")
+
+(use-package drag-stuff
+  :demand
+  :diminish
+  :bind
+  ("M-<up>" . drag-stuff-up)
+  ("M-<down>" . drag-stuff-down)
+  :init
+  (drag-stuff-global-mode 1))
+
+(use-package cil-mode
+  :mode "\\.il")
+
+(use-package feature-mode
+  :mode "\\.feature")
 
 (require 'fb-fsharp)
 (require 'fb-org)

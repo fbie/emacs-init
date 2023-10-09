@@ -1,11 +1,11 @@
 (use-package tuareg
   :mode ("\\.ml[i]?" . tuareg-mode)
-  :bind
-  (:map tuareg-mode-map
-        ("C-c TAB" . helm-imenu))
+  :bind (:map tuareg-mode-map
+              ("C-c TAB" . helm-imenu))
   :config
   (setq tuareg-indent-align-with-first-arg nil
-        tuareg-electric-close-vector 't)
+        tuareg-electric-close-vector 't
+        tuareg-default-indent 2)
   (add-to-list 'helm-boring-file-regexp-list "\\.cmi$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmt$")
   (add-to-list 'helm-boring-file-regexp-list "\\.cmx$")
@@ -25,15 +25,18 @@
         ("C-c x" . merlin-error-next))
   :config
   (setq merlin-completion-with-doc nil
-        merlin-completion-dwim nil)
+        merlin-completion-dwim nil
+        merlin-locate-in-new-window 'never)
   (defun helm-merlin-occurrences ()
     (interactive)
-    (helm :sources '(merlin-occurrences)))
+    (let ((occurrences (merlin-occurrences)))
+      (helm :sources occurrences)))
   (add-hook 'tuareg-mode-hook 'merlin-mode))
 
 (use-package dune)
 
 (use-package merlin-eldoc
+  :disabled
   :after
   tuareg
   merlin

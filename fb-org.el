@@ -1,5 +1,10 @@
 (use-package org
   :straight (:type built-in)
+  :bind
+  (("C-c a" . org-agenda-and-todos)
+   ("C-c c" . org-capture))
+  (:map org-mode-map ("M-<return>" . org-insert-heading-respect-content))
+  :demand
   :config
   (setq org-log-done t ;; Log completion of tasks.
         org-use-sub-superscripts "{}"
@@ -47,7 +52,9 @@
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/org/")
+  (setq org-directory "~/org/"
+        org-default-notes-file "~/org/todo.org"
+        org-refile-targets '((nil . (:maxlevel . 2))))
   (add-to-list 'org-agenda-files org-directory))
 
 (use-package org-journal
@@ -65,7 +72,6 @@
 
 
 (use-package org-present
-  :disabled
   :after org
   :bind
   (:map org-present-mode-keymap
