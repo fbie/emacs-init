@@ -11,6 +11,7 @@
   (add-hook 'fsharp-mode-hook 'lsp-mode)
   :config
   (setq fsharp-doc-idle-delay 1.0
+        warning-minimum-level :error
         inferior-fsharp-program "dotnet fsi --readline-")
   (add-to-list 'helm-boring-file-regexp-list "^obj/")
   :bind
