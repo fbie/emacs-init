@@ -310,15 +310,15 @@
 (use-package paren-face
   :config (global-paren-face-mode))
 
-
 (use-package racket-mode
   :after paredit
   :bind
-  (:map racket-mode-map ("C-h f" . racket-describe))
-  (:map racket-repl-mode-map ("C-h f" . racket-describe))
+  (:map racket-mode-map ("C-h f" . racket-xp-describe))
+  (:map racket-repl-mode-map ("C-h f" . racket-repl-describe))
   :init
   (add-hook 'racket-mode-hook      'enable-paredit-mode)
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
+  (add-hook 'racket-mode-hook      'racket-xp-mode)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
   ;; (add-hook 'racket-mode-hook 'visual-fill-column-mode)
