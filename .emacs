@@ -38,7 +38,7 @@
 (load-file custom-file)
 
 (setq user-full-name "Florian Biermann"
-      user-mail-address "florian.biermann@protonmail.com"
+      user-mail-address "flbm@simcorp.com"
       ;; I don't want any old stuff lying around.
       backup-directory-alist `(("." . "~/.emacs.d/backups"))
       backup-by-copying t
@@ -397,5 +397,6 @@
 (require 'fb-org)
 (require 'fb-ocaml)
 (require 'fb-cpp)
+(require 'fb-simcorp)
 (provide 'emacs)
 ;;; .emacs ends here
