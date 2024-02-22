@@ -1,31 +1,21 @@
 (use-package eglot)
 
+(use-package highlight-indentation
+  :init )
+
 (use-package fsharp-mode
-  :after eglot
+  :after lsp-mode
   :init
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode))
+  (add-hook 'fsharp-mode-hook 'highlight-indentation-mode)
+  (add-hook 'fsharp-mode-hook 'lsp-mode)
   :config
   (setq fsharp-doc-idle-delay 1.0
-        inferior-fsharp-program "dotnet fsi")
+        warning-minimum-level :error
+        inferior-fsharp-program "dotnet fsi --readline-")
   (add-to-list 'helm-boring-file-regexp-list "^obj/")
   :bind
   (:map fsharp-mode-map
         ("C-c x" . flycheck-next-error)))
-
-(use-package eglot-fsharp
-  :after
-  fsharp-mode
-  eglot
-  project
-  :init
-  (setq eglot-fsharp-server-runtime 'net-core
-        eglot-fsharp-server-version "0.58.2")
-  (unless (functionp 'project-root)
-    (defun project-root (project)
-      "A small alias for calling PROJECT-ROOT in Emacs 27."
-      (car (project-roots project))))
-  (add-hook 'fsharp-mode-hook (lambda ()
-                                (require 'eglot-fsharp)
-                                (eglot-ensure))))
 
 (provide 'fb-fsharp)

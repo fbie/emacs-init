@@ -277,48 +277,22 @@
   (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
   (add-hook 'ielm-mode-hook 'enable-paredit-mode))
 
-
-(use-package csharp-mode
-  :bind (:map csharp-mode-map
-              ("C-c C-c" . compile)))
-
-(use-package omnisharp
-  :after (helm company flycheck csharp)
-  :bind
-  (:map omnisharp-mode-map
-	("C-SPC" . company-search-candidates)
-	("M-." . omnisharp-go-to-definition)
-	("M-," . pop-tag-mark)
-	("C-u" . omnisharp-helm-find-usages)
-	("S-s-<up>" . omnisharp-navigate-up)
-	("S-s-<down>" . omnisharp-navigate-down)
-	("s-i" . omnisharp-helm-find-implementations)
-	("C-." . omnisharp-run-code-action-refactoring)
-	("<f2>" . omnisharp-rename-interactively)
-	("<f5>" . omnisharp-build-in-emacs))
-  :config
-  (setq omnisharp-company-template-use-yasnippet nil)
-  (add-to-list 'company-backends 'company-omnisharp)
-  (add-to-list 'auto-mode-alist '("\\.csproj$" . xml-mode))
-  (add-to-list 'auto-mode-alist '("\\.cake?$" . csharp-mode))
-  :init
-  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-  (add-hook 'omnisharp-mode-hook 'eldoc-mode)
-  (add-hook 'omnisharp-mode-hook 'flycheck-mode))
-
+(use-package lsp-mode
+  :hook
+  (csharp-mode . lsp-mode))
 
 (use-package paren-face
   :config (global-paren-face-mode))
 
-
 (use-package racket-mode
   :after paredit
   :bind
-  (:map racket-mode-map ("C-h f" . racket-describe))
-  (:map racket-repl-mode-map ("C-h f" . racket-describe))
+  (:map racket-mode-map ("C-h f" . racket-xp-describe))
+  (:map racket-repl-mode-map ("C-h f" . racket-repl-describe))
   :init
   (add-hook 'racket-mode-hook      'enable-paredit-mode)
   (add-hook 'racket-mode-hook      'racket-unicode-input-method-enable)
+  (add-hook 'racket-mode-hook      'racket-xp-mode)
   (add-hook 'racket-repl-mode-hook 'enable-paredit-mode)
   (add-hook 'racket-repl-mode-hook 'racket-unicode-input-method-enable)
   ;; (add-hook 'racket-mode-hook 'visual-fill-column-mode)
@@ -422,6 +396,7 @@
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
+(require 'fb-cpp)
 (require 'fb-simcorp)
 (provide 'emacs)
 ;;; .emacs ends here
