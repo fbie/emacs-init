@@ -52,8 +52,8 @@
     (interactive)
     (org-agenda arg "n"))
   (global-set-key (kbd "C-c a") 'org-agenda-and-todos)
-  (setq org-directory "~/org/"
-        org-default-notes-file "~/org/todo.org"
+  (setq org-directory (if (eq system-type 'windows-nt)  "~/../../Documents/org/" "~/org/"))
+  (setq org-default-notes-file (concat org-directory "todo.org")
         org-refile-targets '((nil . (:maxlevel . 2))))
   (add-to-list 'org-agenda-files org-directory))
 
