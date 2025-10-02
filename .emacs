@@ -69,6 +69,9 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; Uuuuh.
+(desktop-save-mode 1)
+
 (setq-default require-final-newline t
               indent-tabs-mode nil
               tab-width 4)
