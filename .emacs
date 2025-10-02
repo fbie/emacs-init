@@ -29,8 +29,10 @@
 ;;; Code:
 
 (defvar user-init-dir (file-name-directory
-                       (concat "~/" (or (file-symlink-p user-init-file)
-                                        user-init-file)))
+                       (concat
+                        (if (eq system-type 'windows-nt) "" "~/")
+                        (or (file-symlink-p user-init-file)
+                            user-init-file)))
   "Root directory of emacs.el, after following symlinks, etc.")
 
 (setq custom-file (concat user-init-dir "custom.el"))
