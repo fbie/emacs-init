@@ -236,7 +236,8 @@
   :init
   (ivy-mode)
   (setopt ivy-use-virtual-buffers t
-          enable-recursive-minibuffers t))
+          enable-recursive-minibuffers t
+          ivy-use-selectable-prompt t))
 
 (use-package counsel
   :bind
