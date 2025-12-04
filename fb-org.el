@@ -27,6 +27,9 @@
         org-startup-with-inline-images t
 
         org-agenda-window-setup 'other-window
+        org-agenda-start-on-weekday nil
+        org-agenda-start-day "-3d"
+        org-agenda-span 17
 
         org-todo-keywords '((sequence "TODO(t!)"
                                       "INPROGRESS(p!)"
@@ -66,8 +69,9 @@
   :config
   (setq org-journal-carryover-items nil)
   :init
-  (setq org-journal-file-format "%Y%m%d.org")
-  (setq org-journal-dir (concat org-directory "journal/"))
+  (setq org-journal-file-format "%Y%m%d.org"
+        org-journal-dir (concat org-directory "journal/")
+        org-journal-file-type 'monthly)
   (add-to-list 'org-agenda-files org-journal-dir))
 
 
@@ -93,5 +97,12 @@
               (org-present-show-cursor)
               (org-present-read-write)
               (setq mode-line-format (default-value 'mode-line-format)))))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t)))
+
+(setq org-babel-default-header-args:sql
+      '((:engine . "mssql") (:dbinstance "(localdb)\\MSSQLLocalDB")))
 
 (provide 'fb-org)
