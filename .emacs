@@ -211,12 +211,6 @@
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
-;; (use-package undo-tree
-;;   :diminish undo-tree-mode
-;;   :config
-;;   (global-undo-tree-mode)
-;;   (setq undo-tree-visualizer-diff t))
-
 (use-package helm
   :diminish helm-mode
   :bind
