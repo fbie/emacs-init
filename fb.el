@@ -72,4 +72,24 @@ apparently, that does not work."
   (insert "#+end_src")
   (line-move-visual -1))
 
+(defun fb/current-frame-on-laptop? ()
+  "Return non-nil if the current frame is drawn on laptop, false otherwise."
+  (s-suffix? "DISPLAY1" (alist-get 'name (frame-monitor-attributes (selected-frame)))))
+
+(defun fb/treemacs-visible? ()
+  "Return non-nil if a Treemacs buffer is currently being displayed."
+  (seq-some (lambda (window)
+              (let ((buf (window-buffer window)))
+                (and (buffer-live-p buf)
+                     (s-contains? treemacs-buffer-name-prefix (buffer-name buf)))))
+            (window-list)))
+
+(defun fb/preferred-split-direction (window)
+  "Return the function to split WINDOW depending on monitor and Treemacs display."
+  (if (or (fb/current-frame-on-laptop?) (fb/treemacs-visible?))
+     (split-window-below)
+    (split-window-sensibly)))
+
+(setq split-window-preferred-function #'fb/preferred-split-direction)
+
 (provide 'fb)
