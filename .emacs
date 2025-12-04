@@ -62,7 +62,8 @@
       kill-whole-line t
       ;; Do everything the right way.
       display-time-24hr-format 't
-      display-time-day-and-date 't)
+      display-time-day-and-date 't
+      visible-bell 't)
 
 ;; Remove useless visual stuff.
 (tool-bar-mode -1)
