@@ -211,25 +211,45 @@
   :config
   (add-hook 'LaTeX-mode-hook 'writegood-mode))
 
-(use-package helm
-  :diminish helm-mode
-  :bind
-  ("M-x"     . helm-M-x)
-  ("C-x C-f" . helm-find-files)
-  ("C-x C-g" . helm-recentf)
-  ("C-c k"   . helm-show-kill-ring)
-  ("C-c TAB" . helm-imenu)
-  ("C-x b"   . helm-buffers-list)
-  ("C-s"     . helm-occur)
-  ("C-c s"   . isearch-forward)
+;; (use-package helm
+;;   :diminish helm-mode
+;;   :bind
+;;   ("M-x"     . helm-M-x)
+;;   ("C-x C-f" . helm-find-files)
+;;   ("C-x C-g" . helm-recentf)
+;;   ("C-c k"   . helm-show-kill-ring)
+;;   ("C-c TAB" . helm-imenu)
+;;   ("C-x b"   . helm-buffers-list)
+;;   ("C-s"     . helm-occur)
+;;   ("C-c s"   . isearch-forward)
+;;   :init
+;;   (setq helm-ff-skip-boring-files t
+;;         helm-occur-show-buffer-name t
+;;         helm-moccur-show-buffer-fontification t
+;;         helm-buffer-max-length nil
+;;         helm-grep-default-command "grep -I --color=always -a -d skip %e -n%cH -e %p %f"
+;;         helm-completion-style 'helm)
+;;   (helm-mode 'true)
+;;   (helm-autoresize-mode 'true))
+
+(use-package ivy
   :init
-  (setq helm-ff-skip-boring-files t
-        helm-occur-show-buffer-name t
-        helm-moccur-show-buffer-fontification t
-        helm-buffer-max-length nil
-        helm-grep-default-command "grep -I --color=always -a -d skip %e -n%cH -e %p %f")
-  (helm-mode 'true)
-  (helm-autoresize-mode 'true))
+  (ivy-mode)
+  (setopt ivy-use-virtual-buffers t
+          enable-recursive-minibuffers t))
+
+(use-package counsel
+  :bind
+  ("C-x C-g" . counsel-recentf)
+  :init
+  (setq counsel-find-file-ignore-regexp "#.")
+  (counsel-mode))
+
+(use-package swiper
+  :bind
+  ("C-s" . swiper)
+  :init
+  (setopt search-default-mode #'char-fold-to-regexp))
 
 (use-package which-key
   :diminish
@@ -268,9 +288,9 @@
 (use-package treemacs-magit
   :after (treemacs magit))
 
-(use-package helm-git-grep
-  :after helm
-  :bind ("C-c g" . helm-git-grep-at-point))
+;; (use-package helm-git-grep
+;;   :after helm
+;;   :bind ("C-c g" . helm-git-grep-at-point))
 
 (use-package paredit
   :diminish paredit-mode
@@ -299,7 +319,7 @@
   :commands
   lsp)
 
-(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-ui :commands lsp-ui-mode)
 
 
