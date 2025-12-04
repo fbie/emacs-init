@@ -284,7 +284,19 @@
 
 (use-package lsp-mode
   :hook
-  (csharp-mode . lsp-mode))
+  (csharp-mode . lsp-mode)
+  :init
+  (setq lsp-keymap-prefix "C-c l"
+        lsp-file-watch-threshold 5000
+        lsp-csharp-server-path "C:/Users/FlorianBiermann/AppData/Roaming/.emacs.d/omnisharp-win-x64-net6.0/OmniSharp.exe")
+  (dolist (dir '("UI" "excel templates" ".claude" ".devcontainer" ".act"))
+    (add-to-list 'lsp-file-watch-ignored-directories (concat  "C:/src/polaris/" dir)))
+  :commands
+  lsp)
+
+(use-package helm-lsp :commands helm-lsp-workspace-symbol)
+(use-package lsp-ui :commands lsp-ui-mode)
+
 
 (use-package paren-face
   :config (global-paren-face-mode))
