@@ -398,6 +398,8 @@
 (use-package feature-mode
   :mode "\\.feature")
 
+(require 'nxml-mode)
+(setq nxml-slash-auto-complete-flag 't)
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
