@@ -400,6 +400,20 @@
 
 (require 'nxml-mode)
 (setq nxml-slash-auto-complete-flag 't)
+
+(use-package typescript-mode
+  :mode "\\.ts")
+
+(use-package highlight-indent-guides
+  :hook
+  prog-mode-hook
+  nxml-mode-hook
+  :config
+  (setq highlight-indent-guides-method 'character))
+
+(add-hook 'csharp-mode-hook 'highlight-indentation-current-column-mode)
+(add-hook 'nxml-mode-hook 'highlight-indentation-current-column-mode)
+
 (require 'fb-fsharp)
 (require 'fb-org)
 (require 'fb-ocaml)
