@@ -176,31 +176,36 @@
 
 
 (use-package flycheck
-  :disabled
+  ;; :disabled
   :init
   (add-hook 'prog-mode-hook 'flycheck-mode)
   (add-hook 'LaTeX-mode-hook 'flycheck-mode)
   (add-hook 'latex-mode-hook 'flycheck-mode)
+  (add-hook 'xml-mode-hook 'flycheck-mode)
   :config
-  (flycheck-define-checker proselint
-    "A linter for prose."
-    :command ("proselint" source-inplace)
-    :error-patterns
-    ((warning line-start (file-name) ":" line ":" column ": "
-              (id (one-or-more (not (any " "))))
-              (message (one-or-more not-newline)
-                       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-              line-end))
-    :modes (latex-mode LaTeX-mode text-mode markdown-mode gfm-mode))
+  (flycheck-define-checker
+   proselint
+   "A linter for prose."
+   :command ("proselint" source-inplace)
+   :error-patterns
+   ((warning line-start (file-name) ":" line ":" column ": "
+             (id (one-or-more (not (any " "))))
+             (message (one-or-more not-newline)
+                      (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+             line-end))
+   :modes (latex-mode LaTeX-mode text-mode markdown-mode gfm-mode))
   (add-to-list 'flycheck-checkers 'proselint))
-
 
 (use-package flyspell
   :diminish flyspell-mode
   :config
   ;; TODO: Maybe write some Windows-specific code, too?
   (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+  (let ((hunspell-dir "c:/hunspell/bin/"))
+    (when (and (eq system-type 'windows-nt) (file-directory-p hunspell-dir))
+      (add-to-list 'exec-path hunspell-dir)
+      (setq ispell-program-name (concat hunspell-dir "hunspell.exe")))))
 
 
 (use-package writegood-mode
