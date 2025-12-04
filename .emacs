@@ -251,6 +251,10 @@
   (global-company-mode))
 
 (use-package treemacs
+  :init
+  (setq treemacs-position 'right
+        treemacs-no-delete-other-windows nil
+        treemacs-display-in-side-window t)
   :bind (:map global-map
               ("C-z"       . treemacs-select-window)
               ;; ("C-x t 1"   . treemacs-delete-other-windows)
