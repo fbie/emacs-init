@@ -148,8 +148,12 @@
 
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default 't)
 
+(use-package straight
+  :custom
+  ;; add project and flymake to the pseudo-packages variable so straight.el doesn't download a separate version than what eglot downloads.
+  (straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake xref))
+  (straight-use-package-by-default t))
 
 (use-package tex-site
   :straight auctex
