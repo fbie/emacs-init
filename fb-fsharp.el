@@ -7,7 +7,7 @@
   :after lsp-mode
   :init
   (add-to-list 'auto-mode-alist '("\\.fsproj$" . xml-mode))
-  (add-hook 'fsharp-mode-hook 'highlight-indentation-mode)
+  (add-hook 'fsharp-mode-hook 'highlight-indentation-current-column-mode)
   (add-hook 'fsharp-mode-hook 'lsp-mode)
   :config
   (setq fsharp-doc-idle-delay 1.0
