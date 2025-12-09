@@ -317,9 +317,7 @@
         lsp-file-watch-threshold 5000
         lsp-csharp-server-path "C:/Users/FlorianBiermann/AppData/Roaming/.emacs.d/omnisharp-win-x64-net6.0/OmniSharp.exe")
   (dolist (dir '("UI" "excel templates" ".claude" ".devcontainer" ".act"))
-    (add-to-list 'lsp-file-watch-ignored-directories (concat  "C:/src/polaris/" dir)))
-  :commands
-  lsp)
+    (add-to-list 'lsp-file-watch-ignored-directories (concat  "C:/src/polaris/" dir))))
 
 ;; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
 (use-package lsp-ui :commands lsp-ui-mode)
