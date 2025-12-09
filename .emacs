@@ -242,6 +242,7 @@
 (use-package counsel
   :bind
   ("C-x C-g" . counsel-recentf)
+  (:map counsel-mode-map ("C-l" . counsel-up-directory))
   :init
   (setq counsel-find-file-ignore-regexp "#.")
   (counsel-mode))
