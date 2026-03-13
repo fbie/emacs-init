@@ -249,9 +249,7 @@
 
 (use-package swiper
   :bind
-  ("C-s" . swiper)
-  :init
-  (setopt search-default-mode #'char-fold-to-regexp))
+  ("C-s" . swiper))
 
 (use-package which-key
   :diminish
